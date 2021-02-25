@@ -62,7 +62,8 @@ function System(name){ // 게임의 전체 진행 담당
 
     Bumper,
     Dispersion,
-    Diffusion
+    Diffusion,
+    Dual
   ];
 
   this.bulletList = [
