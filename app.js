@@ -378,7 +378,7 @@ function tickObject(obj,index){
     case "drone":
     break;
     case "shape":
-      obj.rotate += 0.01;
+      obj.rotate += 0.1 / obj.radius;
     objUtil.healObject(obj);
     break;
     default:
