@@ -16,7 +16,7 @@ const bulletUtil = require('./lib/bulletSet');
 const shapeUtil = require('./lib/shapeSet');
 
 const quadtree = require('./lib/QuadTree');
-const readline = require('readline'); // 콘솔 창 명령어 실행 패키지
+const readline = require('readline');
 
 let V = SAT.Vector;
 let C = SAT.Circle;
@@ -27,18 +27,18 @@ var gameSet = {
   mapSize: {x: 1000,y: 1000}
 };
 
-let users = []; // 유저 목록.
-global.objects = []; // 오브젝트 목록.
+let users = [];
+global.objects = [];
 global.objID = (function(){ var id=1; return function(){ return id++;} })();
 
-let sockets = {}; // 유저 접속 목록.
+let sockets = {};
 
-let tankLength = 56; // 탱크의 목록 길이.
+let tankLength = 56;
 
 let tree = new quadtree(-gameSet.mapSize.x*2,-gameSet.mapSize.y*2,gameSet.mapSize.x*4,gameSet.mapSize.y*4);
 let sendTree = new quadtree(-gameSet.mapSize.x*2,-gameSet.mapSize.y*2,gameSet.mapSize.x*4,gameSet.mapSize.y*4);
 
-app.use(express.static(__dirname + '/static')); // 클라이언트 코드 목록 불러오기.
+app.use(express.static(__dirname + '/static'));
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/static/index.html');
 })
@@ -58,9 +58,9 @@ var recursiveAsyncReadLine = function () {
 };
 recursiveAsyncReadLine();
 
-io.on('connection', (socket) => { // 접속.
-  let currentPlayer = { // 현재 플레이어 객체 생성.
-    id: socket.id, // 플레이어의 소켓 id
+io.on('connection', (socket) => {
+  let currentPlayer = {
+    id: socket.id,
     moveRotate: null,
     mouse: {
       left: false,
@@ -327,7 +327,7 @@ function tickObject(obj,index){
   switch (obj.objType){
     case "tank":
     let sc = userUtil.setUserLevel(obj);
-    if (!obj.isCanDir){ // 방향 조정이 불가능할 때 방향 회전
+    if (!obj.isCanDir) {
       obj.rotate += 0.02;
     }
     if (obj.lastMaxHealth !== util.isF(obj.maxHealth)){
@@ -338,10 +338,10 @@ function tickObject(obj,index){
     if (obj.owner){
       userUtil.healTank(obj);
       if (gameSet.gameMode === "sandbox"){
-        /*if (obj.owner.k && obj.level<45 && obj.owner.kTime<=0){
+        if (obj.owner.k && obj.level<45 && obj.owner.kTime<=0){
           obj.exp = sc;
           obj.owner.kTime+=100;
-        }*/
+        }
         obj.owner.kTime=Math.max(obj.owner.kTime-1000/60,0);
         if (obj.owner.changeTank){
           if (obj.owner.changeTime<=0){
@@ -387,7 +387,7 @@ function tickObject(obj,index){
   if (obj.moveAi){
     obj.moveAi(obj);
   }
-  if (obj.isBorder){ // 화면 밖으로 벗어나는가?
+  if (obj.isBorder) {
     if (obj.x>gameSet.mapSize.x+51.6) obj.x=gameSet.mapSize.x+51.6;
     if (obj.x<-gameSet.mapSize.x-51.6) obj.x=-gameSet.mapSize.x-51.6;
     if (obj.y>gameSet.mapSize.y+51.6) obj.y=gameSet.mapSize.y+51.6;
@@ -414,7 +414,7 @@ function tickObject(obj,index){
     obj.opacity=Math.max(obj.opacity-1/60/obj.invTime,0);
   }
 
-  obj.lastHealth = obj.health; // lastHealth 는 데미지 계산 당시에 사용할 이전 체력 값이다. 이 값이 없다면 데미지 계산을 제대로 하지 못한다.
+  obj.lastHealth = obj.health;
 }
 
 function moveloop(){
@@ -557,6 +557,6 @@ function sendUpdates(){
 
 setInterval(moveloop,1000/60);
 setInterval(sendUpdates,1000/30);
-server.listen(80, () => {
-    console.log("잠깐, 지금 서버를 연거야?");
+server.listen(3000, () => {
+    console.log("Server started!");
 });
