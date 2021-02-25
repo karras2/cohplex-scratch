@@ -93,15 +93,15 @@ io.on('connection', (socket) => {
 
   socket.on('login', (name) => { // 탱크 생성.
     if (sockets[socket.id]){
-      console.log('넌 뭐야 저리가!!!');
+      console.log('New socket opened! (But closed)');
       return false;
     }
     else{
       if (name.replace(/[\0-\x7f]|([0-\u07ff]|(.))/g,"$&$1$2").length > 15) {
         name = '';
-        console.log('앗 무지개 방패로 이름 공격을 막았어요 :)');
+        console.log('Invalid name, I guess...');
       }
-      console.log('누군가가 들어왔다!!!');
+      console.log('New socket opened.');
       sockets[socket.id] = socket;
 
       let obj = {
@@ -216,13 +216,13 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => { // 연결 끊김
     if (sockets[socket.id]){
-      console.log('안녕 잘가!!!');
-      //gameSet.mapSize.x+= 50;
-      //gameSet.mapSize.y+= 50;
+      console.log('Socket closed.');
+      gameSet.mapSize.x -= 100;
+      gameSet.mapSize.y -= 100;
 
       tree = sendTree = new quadtree(-gameSet.mapSize.x*2,-gameSet.mapSize.y*2,gameSet.mapSize.x*4,gameSet.mapSize.y*4);
 
-      //shapeUtil.extendMaxShape(-10);
+      shapeUtil.extendMaxShape(-10);
 
       currentPlayer.controlObject.owner = null;
       users.splice(util.findIndex(users,currentPlayer.id),1);
@@ -378,6 +378,7 @@ function tickObject(obj,index){
     case "drone":
     break;
     case "shape":
+      obj.rotate += 0.01;
     objUtil.healObject(obj);
     break;
     default:
