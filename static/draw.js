@@ -205,9 +205,12 @@ function drawUpgrade(I, x, y, s, name, id, color) {
   ctx.fillStyle = color;
   ctx.fillRect(0, 0, s, s);
   let text = name;
+  ctx.font = "30px Ubuntu";
   let w = ctx.measureText(text).width / 2;
-  ctx.fillStyle = "#fff"
-  ctx.fillText(name, s / 2 - w, s * 0.75);
+  ctx.fillStyle = "#fff";
+  ctx.strokeStyle = "#000";
+  ctx.fillText(name, s / 2 - w, s * 0.85);
+  ctx.strokeText(name, s / 2 - w, s * 0.85);
   box.onclick = () => socket.emit("upgradeTank", id);
 };
 

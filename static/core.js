@@ -69,13 +69,14 @@ function System(name, key){ // 게임의 전체 진행 담당
   
   let findTankID = name => this.tankList.indexOf(this.tankList.find(r => new r().tankType === name));
   this.UPGRADES = {};
-  this.UPGRADES[findTankID("Tank")] = ["Twin", "Sniper", "Machine Gun", "Flank Guard"];
-  this.UPGRADES[findTankID("Twin")] = ["Triple Shot", "Twin Flank", "Quad Tank"];
-  this.UPGRADES[findTankID("Sniper")] = ["Assassin", "Hunter", "Overseer", "Trapper"];
-  this.UPGRADES[findTankID("Machine Gun")] = ["Destroyer", "Gunner"];
-  this.UPGRADES[findTankID("Flank Guard")] = ["Quad Tank", "Tri Angle"];
-  for (let path in this.UPGRADES) this.UPGRADES[path] = this.UPGRADES[path].map(up => findTankID(up));
+  this.UPGRADES["Tank"] = ["Twin", "Sniper", "Machine Gun", "Flank Guard"];
+  this.UPGRADES["Twin"] = ["Triple Shot", "Twin Flank", "Quad Tank"];
+  this.UPGRADES["Sniper"] = ["Assassin", "Hunter", "Overseer", "Trapper"];
+  this.UPGRADES["Machine Gun"] = ["Destroyer", "Gunner"];
+  this.UPGRADES["Flank Guard"] = ["Quad Tank", "Tri Angle"];
+  for (let path in this.UPGRADES) this.UPGRADES[path] = this.UPGRADES[path].map(up => [up, findTankID(up)]);
   window.UPS = this.UPGRADES;
+  this.oldUps = [];
 
   this.bulletList = [
     TrapBullet,
@@ -480,13 +481,25 @@ function System(name, key){ // 게임의 전체 진행 담당
         x:targetX,
         y:targetY
       });
+      if (this.UPGRADES[this.controlTank.tankType]) {
+        if (this.oldUps !== this.UPGRADES[this.controlTank.tankType]) for (let i = 0; i < 10; i ++) document.body.removeChild(document.getElementById("upgradeBox" + i));
+        this.oldUps = this.UPGRADES[this.controlTank.tankType];
+        let x = 25,
+            y = 25,
+            i = 0;
+        for (let up of this.UPGRADES[this.controlTank.tankType]) {
+          drawUpgrade(i, x, y, 100, up[0], up[1], "#00beff");
+          i ++;
+          x += 125;
+          if (i % 2 === 0) x = 25, y += 125;
+        }
+      }
     }
 
     this.drawObject.backgroundDraw();
     this.drawObject.objectDraw(this.objectList,this.objectOrder);
     this.drawObject.objectStatusDraw(this.objectList);
     this.drawObject.uiDraw(this.uiObjectList);
-    drawUpgrade(0, 10, 10, 100, "Twin", 1, "#00beff");
 
     requestAnimationFrame(this.loop.bind(this));
   }
