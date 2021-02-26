@@ -30,8 +30,8 @@ var gameSet = {
   maxPlayer: 10,
   tokens: ["TOKEN_wrjgdsnfTihD48970MFBlw_TOKEN"],
   mapSize: {
-    x: 1000,
-    y: 1000
+    x: 500,
+    y: 500
   }
 };
 
