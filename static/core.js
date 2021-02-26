@@ -78,7 +78,11 @@ function System(name, key) { // 게임의 전체 진행 담당
   this.UPGRADES["Twin Flank"] = ["Triple Twin", "Battleship"];
   this.UPGRADES["Quad Tank"] = ["Octo Tank"];
   this.UPGRADES["Destroyer"] = ["Annihilator", "Hybrid", "Skimmer", "Rocketeer"];
-  this.UPGRADES["Gunner"] = ["Auto-Gunner", "Streamliner", "Gunner Trapper"];
+  this.UPGRADES["Gunner"] = ["Auto-Gunner", "Streamliner", "Gunner Trapper", "Sprayer"];
+  this.UPGRADES["Assassin"] = ["Ranger", "Stalker"];
+  this.UPGRADES["Hunter"] = ["Predator", "Streamliner"];
+  this.UPGRADES["Overseer"] = ["Overlord", "Over Trapper", "Factory", "Battleship"];
+  this.UPGRADES["Trapper"] = ["Mega Trapper", "Auto-Trapper", "Gunner Trapper", "Over Trapper", "Tri Trapper"];
   for (let path in this.UPGRADES) this.UPGRADES[path] = this.UPGRADES[path].map(up => [up, findTankID(up)]);
   window.UPS = this.UPGRADES;
   this.bulletList = [

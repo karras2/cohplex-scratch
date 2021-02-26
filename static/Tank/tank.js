@@ -593,7 +593,7 @@ function Overload() {
       [-0.43, 0]
     ], -Math.PI / 2)
   ];
-  this.tankType = "Overload";
+  this.tankType = "Overlord";
 }
 Overload.prototype = new Tank();
 Overload.prototype.constructor = Overload;
@@ -1192,7 +1192,7 @@ function OverTrapper() {
       [-0.43, 0]
     ], -Math.PI / 3 * 2)
   ];
-  this.tankType = "OverTrapper";
+  this.tankType = "Over Trapper";
 }
 OverTrapper.prototype = new Tank();
 OverTrapper.prototype.constructor = OverTrapper;
@@ -1213,7 +1213,7 @@ function MegaTrapper() {
       [-0.542, 0]
     ], 0)
   ];
-  this.tankType = "MegaTrapper";
+  this.tankType = "Mega Trapper";
 }
 MegaTrapper.prototype = new Tank();
 MegaTrapper.prototype.constructor = MegaTrapper;
@@ -1254,7 +1254,7 @@ function TriTrapper() {
       [-0.42, 0]
     ], -Math.PI / 3 * 2)
   ];
-  this.tankType = "TriTrapper";
+  this.tankType = "Tri Trapper";
 }
 TriTrapper.prototype = new Tank();
 TriTrapper.prototype.constructor = TriTrapper;
@@ -1543,7 +1543,7 @@ function AutoTrapper() {
       [-0.3, 0]
     ], 0)
   ];
-  this.tankType = "AutoTrapper";
+  this.tankType = "Auto-Trapper";
 }
 AutoTrapper.prototype = new Tank();
 AutoTrapper.prototype.constructor = AutoTrapper;
