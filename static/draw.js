@@ -416,7 +416,7 @@ function ScoreBoard() {
 
   this.width = 167;
 
-  this.scoreBoardTitle = new Text("Scoreboard", 20);
+  this.scoreBoardTitle = new Text("Scoreboard:", 20);
   this.scoreBoardBar = [];
   this.scoreBoardText = [];
   this.scoreBoardList = [];
