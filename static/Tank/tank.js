@@ -1350,6 +1350,24 @@ function Smasher() {
 Smasher.prototype = new Tank();
 Smasher.prototype.constructor = Smasher;
 
+function MegaSmasher() {
+  "use strict";
+  Tank.apply(this, arguments);
+  let list = [];
+  let dis = 2.25 * Math.sqrt(3) / 3;
+  let dir = -Math.PI / 3 * 2;
+  for (let i = 0; i < 6; i++) {
+    list.push([Math.cos(dir) * dis, Math.sin(dir) * dis]);
+    dir += Math.PI / 3;
+  }
+  this.guns = [
+    new Bolt(list, Math.PI / 80)
+  ];
+  this.tankType = "Mega Smasher";
+}
+MegaSmasher.prototype = new Tank();
+MegaSmasher.prototype.constructor = MegaSmasher;
+
 
 function Landmine() {
   "use strict";

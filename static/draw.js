@@ -279,7 +279,7 @@ function Button(text) {
       this.tankData.x = 0;
       this.tankData.y = 0;
       this.tankData.imRotate += 0.01;
-      this.tankData.showRadius = 15;
+      this.tankData.showRadius = 17.5;
       this.tankData.drawUI(ctx);
       ctx.restore();
     }
