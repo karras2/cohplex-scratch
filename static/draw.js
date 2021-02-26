@@ -249,6 +249,8 @@ function Button(text) {
     } else return false;
   }
 
+  this.onclick = false;
+  
   this.draw = function(ctx, z) {
     ctx.fillStyle = this.color.getRGBValue();
     ctx.strokeStyle = "#444444";

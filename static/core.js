@@ -435,7 +435,7 @@ function System(name, key){ // 게임의 전체 진행 담당
       this.showScoreBoard.setPosition(whz[0] - 108*whz[2],34*whz[2],whz[2],this.scoreBoard);
     }
 
-/*
+
     this.showUpgradeTank[0].setPosition(43.3*whz[2],62.3*whz[2],122.8*whz[2],141.8*whz[2]);
     this.showUpgradeTank[0].setColor(new RGB(166,248,244));
     //new RGB(145,248,244);
@@ -448,7 +448,7 @@ function System(name, key){ // 게임의 전체 진행 담당
     this.showUpgradeTank[4].setPosition(43.3*whz[2],246.3*whz[2],122.8*whz[2],325.8*whz[2]);
     this.showUpgradeTank[4].setColor(new RGB(145,178,247));
     this.showUpgradeTank[5].setPosition(139.3*whz[2],246.3*whz[2],218.8*whz[2],325.8*whz[2]);
-    this.showUpgradeTank[5].setColor(new RGB(181,146,248));*/
+    this.showUpgradeTank[5].setColor(new RGB(181,146,248));
   }
 
   this.loop = function (){
@@ -481,7 +481,7 @@ function System(name, key){ // 게임의 전체 진행 담당
         x:targetX,
         y:targetY
       });
-      if (this.UPGRADES[this.controlTank.tankType]) {
+      if (this.UPGRADES[this.controlTank.tankType] && false) {
         //if (this.oldUps !== this.UPGRADES[this.controlTank.tankType]) for (let i = 0; i < 10; i ++) document.body.removeChild(document.getElementById("upgradeBox" + i));
         this.oldUps = this.UPGRADES[this.controlTank.tankType];
         let x = 25,
@@ -544,6 +544,13 @@ function System(name, key){ // 게임의 전체 진행 담당
         this.input.shot++;
         socket.emit('leftMouse',this.input.autoE || this.input.shot);
         this.input.leftMouse = true;
+        let x = e.clientX * window.devicePixelRatio;
+        let y = e.clientY * window.devicePixelRatio;
+        for (let i=0;i<this.showUpgradeTank.length;i++){
+          if (this.showUpgradeTank[i].inMousePoint(x,y)){
+            if (this.showUpgradeTank[i].onclick) this.showUpgradeTank[i].onclick();
+          }
+        }
       }
       break;
       case 1: // 마우스 휠 클릭
