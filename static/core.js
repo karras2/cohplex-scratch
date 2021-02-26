@@ -4,6 +4,7 @@ function System(name, key) { // 게임의 전체 진행 담당
   this.objectList = {};
   this.objectOrder = [];
   this.uiObjectList = [];
+  this.fps = 0;
 
   this.tankList = [
     Basic, //// 구현 완료
@@ -379,6 +380,9 @@ function System(name, key) { // 게임의 전체 진행 담당
   this.showTankName = this.createUiObject(new Text("", 33));
 
   this.showPing = this.createUiObject(new Text("", 12.5, 0, "right", false));
+  this.showFps = this.createUiObject(new Text("", 12.5, 0, "right", false));
+  this.showDiep = this.createUiObject(new Text("", 15, 0, "right", false));
+  this.showDiep.setEnable(true);
 
   this.showMiniMap = this.createUiObject(new MiniMap());
 
@@ -424,8 +428,12 @@ function System(name, key) { // 게임의 전체 진행 담당
       this.showTankName.setPosition(whz[0] / 2, whz[1] - 64 * whz[2], 0);
       this.showTankName.setText(this.controlTank.name);
 
-      this.showPing.setPosition(whz[0] - (21 + 5) * whz[2], whz[1] - (21 + 147 + 5) * whz[2], 0);
+      this.showPing.setPosition(whz[0] - (21 + 5) * whz[2], whz[1] - (21 + 147 + 25) * whz[2], 0);
       this.showPing.setText(String(this.ping) + ' ms');
+      this.showFps.setPosition(whz[0] - (21 + 5) * whz[2], whz[1] - (21 + 147 + 40) * whz[2], 0);
+      this.showFps.setText(String(this.fps.toFixed(1)) + ' FPS');
+      this.showDiep.setPosition(whz[0] - (21 + 5) * whz[2], whz[1] - (21 + 147 + 5) * whz[2], 0);
+      this.showDiep.setText("Diep.io");
 
       if (this.drawObject.mapSize) {
         this.showMiniMap.setPosition(whz[0] - 21 * whz[2], whz[1] - 21 * whz[2]);
@@ -457,6 +465,23 @@ function System(name, key) { // 게임의 전체 진행 담당
     }
   }
 
+  var lastCalledTime;
+  var fps;
+  var delta = 0;
+
+  function getFps() {
+
+    if (!lastCalledTime) {
+      lastCalledTime = Date.now();
+      fps = 0;
+      return;
+    }
+    delta = (Date.now() - lastCalledTime) / 1000;
+    lastCalledTime = Date.now();
+    fps = 1 / delta;
+    return fps;
+  } 
+  
   this.loop = function() {
     this.tick = Date.now() - this.lastTime;
     this.lastTime = Date.now();
@@ -493,6 +518,8 @@ function System(name, key) { // 게임의 전체 진행 담당
     this.drawObject.objectDraw(this.objectList, this.objectOrder);
     this.drawObject.objectStatusDraw(this.objectList);
     this.drawObject.uiDraw(this.uiObjectList);
+    
+    this.fps = getFps();
 
     requestAnimationFrame(this.loop.bind(this));
   }
@@ -696,6 +723,7 @@ function System(name, key) { // 게임의 전체 진행 담당
         case 76: // L키
           if (!this.input.l) {
             this.showPing.setEnable(true);
+            this.showFps.setEnable(true);
             this.input.l = true;
           }
           break;
@@ -810,6 +838,7 @@ function System(name, key) { // 게임의 전체 진행 담당
         case 76: // L키
           if (this.input.l) {
             this.showPing.setEnable(false);
+            this.showFps.setEnable(false);
             this.input.l = false;
           }
           break;
