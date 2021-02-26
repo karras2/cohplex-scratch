@@ -1816,7 +1816,7 @@ function AutoSmasher() {
       [-0.3, 0]
     ], 0)
   ];
-  this.tankType = "AutoSmasher";
+  this.tankType = "Auto-Smasher";
 }
 AutoSmasher.prototype = new Tank();
 AutoSmasher.prototype.constructor = AutoSmasher;
