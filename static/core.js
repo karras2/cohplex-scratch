@@ -1,4 +1,4 @@
-function System(name){ // 게임의 전체 진행 담당
+function System(name, key){ // 게임의 전체 진행 담당
   "use strict";
 
   this.objectList = {};
@@ -217,7 +217,7 @@ function System(name){ // 게임의 전체 진행 담당
   this.ping;
   this.scoreBoard=[];
 
-  socket.emit('login', name);
+  socket.emit('login', name, key);
 
   socket.on('pong!', function(data) {
     this.ping = Date.now()-data;

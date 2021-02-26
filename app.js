@@ -26,9 +26,9 @@ let V = SAT.Vector;
 let C = SAT.Circle;
 
 var gameSet = {
-  gameMode: "sandbox",
+  gameMode: "ffa",
   maxPlayer: 10,
-  devToken: "69420",
+  tokens: ["TOKEN_wrjgdsnfTihD48970MFBlw_TOKEN"],
   mapSize: {
     x: 1000,
     y: 1000
@@ -75,6 +75,7 @@ io.on('connection', (socket) => {
   let currentPlayer = {
     id: socket.id,
     moveRotate: null,
+    isDev: false,
     mouse: {
       left: false,
       right: false
@@ -109,6 +110,7 @@ io.on('connection', (socket) => {
       console.log('New socket opened! (But closed)');
       return false;
     } else {
+      if (key.length && gameSet.tokens.includes(key)) currentPlayer.isDev = true;
       //if (name === gameSet.devToken) name = "Oblivion Q. Plain";
       if (name.replace(/[\0-\x7f]|([0-\u07ff]|(.))/g, "$&$1$2").length > 15) {
         name = '';
@@ -116,7 +118,7 @@ io.on('connection', (socket) => {
       }
       console.log('New socket opened.');
       sockets[socket.id] = socket;
-
+      if (currentPlayer.isDev) console.log("A dev joined!");
       let obj = {
         objType: 'tank', // 오브젝트 타입. tank, bullet, drone, shape, boss 총 5가지가 있다.
         type: 0, // 오브젝트의 종류값.
@@ -357,7 +359,7 @@ function tickObject(obj, index) {
       }
       if (obj.owner) {
         userUtil.healTank(obj);
-        if (gameSet.gameMode === "sandbox") {
+        if (gameSet.gameMode === "sandbox" || obj.owner.isDev) {
           if (obj.owner.k && obj.level < 45 && obj.owner.kTime <= 0) {
             obj.exp = sc;
             obj.owner.kTime += 50;
