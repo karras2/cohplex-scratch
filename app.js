@@ -145,7 +145,7 @@ io.on('connection', (socket) => {
           return 20 + obj.stats[2] * 4;
         }, // 20+bodyDamageStat*4
         radius: function() {
-          return 13 * Math.pow(1.01, (obj.level - 1));
+          return (13 * Math.pow(1.01, (obj.level - 1))) * (obj.realSize || 1);
         }, // 12.9*1.01^(level-1)
         rotate: 0, // 오브젝트의 방향값.
         bound: 1, // 오브젝트의 반동값.

@@ -1954,6 +1954,7 @@ function Commander() {
     ], -Math.PI * 0.667)
   ];
   this.tankType = "Commander";
+  this.realSize = 2;
 }
 Commander.prototype = new Tank();
 Commander.prototype.constructor = Commander;
