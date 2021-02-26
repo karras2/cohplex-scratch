@@ -234,20 +234,6 @@ function Twin(){
 Twin.prototype = new Tank();
 Twin.prototype.constructor = Twin;
 
-function Dual(){
-  "use strict";
-  Tank.apply(this, arguments);
-  this.guns=[
-    new Gun([[0,0],[0.7,0],[0.7,2],[0.1,2],[0.1, 0]],0),
-    new Gun([[0,0],[-0.1,0],[-0.1,2],[-0.7,2],[-0.7, 0]],0),
-    new Gun([[0,0],[0.9,0],[0.9,1.88],[0.1,1.88],[0.1, 0]],0),
-    new Gun([[0,0],[-0.1,0],[-0.1,1.88],[-0.9,1.88],[-0.9, 0]],0)
-  ];
-  this.tankType = "Dual";
-}
-Dual.prototype = new Tank();
-Dual.prototype.constructor = Dual;
-
 
 function Triplet(){
   "use strict";
@@ -1059,3 +1045,18 @@ function Diffusion(){
 }
 Diffusion.prototype = new Tank();
 Diffusion.prototype.constructor = Diffusion;
+
+
+function Dual(){
+  "use strict";
+  Tank.apply(this, arguments);
+  this.guns=[
+    new Gun([[0,0],[0.7,0],[0.7,2.1],[-0.1,2.1],[-0.1, 0]],0),
+    new Gun([[0,0],[-0.3,0],[-0.3,2.1],[-0.7,2.1],[-0.7, 0]],0),
+    new Gun([[0,0],[0.9,0],[0.9,1.88],[0.1,1.88],[0.1, 0]],0),
+    new Gun([[0,0],[-0.1,0],[-0.1,1.88],[-0.9,1.88],[-0.9, 0]],0)
+  ];
+  this.tankType = "Dual";
+}
+Dual.prototype = new Tank();
+Dual.prototype.constructor = Dual;

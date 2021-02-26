@@ -41,7 +41,7 @@ global.objID = (function() {
 
 let sockets = {};
 
-let tankLength = 56;
+let tankLength = 57;
 
 let tree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
 let sendTree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
