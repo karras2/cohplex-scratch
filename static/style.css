@@ -66,5 +66,6 @@ html, body, #canvas {
 	padding-right: 5px;
 	margin : 0 auto;
 	display: block;
+  padding-top: 5%;
 	/* border-color: 10px solid black; */
 }

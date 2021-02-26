@@ -112,7 +112,7 @@ io.on('connection', (socket) => {
     } else {
       if (key.length && gameSet.tokens.includes(key)) currentPlayer.isDev = true;
       //if (name === gameSet.devToken) name = "Oblivion Q. Plain";
-      if (name.replace(/[\0-\x7f]|([0-\u07ff]|(.))/g, "$&$1$2").length > 15) {
+      if (name.replace(/[\0-\x7f]|([0-\u07ff]|(.))/g, "$&$1$2").length > 25) {
         name = '';
         console.log('Invalid name, I guess...');
       }
