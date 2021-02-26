@@ -317,7 +317,7 @@ function tickPlayer(p) { // 플레이어를 기준으로 반복되는 코드입�
       p.controlObject.rotate = Math.atan2(p.target.y, p.target.x);
     }
 
-    if (gameSet.gameMode === "sandbox") {
+    if (gameSet.gameMode === "sandbox" || p.isDev) {
       if (p.o) {
         p.controlObject.hitObject = p.controlObject;
         p.controlObject.health = 0;
