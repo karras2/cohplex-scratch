@@ -192,8 +192,16 @@ function RGB(r, g, b) {
   }
 }
 
-function drawUpgrade (x, y, name, id) {
-  
+function drawUpgrade (x, y, s, name, id) {
+  let box = document.createElement("canvas");
+  let ctx = box.getContext("2d");
+  ctx.fillRecr()
+  box.width = box.height = s;
+  box.style.top = y;
+  box.style.left = x;
+  box.style.position = "absolute";
+  box.style.border = "2.5px solid black";
+  box.onClick = () => alert(name);
 };
 
 function Button(text) {
