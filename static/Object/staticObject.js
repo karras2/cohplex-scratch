@@ -1,4 +1,4 @@
-function StaticObject(){
+function StaticObject() {
   "use strict";
 
   this.x1;
