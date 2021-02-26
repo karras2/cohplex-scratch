@@ -424,7 +424,7 @@ function OctoTank() {
       [-0.4, 0]
     ], -Math.PI / 4)
   ];
-  this.tankType = "OctoTank";
+  this.tankType = "Octo Tank";
 }
 OctoTank.prototype = new Tank();
 OctoTank.prototype.constructor = OctoTank;
@@ -678,7 +678,7 @@ function PentaShot() {
       [-0.42, 0]
     ], 0)
   ];
-  this.tankType = "PentaShot";
+  this.tankType = "Penta Shot";
 }
 PentaShot.prototype = new Tank();
 PentaShot.prototype.constructor = PentaShot;
@@ -791,7 +791,7 @@ function TripleTwin() {
       [-0.9, 0]
     ], -Math.PI / 3 * 2)
   ];
-  this.tankType = "TripleTwin";
+  this.tankType = "Triple Twin";
 }
 TripleTwin.prototype = new Tank();
 TripleTwin.prototype.constructor = TripleTwin;
@@ -1467,7 +1467,7 @@ function SpreadShot() {
       [-0.42, 0]
     ], 0)
   ];
-  this.tankType = "SpreadShot";
+  this.tankType = "Spreadshot";
 }
 SpreadShot.prototype = new Tank();
 SpreadShot.prototype.constructor = SpreadShot;

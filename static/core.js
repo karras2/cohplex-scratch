@@ -74,6 +74,9 @@ function System(name, key){ // 게임의 전체 진행 담당
   this.UPGRADES["Sniper"] = ["Assassin", "Hunter", "Overseer", "Trapper"];
   this.UPGRADES["Machine Gun"] = ["Destroyer", "Gunner"];
   this.UPGRADES["Flank Guard"] = ["Quad Tank", "Tri Angle"];
+  this.UPGRADES["Triple Shot"] = ["Penta Shot", "Spreadshot", "Triplet"];
+  this.UPGRADES["Twin Flank"] = ["Triple Twin", "Battleship"];
+  this.UPGRADES["Quad Tank"] = ["Octo Tank"];
   for (let path in this.UPGRADES) this.UPGRADES[path] = this.UPGRADES[path].map(up => [up, findTankID(up)]);
   window.UPS = this.UPGRADES;
   this.oldUps = [];
@@ -435,17 +438,16 @@ function System(name, key){ // 게임의 전체 진행 담당
       this.showScoreBoard.setPosition(whz[0] - 108*whz[2],34*whz[2],whz[2],this.scoreBoard);
     }
 
-    let upgrades = this.controlTank ? (this.UPGRADES[this.controlTank.tankType]) : false;
-    let i = 0;
+    let upgrades = this.controlTank ? (this.UPGRADES[this.controlTank.tankType] || []) : [];
     let positions = [[43.3*whz[2],62.3*whz[2],122.8*whz[2],141.8*whz[2]], [139.3*whz[2],62.3*whz[2],218.8*whz[2],141.8*whz[2]], [139.3*whz[2],62.3*whz[2],218.8*whz[2],141.8*whz[2]], [43.3*whz[2],154.3*whz[2],122.8*whz[2],233.8*whz[2]], [139.3*whz[2],154.3*whz[2],218.8*whz[2],233.8*whz[2]], [43.3*whz[2],246.3*whz[2],122.8*whz[2],325.8*whz[2]], [139.3*whz[2],246.3*whz[2],218.8*whz[2],325.8*whz[2]]];
     let colors = [new RGB(166,248,244), new RGB(181,248,145), new RGB(248,145,146), new RGB(248,230,146), new RGB(145,178,247), new RGB(181,146,248)]; // new RGB(145,248,244);
-    if (upgrades) for (let up of upgrades) {
-      this.showUpgradeTank[i].setPosition(...positions[i]);
-      this.showUpgradeTank[i].setColor(colors[i]);
-      this.showUpgradeTank[i].onclick = () => socket.emit("upgradeTank", up[1]);
-      console.log(i);
-      i ++;
-    };
+    for (let i = 0; i < this.showUpgradeTank.length; i ++) {
+      let box = this.showUpgradeTank[i];
+      let position = upgrades[i] ? positions[i] : [-10, -10, -9, -9];
+      box.setPosition(...position);
+      box.setColor(colors[i]);
+      box.onclick = () => socket.emit("upgradeTank", upgrades[i][1]);
+    }
   }
 
   this.loop = function (){
