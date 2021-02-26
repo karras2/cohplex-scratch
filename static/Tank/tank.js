@@ -1045,11 +1045,11 @@ function MotherShip() {
       [0.18, 1.19],
       [-0.18, 1.19],
       [-0.15, 0]
-    ], i));
+    ], i + (Math.PI / 16)));
   }
   this.bodyVertex = 16;
   this.bodySize = 1;
-  this.tankType = "MotherShip";
+  this.tankType = "Mothership";
 }
 MotherShip.prototype = new Tank();
 MotherShip.prototype.constructor = MotherShip;
@@ -1573,7 +1573,7 @@ function BasicDominator() {
       [-0.6, 0.8]
     ], 0)
   ];
-  this.tankType = "BasicDominator";
+  this.tankType = "Destroyer Dominator";
 }
 BasicDominator.prototype = new Tank();
 BasicDominator.prototype.constructor = BasicDominator;
@@ -1615,7 +1615,7 @@ function GunnerDominator() {
       [-0.6, 0.8]
     ], 0)
   ];
-  this.tankType = "GunnerDominator";
+  this.tankType = "Gunner Dominator";
 }
 GunnerDominator.prototype = new Tank();
 GunnerDominator.prototype.constructor = GunnerDominator;
@@ -1645,7 +1645,7 @@ function TrapperDominator() {
       [-0.21, 0]
     ], dir));
   }
-  this.tankType = "TrapperDominator";
+  this.tankType = "Trapper Dominator";
 }
 TrapperDominator.prototype = new Tank();
 TrapperDominator.prototype.constructor = TrapperDominator;
@@ -1680,7 +1680,7 @@ function BattleShip() {
       [0.16, 0]
     ], -Math.PI / 2),
   ];
-  this.tankType = "BattleShip";
+  this.tankType = "Battleship";
 }
 BattleShip.prototype = new Tank();
 BattleShip.prototype.constructor = BattleShip;
