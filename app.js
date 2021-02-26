@@ -171,6 +171,7 @@ io.on('connection', (socket) => {
         variable: {
 
         },
+        upgrades: [],
         isBorder: true, // 오브젝트가 맵 밖을 벗어날 수 없는가?
         isCanDir: true, // 오브젝트의 방향을 조정할 수 있나?
         isCollision: false, // 오브젝트가 충돌계산을 마쳤나?
@@ -230,6 +231,13 @@ io.on('connection', (socket) => {
 
   socket.on('changeTank', (data) => {
     currentPlayer.changeTank = data;
+  });
+  
+  socket.on("upgradeTank", (data) => {
+    //if (!currentPlayer.upgrades.includes(data)) return;
+    console.log("Valid upgrade!");
+    currentPlayer.controlObject.type = data;
+    userUtil.setUserTank(currentPlayer.controlObject);
   });
 
   socket.on('stat', (num) => {
@@ -369,7 +377,7 @@ function tickObject(obj, index) {
             if (obj.owner.changeTime <= 0) {
               obj.type = obj.type == 0 ? tankLength - 1 : obj.type - 1;
               userUtil.setUserTank(obj);
-              obj.owner.changeTime += 10;
+              obj.owner.changeTime += 1;
             }
             obj.owner.changeTank = false;
           }

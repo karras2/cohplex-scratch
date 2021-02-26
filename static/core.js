@@ -66,6 +66,9 @@ function System(name, key){ // 게임의 전체 진행 담당
     Dual,
     Commander
   ];
+  
+  this.UPGRADES = {};
+  for (let tank)
 
   this.bulletList = [
     TrapBullet,
@@ -218,6 +221,7 @@ function System(name, key){ // 게임의 전체 진행 담당
   this.scoreBoard=[];
 
   socket.emit('login', name, key);
+  window.UPGRADE = id => socket.emit("upgradeTank", id);
 
   socket.on('pong!', function(data) {
     this.ping = Date.now()-data;
