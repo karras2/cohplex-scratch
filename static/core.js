@@ -482,7 +482,7 @@ function System(name, key){ // 게임의 전체 진행 담당
         y:targetY
       });
       if (this.UPGRADES[this.controlTank.tankType]) {
-        if (this.oldUps !== this.UPGRADES[this.controlTank.tankType]) for (let i = 0; i < 10; i ++) document.body.removeChild(document.getElementById("upgradeBox" + i));
+        //if (this.oldUps !== this.UPGRADES[this.controlTank.tankType]) for (let i = 0; i < 10; i ++) document.body.removeChild(document.getElementById("upgradeBox" + i));
         this.oldUps = this.UPGRADES[this.controlTank.tankType];
         let x = 25,
             y = 25,
