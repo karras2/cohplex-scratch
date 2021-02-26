@@ -318,7 +318,7 @@ function TripleShot() {
       [-0.4, 0]
     ], Math.PI / 4)
   ];
-  this.tankType = "TripleShot";
+  this.tankType = "Triple Shot";
 }
 TripleShot.prototype = new Tank();
 TripleShot.prototype.constructor = TripleShot;
@@ -357,7 +357,7 @@ function QuadTank() {
       [-0.4, 0]
     ], Math.PI)
   ];
-  this.tankType = "QuadTank";
+  this.tankType = "Quad Tank";
 }
 QuadTank.prototype = new Tank();
 QuadTank.prototype.constructor = QuadTank;
@@ -460,7 +460,7 @@ function MachineGun() {
       [-0.4, 0]
     ], 0)
   ];
-  this.tankType = "MachineGun";
+  this.tankType = "Machine Gun";
 }
 MachineGun.prototype = new Tank();
 MachineGun.prototype.constructor = MachineGun;
@@ -485,7 +485,7 @@ function FlankGuard() {
       [-0.4, 0]
     ], Math.PI)
   ];
-  this.tankType = "FlankGuard";
+  this.tankType = "Flank Guard";
 }
 FlankGuard.prototype = new Tank();
 FlankGuard.prototype.constructor = FlankGuard;
@@ -517,7 +517,7 @@ function TriAngle() {
       [-0.4, 0]
     ], -Math.PI / 6 * 5)
   ];
-  this.tankType = "TriAngle";
+  this.tankType = "Tri Angle";
 }
 TriAngle.prototype = new Tank();
 TriAngle.prototype.constructor = TriAngle;
@@ -632,7 +632,7 @@ function TwinFlank() {
       [-0.9, 0]
     ], Math.PI)
   ];
-  this.tankType = "TwinFlank";
+  this.tankType = "Twin Flank";
 }
 TwinFlank.prototype = new Tank();
 TwinFlank.prototype.constructor = TwinFlank;
@@ -695,7 +695,7 @@ function Assasin() {
       [-0.42, 0]
     ], 0)
   ];
-  this.tankType = "Assasin";
+  this.tankType = "Assassin";
 }
 Assasin.prototype = new Tank();
 Assasin.prototype.constructor = Assasin;

@@ -69,8 +69,12 @@ function System(name, key){ // 게임의 전체 진행 담당
   
   let findTankID = name => this.tankList.indexOf(this.tankList.find(r => new r().tankType === name));
   this.UPGRADES = {};
-  this.UPGRADES[findTankID("Tank")] = ["Twin", "Sniper"].map(r => findTankID(r));
-  this.UPGRADES[findTankID("Twin")] = ["Triple Shot", "Sniper"].map(r => findTankID(r));
+  this.UPGRADES[findTankID("Tank")] = ["Twin", "Sniper", "Machine Gun", "Flank Guard"];
+  this.UPGRADES[findTankID("Twin")] = ["Triple Shot", "Twin Flank", "Quad Tank"];
+  this.UPGRADES[findTankID("Sniper")] = ["Assassin", "Hunter", "Overseer", "Trapper"];
+  this.UPGRADES[findTankID("Machine Gun")] = ["Destroyer", "Gunner"];
+  this.UPGRADES[findTankID("Flank Guard")] = ["Quad Tank", "Tri Angle"];
+  for (let path in this.UPGRADES) this.UPGRADES[path] = this.UPGRADES[path].map(up => findTankID(up));
   window.UPS = this.UPGRADES;
 
   this.bulletList = [
