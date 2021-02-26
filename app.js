@@ -315,7 +315,7 @@ function tickPlayer(p) { // 플레이어를 기준으로 반복되는 코드입�
       p.camera.z = 1;
     if (p.controlObject.event) {
       if (p.controlObject.event.rightEvent && p.mouse.right) {
-        p.controlObject.event.rightEvent();
+        p.controlObject.event.rightEvent(p.controlObject);
       }
     }
     if (typeof(p.moveRotate) !== "number") {
