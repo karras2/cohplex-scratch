@@ -228,7 +228,7 @@ function Button(text) {
   this.x2;
   this.y2;
 
-  this.text = new Text(text, 10);
+  this.text = new Text(text, 12.5);
 
   this.color = new RGB(127, 127, 127);
 
@@ -237,6 +237,7 @@ function Button(text) {
     this.y1 = y1;
     this.x2 = x2;
     this.y2 = y2;
+    this.text.setPosition((x1 + x2) / 2, y1 + (y2 - y1) * 0.85);
   }
 
   this.setColor = function(color) {
@@ -260,6 +261,7 @@ function Button(text) {
     ctx.fillRect(this.x1, this.y1, this.x2 - this.x1, this.y2 - this.y1);
     ctx.fillStyle = this.color.getDarkRGB().getRGBValue();
     ctx.fillRect(this.x1, (this.y1 + this.y2) / 2 + 6.5 * z, this.x2 - this.x1, (this.y2 - this.y1) / 2 - 6.5 * z);
+    if (this.text.text) this.text.draw(ctx, z);
   }
 }
 

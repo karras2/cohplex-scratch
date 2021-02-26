@@ -1159,7 +1159,7 @@ function GunnerTrapper() {
       [-0.542, 0]
     ], Math.PI)
   ];
-  this.tankType = "GunnerTrapper";
+  this.tankType = "Gunner Trapper";
 }
 GunnerTrapper.prototype = new Tank();
 GunnerTrapper.prototype.constructor = GunnerTrapper;
@@ -1341,7 +1341,7 @@ function AutoGunner() {
       [-0.3, 0]
     ], 0)
   ];
-  this.tankType = "AutoGunner";
+  this.tankType = "Auto-Gunner";
 }
 AutoGunner.prototype = new Tank();
 AutoGunner.prototype.constructor = AutoGunner;

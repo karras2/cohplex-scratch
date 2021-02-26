@@ -77,6 +77,8 @@ function System(name, key) { // 게임의 전체 진행 담당
   this.UPGRADES["Triple Shot"] = ["Penta Shot", "Spreadshot", "Triplet"];
   this.UPGRADES["Twin Flank"] = ["Triple Twin", "Battleship"];
   this.UPGRADES["Quad Tank"] = ["Octo Tank"];
+  this.UPGRADES["Destroyer"] = ["Annihilator", "Hybrid", "Skimmer", "Rocketeer"];
+  this.UPGRADES["Gunner"] = ["Auto-Gunner", "Streamliner", "Gunner Trapper"];
   for (let path in this.UPGRADES) this.UPGRADES[path] = this.UPGRADES[path].map(up => [up, findTankID(up)]);
   window.UPS = this.UPGRADES;
   this.bulletList = [
@@ -444,8 +446,10 @@ function System(name, key) { // 게임의 전체 진행 담당
       let position = upgrades[i] ? positions[i] : [-10, -10, -9, -9];
       box.setPosition(...position);
       box.setColor(colors[i]);
-      box.text.text = upgrades[i][0];
-      box.onclick = () => socket.emit("upgradeTank", upgrades[i][1]);
+      if (upgrades[i]) {
+        box.text.text = upgrades[i][0];
+        box.onclick = () => socket.emit("upgradeTank", upgrades[i][1]);
+      }
     }
   }
 
@@ -531,16 +535,16 @@ function System(name, key) { // 게임의 전체 진행 담당
     switch (e.button) {
       case 0: // 좌클릭
         if (!this.input.leftMouse) {
-          this.input.shot++;
-          socket.emit('leftMouse', this.input.autoE || this.input.shot);
-          this.input.leftMouse = true;
           let x = e.clientX * window.devicePixelRatio;
           let y = e.clientY * window.devicePixelRatio;
           for (let i = 0; i < this.showUpgradeTank.length; i++) {
             if (this.showUpgradeTank[i].inMousePoint(x, y)) {
-              if (this.showUpgradeTank[i].onclick) this.showUpgradeTank[i].onclick();
+              if (this.showUpgradeTank[i].onclick) return this.showUpgradeTank[i].onclick();
             }
           }
+          this.input.shot++;
+          socket.emit('leftMouse', this.input.autoE || this.input.shot);
+          this.input.leftMouse = true;
         }
         break;
       case 1: // 마우스 휠 클릭

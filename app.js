@@ -188,6 +188,10 @@ io.on('connection', (socket) => {
       users.push(currentPlayer);
       objects.push(currentPlayer.controlObject);
       socket.emit('mapSize', gameSet.mapSize);
+      gameSet.mapSize.x += 100;
+      gameSet.mapSize.y += 100;
+      shapeUtil.extendMaxShape(-10);
+      io.emit('mapSize', gameSet.mapSize);
     }
   });
 
