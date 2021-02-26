@@ -192,6 +192,10 @@ function RGB(r, g, b) {
   }
 }
 
+function drawUpgrade (x, y, name, id) {
+  
+};
+
 function Button(text) {
   "use strict";
 
