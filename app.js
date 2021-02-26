@@ -18,6 +18,10 @@ const shapeUtil = require('./lib/shapeSet');
 const quadtree = require('./lib/QuadTree');
 const readline = require('readline');
 
+process.on("uncaughtexception", e => {
+  console.log("Error:",e);
+});
+
 let V = SAT.Vector;
 let C = SAT.Circle;
 
@@ -100,7 +104,7 @@ io.on('connection', (socket) => {
 
   io.emit('mapSize', gameSet.mapSize);
 
-  socket.on('login', (name) => { // 탱크 생성.
+  socket.on('login', (name, key) => { // 탱크 생성.
     if (sockets[socket.id]) {
       console.log('New socket opened! (But closed)');
       return false;
