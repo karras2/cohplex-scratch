@@ -67,8 +67,11 @@ function System(name, key){ // 게임의 전체 진행 담당
     Commander
   ];
   
+  let findTankID = name => this.tankList.indexOf(this.tankList.find(r => new r().tankType === name));
   this.UPGRADES = {};
-  for (let tank)
+  this.UPGRADES[findTankID("Tank")] = ["Twin", "Sniper"].map(r => findTankID(r));
+  this.UPGRADES[findTankID("Twin")] = ["Triple Shot", "Sniper"].map(r => findTankID(r));
+  window.UPS = this.UPGRADES;
 
   this.bulletList = [
     TrapBullet,
