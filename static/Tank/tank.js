@@ -212,6 +212,78 @@ function Tank(radius, rotate) {
     }
     ctx.restore();
   }
+  this.drawUI = ctx => {
+    let camera = { x: 0, y: 0, z: 1 };
+    if (this.opacity >= 1) {
+      ctx.save();
+      ctx.globalAlpha = 1;
+      ctx.lineWidth = 2;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+
+      for (let i = 0; i < this.guns.length; i++) {
+        this.guns[i].drawGun(this, ctx, camera);
+      }
+
+      ctx.strokeStyle = this.color.getDarkRGB().getRedRGB(this.r).getLightRGB(this.w).getRGBValue(); // 몸체 그리기
+      ctx.fillStyle = this.color.getRedRGB(this.r).getLightRGB(this.w).getRGBValue();
+      ctx.beginPath();
+      if (this.bodyVertex <= 2) {
+        ctx.arc(this.canvasPos.x, this.canvasPos.y, this.showRadius * this.bodySize * camera.z, 0, Math.PI * 2);
+      } else {
+        let r = this.showRadius * this.bodySize * camera.z;
+        let dir = Math.PI / this.bodyVertex + this.imRotate;
+        ctx.moveTo(this.canvasPos.x + Math.cos(dir) * r, this.canvasPos.y + Math.sin(dir) * r);
+        for (let i = 1; i <= this.bodyVertex; i++) {
+          dir += Math.PI / this.bodyVertex * 2;
+          ctx.lineTo(this.canvasPos.x + Math.cos(dir) * r, this.canvasPos.y + Math.sin(dir) * r);
+        }
+      }
+      ctx.fill();
+      ctx.stroke();
+      ctx.closePath();
+
+      for (let i = 0; i < this.afterGuns.length; i++) {
+        this.afterGuns[i].drawGun(this, ctx, camera);
+      }
+
+      ctx.restore();
+    } 
+    else {
+      this.setCanvasSize(camera);
+
+      for (let i = 0; i < this.guns.length; i++) {
+        this.guns[i].drawGun(this, this.ctx, camera);
+      }
+
+      this.ctx.strokeStyle = this.color.getDarkRGB().getRedRGB(this.r).getLightRGB(this.w).getRGBValue(); // 몸체 그리기
+      this.ctx.fillStyle = this.color.getRedRGB(this.r).getLightRGB(this.w).getRGBValue();
+      this.ctx.beginPath();
+      if (this.bodyVertex <= 2) {
+        this.ctx.arc(this.canvasPos.x, this.canvasPos.y, this.showRadius * this.bodySize * camera.z, 0, Math.PI * 2);
+      } else {
+        let r = this.showRadius * this.bodySize * camera.z;
+        let dir = Math.PI / this.bodyVertex + this.imRotate;
+        this.ctx.moveTo(this.canvasPos.x + Math.cos(dir) * r, this.canvasPos.y + Math.sin(dir) * r);
+        for (let i = 1; i <= this.bodyVertex; i++) {
+          dir += Math.PI / this.bodyVertex * 2;
+          this.ctx.lineTo(this.canvasPos.x + Math.cos(dir) * r, this.canvasPos.y + Math.sin(dir) * r);
+        }
+      }
+      this.ctx.fill();
+      this.ctx.stroke();
+      this.ctx.closePath();
+
+      for (let i = 0; i < this.afterGuns.length; i++) {
+        this.afterGuns[i].drawGun(this, this.ctx, camera);
+      }
+
+      ctx.save();
+      ctx.globalAlpha = this.opacity;
+      ctx.drawImage(this.canvas, ((this.x - camera.x) * camera.z - this.canvasPos.x), ((this.y - camera.y) * camera.z - this.canvasPos.y));
+      ctx.restore();
+    }
+  };
 }
 Tank.prototype = new HealthShowObject();
 Tank.prototype.constructor = Tank;

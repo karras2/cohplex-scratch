@@ -227,6 +227,7 @@ function Button(text) {
   this.y1;
   this.x2;
   this.y2;
+  this.tankData = false;
 
   this.text = new Text(text, 12.5);
 
@@ -237,6 +238,7 @@ function Button(text) {
     this.y1 = y1;
     this.x2 = x2;
     this.y2 = y2;
+    this.rot = 0;
     this.text.setPosition((x1 + x2) / 2, y1 + (y2 - y1) * 0.85);
   }
 
@@ -249,10 +251,15 @@ function Button(text) {
       return true;
     } else return false;
   }
+  
+  this.setTank = function(tank) {
+    this.tankData = tank;
+  }
 
   this.onclick = false;
   
   this.draw = function(ctx, z) {
+    this.rot += 0.01;
     ctx.fillStyle = this.color.getRGBValue();
     ctx.strokeStyle = "#444444";
     ctx.lineWidth = 8 * z;
@@ -261,6 +268,21 @@ function Button(text) {
     ctx.fillRect(this.x1, this.y1, this.x2 - this.x1, this.y2 - this.y1);
     ctx.fillStyle = this.color.getDarkRGB().getRGBValue();
     ctx.fillRect(this.x1, (this.y1 + this.y2) / 2 + 6.5 * z, this.x2 - this.x1, (this.y2 - this.y1) / 2 - 6.5 * z);
+    if (this.tankData) {
+      let x = this.x1 + this.x2;
+      x /= 2;
+      let y = this.y1 + this.y2;
+      y /= 2;
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(this.rot);
+      this.tankData.x = 0;
+      this.tankData.y = 0;
+      this.tankData.imRotate += 0.01;
+      this.tankData.showRadius = 15;
+      this.tankData.drawUI(ctx);
+      ctx.restore();
+    }
     if (this.text.text) this.text.draw(ctx, z);
   }
 }

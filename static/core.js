@@ -458,10 +458,11 @@ function System(name, key) { // 게임의 전체 진행 담당
       let position = upgrades[i] ? positions[i] : [-10, -10, -9, -9];
       box.setPosition(...position);
       box.setColor(colors[i]);
+      box.setTank(false);
       if (upgrades[i]) {
         box.text.text = upgrades[i][0];
         box.onclick = () => socket.emit("upgradeTank", upgrades[i][1]);
-        upgrades[i][2].draw(document.querySelector("canvas").getContext("2d"), {y: 0, z: 0, x: 0});
+        box.setTank(upgrades[i][2]);
       }
     }
   }
