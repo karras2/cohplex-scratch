@@ -84,7 +84,7 @@ function System(name, key) { // 게임의 전체 진행 담당
   this.UPGRADES["Hunter"] = ["Predator", "Streamliner"];
   this.UPGRADES["Overseer"] = ["Overlord", "Over Trapper", "Factory", "Battleship"];
   this.UPGRADES["Trapper"] = ["Mega Trapper", "Auto-Trapper", "Gunner Trapper", "Over Trapper", "Tri Trapper"];
-  for (let path in this.UPGRADES) this.UPGRADES[path] = this.UPGRADES[path].map(up => [up, findTankID(up)]);
+  for (let path in this.UPGRADES) this.UPGRADES[path] = this.UPGRADES[path].map(up => [up, findTankID(up), new this.tankList[findTankID(up)]()]);
   window.UPS = this.UPGRADES;
   this.bulletList = [
     TrapBullet,
@@ -461,6 +461,7 @@ function System(name, key) { // 게임의 전체 진행 담당
       if (upgrades[i]) {
         box.text.text = upgrades[i][0];
         box.onclick = () => socket.emit("upgradeTank", upgrades[i][1]);
+        upgrades[i][2].draw(document.querySelector("canvas").getContext("2d"), {y: 0, z: 0, x: 0});
       }
     }
   }

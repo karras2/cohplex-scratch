@@ -412,6 +412,8 @@ function tickObject(obj, index) {
       break;
     case "shape":
       obj.rotate += 0.1 / obj.radius;
+      obj.x += 0.1 * Math.cos(obj.rotate);
+      obj.y += 0.1 * Math.sin(obj.rotate);
       objUtil.healObject(obj);
       break;
     default:
