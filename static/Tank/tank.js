@@ -1060,3 +1060,16 @@ function Dual(){
 }
 Dual.prototype = new Tank();
 Dual.prototype.constructor = Dual;
+
+function Commander(){
+  "use strict";
+  Tank.apply(this, arguments);
+  this.guns=[
+    new Gun([[0.43,0],[0.73,1.4],[-0.73,1.4],[-0.43,0]],0)
+  ];
+  this.bodyVertex = 8;
+  this.bodySize = 1.3;
+  this.tankType = "Commander";
+}
+Commander.prototype = new Tank();
+Commander.prototype.constructor = Commander;

@@ -41,7 +41,7 @@ global.objID = (function() {
 
 let sockets = {};
 
-let tankLength = 57;
+let tankLength = 58;
 
 let tree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
 let sendTree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
@@ -353,8 +353,8 @@ function tickObject(obj, index) {
         userUtil.healTank(obj);
         if (gameSet.gameMode === "sandbox") {
           if (obj.owner.k && obj.level < 45 && obj.owner.kTime <= 0) {
-            obj.exp += 1000;
-            obj.owner.kTime += 10;
+            obj.exp = sc;
+            obj.owner.kTime += 50;
           }
           obj.owner.kTime = Math.max(obj.owner.kTime - 1000 / 60, 0);
           if (obj.owner.changeTank) {
