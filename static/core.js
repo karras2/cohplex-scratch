@@ -486,6 +486,7 @@ function System(name, key){ // 게임의 전체 진행 담당
     this.drawObject.objectDraw(this.objectList,this.objectOrder);
     this.drawObject.objectStatusDraw(this.objectList);
     this.drawObject.uiDraw(this.uiObjectList);
+    drawUpgrade(0, 10, 10, 100, "Twin", 1, "#00beff");
 
     requestAnimationFrame(this.loop.bind(this));
   }

@@ -192,17 +192,30 @@ function RGB(r, g, b) {
   }
 }
 
-function drawUpgrade (x, y, s, name, id) {
-  let box = document.createElement("canvas");
-  let ctx = box.getContext("2d");
-  ctx.fillRecr()
+function drawUpgrade(I, x, y, s, name, id, color) {
+  let box = document.getElementById("upgradeBox" + I);
   box.width = box.height = s;
-  box.style.top = y;
-  box.style.left = x;
+  box.style.top = y + "px";
+  box.style.left = x + "px";
   box.style.position = "absolute";
   box.style.border = "2.5px solid black";
-  box.onClick = () => alert(name);
+  box.style.borderRadius = "2px";
+  let ctx = box.getContext("2d");
+  ctx.clearRect(0, 0, s, s);
+  ctx.fillStyle = color;
+  ctx.fillRect(0, 0, s, s);
+  let text = name;
+  let w = ctx.measureText(text).width / 2;
+  ctx.fillStyle = "#fff"
+  ctx.fillText(name, s / 2 - w, s * 0.75);
+  box.onclick = () => socket.emit("upgradeTank", id);
 };
+
+for (let i = 0; i < 10; i ++) {
+  let elem = document.createElement("canvas");
+  elem.id = "upgradeBox" + i;
+  document.body.appendChild(elem);
+}
 
 function Button(text) {
   "use strict";
