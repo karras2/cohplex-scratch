@@ -435,20 +435,17 @@ function System(name, key){ // 게임의 전체 진행 담당
       this.showScoreBoard.setPosition(whz[0] - 108*whz[2],34*whz[2],whz[2],this.scoreBoard);
     }
 
-
-    this.showUpgradeTank[0].setPosition(43.3*whz[2],62.3*whz[2],122.8*whz[2],141.8*whz[2]);
-    this.showUpgradeTank[0].setColor(new RGB(166,248,244));
-    //new RGB(145,248,244);
-    this.showUpgradeTank[1].setPosition(139.3*whz[2],62.3*whz[2],218.8*whz[2],141.8*whz[2]);
-    this.showUpgradeTank[1].setColor(new RGB(181,248,145));
-    this.showUpgradeTank[2].setPosition(43.3*whz[2],154.3*whz[2],122.8*whz[2],233.8*whz[2]);
-    this.showUpgradeTank[2].setColor(new RGB(248,145,146));
-    this.showUpgradeTank[3].setPosition(139.3*whz[2],154.3*whz[2],218.8*whz[2],233.8*whz[2]);
-    this.showUpgradeTank[3].setColor(new RGB(248,230,146));
-    this.showUpgradeTank[4].setPosition(43.3*whz[2],246.3*whz[2],122.8*whz[2],325.8*whz[2]);
-    this.showUpgradeTank[4].setColor(new RGB(145,178,247));
-    this.showUpgradeTank[5].setPosition(139.3*whz[2],246.3*whz[2],218.8*whz[2],325.8*whz[2]);
-    this.showUpgradeTank[5].setColor(new RGB(181,146,248));
+    let upgrades = this.controlTank ? (this.UPGRADES[this.controlTank.tankType]) : false;
+    let i = 0;
+    let positions = [[43.3*whz[2],62.3*whz[2],122.8*whz[2],141.8*whz[2]], [139.3*whz[2],62.3*whz[2],218.8*whz[2],141.8*whz[2]], [139.3*whz[2],62.3*whz[2],218.8*whz[2],141.8*whz[2]], [43.3*whz[2],154.3*whz[2],122.8*whz[2],233.8*whz[2]], [139.3*whz[2],154.3*whz[2],218.8*whz[2],233.8*whz[2]], [43.3*whz[2],246.3*whz[2],122.8*whz[2],325.8*whz[2]], [139.3*whz[2],246.3*whz[2],218.8*whz[2],325.8*whz[2]]];
+    let colors = [new RGB(166,248,244), new RGB(181,248,145), new RGB(248,145,146), new RGB(248,230,146), new RGB(145,178,247), new RGB(181,146,248)]; // new RGB(145,248,244);
+    if (upgrades) for (let up of upgrades) {
+      this.showUpgradeTank[i].setPosition(...positions[i]);
+      this.showUpgradeTank[i].setColor(colors[i]);
+      this.showUpgradeTank[i].onclick = () => socket.emit("upgradeTank", up[1]);
+      console.log(i);
+      i ++;
+    };
   }
 
   this.loop = function (){
