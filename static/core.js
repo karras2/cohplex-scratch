@@ -433,7 +433,6 @@ function System(name, key) { // 게임의 전체 진행 담당
     let positions = [
       [43.3 * whz[2], 62.3 * whz[2], 122.8 * whz[2], 141.8 * whz[2]],
       [139.3 * whz[2], 62.3 * whz[2], 218.8 * whz[2], 141.8 * whz[2]],
-      [139.3 * whz[2], 62.3 * whz[2], 218.8 * whz[2], 141.8 * whz[2]],
       [43.3 * whz[2], 154.3 * whz[2], 122.8 * whz[2], 233.8 * whz[2]],
       [139.3 * whz[2], 154.3 * whz[2], 218.8 * whz[2], 233.8 * whz[2]],
       [43.3 * whz[2], 246.3 * whz[2], 122.8 * whz[2], 325.8 * whz[2]],
@@ -445,7 +444,8 @@ function System(name, key) { // 게임의 전체 진행 담당
       let position = upgrades[i] ? positions[i] : [-10, -10, -9, -9];
       box.setPosition(...position);
       box.setColor(colors[i]);
-      if (upgrabox.onclick = () => socket.emit("upgradeTank", upgrades[i][1]);
+      box.text.text = upgrades[i][0];
+      box.onclick = () => socket.emit("upgradeTank", upgrades[i][1]);
     }
   }
 
