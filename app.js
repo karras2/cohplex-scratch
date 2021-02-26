@@ -23,7 +23,8 @@ let C = SAT.Circle;
 
 var gameSet = {
   gameMode: "sandbox",
-  maxPlayer: 50,
+  maxPlayer: 10,
+  devToken: "69420",
   mapSize: {
     x: 1000,
     y: 1000
@@ -104,6 +105,7 @@ io.on('connection', (socket) => {
       console.log('New socket opened! (But closed)');
       return false;
     } else {
+      //if (name === gameSet.devToken) name = "Oblivion Q. Plain";
       if (name.replace(/[\0-\x7f]|([0-\u07ff]|(.))/g, "$&$1$2").length > 15) {
         name = '';
         console.log('Invalid name, I guess...');
@@ -361,7 +363,7 @@ function tickObject(obj, index) {
             if (obj.owner.changeTime <= 0) {
               obj.type = obj.type == 0 ? tankLength - 1 : obj.type - 1;
               userUtil.setUserTank(obj);
-              obj.owner.changeTime += 300;
+              obj.owner.changeTime += 10;
             }
             obj.owner.changeTank = false;
           }
