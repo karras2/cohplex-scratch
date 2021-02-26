@@ -1,4 +1,4 @@
-function System(name, key){ // 게임의 전체 진행 담당
+function System(name, key) { // 게임의 전체 진행 담당
   "use strict";
 
   this.objectList = {};
@@ -17,48 +17,48 @@ function System(name, key){ // 게임의 전체 진행 담당
     FlankGuard, ////
     TriAngle, ////
     Destroyer, ////
-    Overseer,////
-    Overload,////
-    TwinFlank,////
-    PentaShot,////
-    Assasin,////
-    ArenaCloser,/// 디자인만 완료
-    Necromanser,////
-    TripleTwin,////
-    Hunter,////
-    Gunner,////
-    Stalker,////
-    Ranger,////
-    Booster,////
-    Fighter,////
-    Hybrid,////
-    Manager,////
-    MotherShip,////
-    Predator,////
-    Sprayer,////
-    Trapper,////
-    GunnerTrapper,////
-    OverTrapper,////
-    MegaTrapper,////
-    TriTrapper,////
-    Smasher,////
-    Landmine,////
-    AutoGunner,///
-    Auto5,///
-    Auto3,///
-    SpreadShot,////
-    Streamliner,////
-    AutoTrapper,///
-    BasicDominator,////
-    GunnerDominator,////
-    TrapperDominator,////
-    BattleShip,////
-    Annihilator,////
-    AutoSmasher,///
-    Spike,////
-    Factory,////
-    Skimmer,////
-    Rocketeer,////
+    Overseer, ////
+    Overload, ////
+    TwinFlank, ////
+    PentaShot, ////
+    Assasin, ////
+    ArenaCloser, /// 디자인만 완료
+    Necromanser, ////
+    TripleTwin, ////
+    Hunter, ////
+    Gunner, ////
+    Stalker, ////
+    Ranger, ////
+    Booster, ////
+    Fighter, ////
+    Hybrid, ////
+    Manager, ////
+    MotherShip, ////
+    Predator, ////
+    Sprayer, ////
+    Trapper, ////
+    GunnerTrapper, ////
+    OverTrapper, ////
+    MegaTrapper, ////
+    TriTrapper, ////
+    Smasher, ////
+    Landmine, ////
+    AutoGunner, ///
+    Auto5, ///
+    Auto3, ///
+    SpreadShot, ////
+    Streamliner, ////
+    AutoTrapper, ///
+    BasicDominator, ////
+    GunnerDominator, ////
+    TrapperDominator, ////
+    BattleShip, ////
+    Annihilator, ////
+    AutoSmasher, ///
+    Spike, ////
+    Factory, ////
+    Skimmer, ////
+    Rocketeer, ////
 
     Bumper,
     Dispersion,
@@ -66,7 +66,7 @@ function System(name, key){ // 게임의 전체 진행 담당
     Dual,
     Commander
   ];
-  
+
   let findTankID = name => this.tankList.indexOf(this.tankList.find(r => new r().tankType === name));
   this.UPGRADES = {};
   this.UPGRADES["Tank"] = ["Twin", "Sniper", "Machine Gun", "Flank Guard"];
@@ -79,8 +79,6 @@ function System(name, key){ // 게임의 전체 진행 담당
   this.UPGRADES["Quad Tank"] = ["Octo Tank"];
   for (let path in this.UPGRADES) this.UPGRADES[path] = this.UPGRADES[path].map(up => [up, findTankID(up)]);
   window.UPS = this.UPGRADES;
-  this.oldUps = [];
-
   this.bulletList = [
     TrapBullet,
     BasicBullet,
@@ -100,14 +98,14 @@ function System(name, key){ // 게임의 전체 진행 담당
   ]
 
   this.colorList = [
-    new RGB(230,176,138),
-    new RGB(228,102,233),
-    new RGB(148,102,234),
-    new RGB(103,144,234),
-    new RGB(234,178,102),
-    new RGB(231,103,98),
-    new RGB(147,234,103),
-    new RGB(103,233,233)
+    new RGB(230, 176, 138),
+    new RGB(228, 102, 233),
+    new RGB(148, 102, 234),
+    new RGB(103, 144, 234),
+    new RGB(234, 178, 102),
+    new RGB(231, 103, 98),
+    new RGB(147, 234, 103),
+    new RGB(103, 233, 233)
   ];
 
   this.expList = [
@@ -158,17 +156,14 @@ function System(name, key){ // 게임의 전체 진행 담당
     23536
   ];
 
-  this.number3comma=function(s)
-  {
-    var r=s.substr(Math.max(s.length-3,0),3);
-    do
-    {
-      s=s.substr(0,s.length-3);
-      if(s.length>0)
-      {
-        r=s.substr(Math.max(s.length-3,0),3)+','+r;
+  this.number3comma = function(s) {
+    var r = s.substr(Math.max(s.length - 3, 0), 3);
+    do {
+      s = s.substr(0, s.length - 3);
+      if (s.length > 0) {
+        r = s.substr(Math.max(s.length - 3, 0), 3) + ',' + r;
       }
-    }while(s.length>0);
+    } while (s.length > 0);
     return r;
   }
 
@@ -182,7 +177,7 @@ function System(name, key){ // 게임의 전체 진행 담당
     shot: 0,
     rShot: 0,
     moveRotate: null,
-    moveVector: new Vector(0,0),
+    moveVector: new Vector(0, 0),
     space: false,
     leftMouse: false,
     rightMouse: false,
@@ -190,7 +185,7 @@ function System(name, key){ // 게임의 전체 진행 담당
     a: false,
     s: false,
     d: false,
-    num:[false,false,false,false,false,false,false,false],
+    num: [false, false, false, false, false, false, false, false],
     o: false,
     k: false,
     l: false,
@@ -200,26 +195,26 @@ function System(name, key){ // 게임의 전체 진행 담당
     autoC: false,
     changeTank: false,
     target: {
-      x:0,
-      y:0
+      x: 0,
+      y: 0
     }
   };
 
   this.drawObject = new DrawObject();
 
-  this.createObject = function (id,type,radius,rotate){
-    let obj = new type(radius,rotate);
-    this.objectList[id]=obj;
+  this.createObject = function(id, type, radius, rotate) {
+    let obj = new type(radius, rotate);
+    this.objectList[id] = obj;
     this.objectList[id].setId(id);
     return obj;
   }
 
-  this.createUiObject = function (obj){
+  this.createUiObject = function(obj) {
     this.uiObjectList.push(obj);
     return obj;
   }
 
-  this.removeObject = function (id){
+  this.removeObject = function(id) {
     this.objectList[id] = null;
   }
 
@@ -229,16 +224,16 @@ function System(name, key){ // 게임의 전체 진행 담당
   this.stats;
   this.maxStats;
   this.ping;
-  this.scoreBoard=[];
+  this.scoreBoard = [];
 
   socket.emit('login', name, key);
   window.UPGRADE = id => socket.emit("upgradeTank", id);
 
   socket.on('pong!', function(data) {
-    this.ping = Date.now()-data;
+    this.ping = Date.now() - data;
   }.bind(this));
 
-  socket.on('playerSet',(data)=>{
+  socket.on('playerSet', (data) => {
     this.controlTankLevel = data.level;
     this.drawObject.setSight(data.camera.z);
     this.drawObject.cameraSet(data.camera);
@@ -250,137 +245,134 @@ function System(name, key){ // 게임의 전체 진행 담당
 
   socket.on('objectList', (objectList) => {
     let deleteList = {};
-    for (let key in this.objectList){
-      if (this.objectList[key]){
-        deleteList[this.objectList[key].id]=true;
+    for (let key in this.objectList) {
+      if (this.objectList[key]) {
+        deleteList[this.objectList[key].id] = true;
       }
     }
     this.objectOrder = objectList;
-    for (let key=0;key<objectList.length;key++){ // 탱크 지정
+    for (let key = 0; key < objectList.length; key++) { // 탱크 지정
       let obj = objectList[key];
-      deleteList[obj.id]=false;
-      switch (obj.objType){
+      deleteList[obj.id] = false;
+      switch (obj.objType) {
         case "tank":
-        if (this.objectList[obj.id]){
-          let objO = this.objectList[obj.id];
-          objO.setDead(obj.isDead);
-          if (!obj.isDead){
-            objO.setRadius(obj.radius);
-            objO.setOpacity(obj.opacity);
-            objO.setScore(obj.score);
-          }
-          objO.setPosition(obj.x,obj.y);
-          objO.setHealth(obj.health,obj.maxHealth);
+          if (this.objectList[obj.id]) {
+            let objO = this.objectList[obj.id];
+            objO.setDead(obj.isDead);
+            if (!obj.isDead) {
+              objO.setRadius(obj.radius);
+              objO.setOpacity(obj.opacity);
+              objO.setScore(obj.score);
+            }
+            objO.setPosition(obj.x, obj.y);
+            objO.setHealth(obj.health, obj.maxHealth);
 
-          let tankType = new this.tankList[obj.type]().tankType;
-          if (tankType != objO.tankType){
-            objO.changeTank(this.tankList[obj.type]);
-          }
-          if (objO !== this.controlTank){
+            let tankType = new this.tankList[obj.type]().tankType;
+            if (tankType != objO.tankType) {
+              objO.changeTank(this.tankList[obj.type]);
+            }
+            if (objO !== this.controlTank) {
+              objO.setRotate(obj.rotate);
+            }
+          } else {
+            if (obj.isDead) continue;
+            let objO = this.createObject(obj.id, this.tankList[obj.type], obj.radius, obj.rotate);
+            objO.setPosition(obj.x, obj.y);
+            objO.setName(obj.name);
+            objO.setScore(obj.score);
+            objO.setRadius(obj.radius);
             objO.setRotate(obj.rotate);
+            objO.setHealth(obj.health, obj.maxHealth);
+            if (obj.owner === socket.id) this.controlTank = objO;
+            else objO.setColor(new RGB(241, 78, 84));
           }
-        }
-        else{
-          if (obj.isDead) continue;
-          let objO = this.createObject(obj.id,this.tankList[obj.type],obj.radius,obj.rotate);
-          objO.setPosition(obj.x,obj.y);
-          objO.setName(obj.name);
-          objO.setScore(obj.score);
-          objO.setRadius(obj.radius);
-          objO.setRotate(obj.rotate);
-          objO.setHealth(obj.health,obj.maxHealth);
-          if (obj.owner === socket.id) this.controlTank = objO;
-          else objO.setColor(new RGB(241,78,84));
-        }
-        break;
+          break;
         case "bullet":
         case "drone":
-        if (this.objectList[obj.id]){
-          let objO = this.objectList[obj.id];
-          objO.setDead(obj.isDead);
-          if (!obj.isDead){
+          if (this.objectList[obj.id]) {
+            let objO = this.objectList[obj.id];
+            objO.setDead(obj.isDead);
+            if (!obj.isDead) {
+              objO.setRadius(obj.radius);
+            }
+            objO.setPosition(obj.x, obj.y);
+            objO.setRotate(obj.rotate);
+          } else {
+            if (obj.isDead) continue;
+            let objO = this.createObject(obj.id, this.bulletList[obj.type], obj.radius, obj.rotate);
+            objO.setPosition(obj.x, obj.y);
             objO.setRadius(obj.radius);
+            objO.setRotate(obj.rotate);
+            if (obj.owner !== this.controlTank.id) {
+              objO.setColor(new RGB(241, 78, 84));
+            }
           }
-          objO.setPosition(obj.x,obj.y);
-          objO.setRotate(obj.rotate);
-        }
-        else{
-          if (obj.isDead) continue;
-          let objO = this.createObject(obj.id,this.bulletList[obj.type],obj.radius,obj.rotate);
-          objO.setPosition(obj.x,obj.y);
-          objO.setRadius(obj.radius);
-          objO.setRotate(obj.rotate);
-          if (obj.owner !== this.controlTank.id){
-            objO.setColor(new RGB(241,78,84));
-          }
-        }
-        break;
+          break;
         case "shape":
-        if (this.objectList[obj.id]){
-          let objO = this.objectList[obj.id];
-          objO.setDead(obj.isDead);
-          if (!obj.isDead){
+          if (this.objectList[obj.id]) {
+            let objO = this.objectList[obj.id];
+            objO.setDead(obj.isDead);
+            if (!obj.isDead) {
+              objO.setRadius(obj.radius);
+            }
+            objO.setPosition(obj.x, obj.y);
+            objO.setRotate(obj.rotate);
+            objO.setHealth(obj.health, obj.maxHealth);
+          } else {
+            if (obj.isDead) continue;
+            let objO = this.createObject(obj.id, this.shapeList[obj.type], obj.radius, obj.rotate);
+            objO.setPosition(obj.x, obj.y);
             objO.setRadius(obj.radius);
+            objO.setRotate(obj.rotate);
+            objO.setHealth(obj.health, obj.maxHealth);
+            let colorList = [
+              new RGB(255, 232, 105),
+              new RGB(252, 118, 118),
+              new RGB(118, 140, 252),
+              new RGB(118, 140, 252),
+              new RGB(241, 119, 221),
+              new RGB(241, 119, 221)
+            ];
+            objO.setColor(colorList[obj.type]);
           }
-          objO.setPosition(obj.x,obj.y);
-          objO.setRotate(obj.rotate);
-          objO.setHealth(obj.health,obj.maxHealth);
-        }
-        else{
-          if (obj.isDead) continue;
-          let objO = this.createObject(obj.id,this.shapeList[obj.type],obj.radius,obj.rotate);
-          objO.setPosition(obj.x,obj.y);
-          objO.setRadius(obj.radius);
-          objO.setRotate(obj.rotate);
-          objO.setHealth(obj.health,obj.maxHealth);
-          let colorList = [
-            new RGB(255,232,105),
-            new RGB(252,118,118),
-            new RGB(118,140,252),
-            new RGB(118,140,252),
-            new RGB(241,119,221),
-            new RGB(241,119,221)
-          ];
-          objO.setColor(colorList[obj.type]);
-        }
-        break;
+          break;
         default:
-        break;
+          break;
       }
     }
-    for (let key in deleteList){
-      if (deleteList[key] === true && key!==this.controlTank.id){
+    for (let key in deleteList) {
+      if (deleteList[key] === true && key !== this.controlTank.id) {
         this.removeObject(key);
       }
     }
   });
 
   socket.on('objectHit', (id) => { // 피격 효과 전달
-    if (this.objectList[id]){
+    if (this.objectList[id]) {
       this.objectList[id].hit();
     }
   });
 
-  socket.on('shot', (id,gun) => {
-    if (this.objectList[id]){
+  socket.on('shot', (id, gun) => {
+    if (this.objectList[id]) {
       this.objectList[id].gunAnime(gun);
     }
   });
 
   socket.on('scoreboardlist', (array) => {
-    this.scoreBoard=array;
+    this.scoreBoard = array;
   });
 
-  this.showTankStat = this.createUiObject(new Text("",20,-Math.PI/8));
-  this.showTankStats = this.createUiObject(new Text("",15,0,"left"));
+  this.showTankStat = this.createUiObject(new Text("", 20, -Math.PI / 8));
+  this.showTankStats = this.createUiObject(new Text("", 15, 0, "left"));
 
-  this.showTankLevelBar = this.createUiObject(new Bar(new RGB(255,225,78),40));
-  this.showTankLevel = this.createUiObject(new Text("",13));
-  this.showTankScoreBar = this.createUiObject(new Bar(new RGB(66,255,145),32));
-  this.showTankScore = this.createUiObject(new Text("",13));
-  this.showTankName = this.createUiObject(new Text("",33));
+  this.showTankLevelBar = this.createUiObject(new Bar(new RGB(255, 225, 78), 40));
+  this.showTankLevel = this.createUiObject(new Text("", 13));
+  this.showTankScoreBar = this.createUiObject(new Bar(new RGB(66, 255, 145), 32));
+  this.showTankScore = this.createUiObject(new Text("", 13));
+  this.showTankName = this.createUiObject(new Text("", 33));
 
-  this.showPing = this.createUiObject(new Text("",12.5,0,"right",false));
+  this.showPing = this.createUiObject(new Text("", 12.5, 0, "right", false));
 
   this.showMiniMap = this.createUiObject(new MiniMap());
 
@@ -395,71 +387,78 @@ function System(name, key){ // 게임의 전체 진행 담당
     this.createUiObject(new Button())
   ];
 
-  this.uiSet = function (){
+  this.uiSet = function() {
     let whz = this.drawObject.getCanvasSize();
 
-    if (this.controlTank){
-      this.showTankStat.setPosition(50,whz[1]-50 * whz[2],0);
-      this.showTankStat.setText(this.stat===0?"":"x" + this.stat);
-      this.showTankStats.setPosition(25,whz[1]-25 * whz[2],0);
+    if (this.controlTank) {
+      this.showTankStat.setPosition(50, whz[1] - 50 * whz[2], 0);
+      this.showTankStat.setText(this.stat === 0 ? "" : "x" + this.stat);
+      this.showTankStats.setPosition(25, whz[1] - 25 * whz[2], 0);
       let tankStats = "";
-      if (this.stats){
-        for (let i=0;i<this.stats.length;i++){
+      if (this.stats) {
+        for (let i = 0; i < this.stats.length; i++) {
           tankStats += this.stats[i] + " ";
         }
       }
       this.showTankStats.setText(tankStats);
-      this.showTankLevelBar.setPosition((whz[0]-334 * whz[2])/2,(whz[0]+334 * whz[2])/2,whz[1] - 48 * whz[2],this.controlTank.score<this.expList[44]?(this.controlTank.score-this.expList[this.controlTankLevel-1])/(this.expList[this.controlTankLevel]-this.expList[this.controlTankLevel-1]):1);
-      this.showTankLevel.setPosition(whz[0]/2,whz[1] - 24 * whz[2],0);
-      this.showTankLevel.setText("Lvl "+String(this.controlTankLevel)+" "+this.controlTank.tankType);
-      let scoreBarPercent=1;
-      if(this.scoreBoard.length>0){
-        scoreBarPercent=this.controlTank.score/this.scoreBoard[0].score;
-        if(this.scoreBoard[0].score===0){
-          scoreBarPercent=1;
+      this.showTankLevelBar.setPosition((whz[0] - 334 * whz[2]) / 2, (whz[0] + 334 * whz[2]) / 2, whz[1] - 48 * whz[2], this.controlTank.score < this.expList[44] ? (this.controlTank.score - this.expList[this.controlTankLevel - 1]) / (this.expList[this.controlTankLevel] - this.expList[this.controlTankLevel - 1]) : 1);
+      this.showTankLevel.setPosition(whz[0] / 2, whz[1] - 24 * whz[2], 0);
+      this.showTankLevel.setText("Lvl " + String(this.controlTankLevel) + " " + this.controlTank.tankType);
+      let scoreBarPercent = 1;
+      if (this.scoreBoard.length > 0) {
+        scoreBarPercent = this.controlTank.score / this.scoreBoard[0].score;
+        if (this.scoreBoard[0].score === 0) {
+          scoreBarPercent = 1;
         }
       }
 
-      this.showTankScoreBar.setPosition((whz[0]-250 * whz[2])/2,(whz[0]+250 * whz[2])/2,whz[1] - 64 * whz[2],scoreBarPercent);
-      this.showTankScore.setPosition(whz[0]/2,whz[1]-44 * whz[2],0);
-      this.showTankScore.setText("Score: "+this.number3comma(String(this.controlTank.score)));
-      this.showTankName.setPosition(whz[0]/2,whz[1]-64 * whz[2],0);
+      this.showTankScoreBar.setPosition((whz[0] - 250 * whz[2]) / 2, (whz[0] + 250 * whz[2]) / 2, whz[1] - 64 * whz[2], scoreBarPercent);
+      this.showTankScore.setPosition(whz[0] / 2, whz[1] - 44 * whz[2], 0);
+      this.showTankScore.setText("Score: " + this.number3comma(String(this.controlTank.score)));
+      this.showTankName.setPosition(whz[0] / 2, whz[1] - 64 * whz[2], 0);
       this.showTankName.setText(this.controlTank.name);
 
-      this.showPing.setPosition(whz[0]-(21 + 5)*whz[2],whz[1] - (21 + 147 + 5) * whz[2],0);
-      this.showPing.setText(String(this.ping)+' ms');
+      this.showPing.setPosition(whz[0] - (21 + 5) * whz[2], whz[1] - (21 + 147 + 5) * whz[2], 0);
+      this.showPing.setText(String(this.ping) + ' ms');
 
-      if (this.drawObject.mapSize)
-      {
-        this.showMiniMap.setPosition(whz[0] - 21*whz[2],whz[1] - 21*whz[2]);
-        this.showMiniMap.setPointPosition((this.controlTank.x+this.drawObject.mapSize.x)/2/this.drawObject.mapSize.x,(this.controlTank.y+this.drawObject.mapSize.y)/2/this.drawObject.mapSize.y,this.controlTank.rotate);
+      if (this.drawObject.mapSize) {
+        this.showMiniMap.setPosition(whz[0] - 21 * whz[2], whz[1] - 21 * whz[2]);
+        this.showMiniMap.setPointPosition((this.controlTank.x + this.drawObject.mapSize.x) / 2 / this.drawObject.mapSize.x, (this.controlTank.y + this.drawObject.mapSize.y) / 2 / this.drawObject.mapSize.y, this.controlTank.rotate);
       }
 
-      this.showScoreBoard.setPosition(whz[0] - 108*whz[2],34*whz[2],whz[2],this.scoreBoard);
+      this.showScoreBoard.setPosition(whz[0] - 108 * whz[2], 34 * whz[2], whz[2], this.scoreBoard);
     }
 
     let upgrades = this.controlTank ? (this.UPGRADES[this.controlTank.tankType] || []) : [];
-    let positions = [[43.3*whz[2],62.3*whz[2],122.8*whz[2],141.8*whz[2]], [139.3*whz[2],62.3*whz[2],218.8*whz[2],141.8*whz[2]], [139.3*whz[2],62.3*whz[2],218.8*whz[2],141.8*whz[2]], [43.3*whz[2],154.3*whz[2],122.8*whz[2],233.8*whz[2]], [139.3*whz[2],154.3*whz[2],218.8*whz[2],233.8*whz[2]], [43.3*whz[2],246.3*whz[2],122.8*whz[2],325.8*whz[2]], [139.3*whz[2],246.3*whz[2],218.8*whz[2],325.8*whz[2]]];
-    let colors = [new RGB(166,248,244), new RGB(181,248,145), new RGB(248,145,146), new RGB(248,230,146), new RGB(145,178,247), new RGB(181,146,248)]; // new RGB(145,248,244);
-    for (let i = 0; i < this.showUpgradeTank.length; i ++) {
+    let positions = [
+      [43.3 * whz[2], 62.3 * whz[2], 122.8 * whz[2], 141.8 * whz[2]],
+      [139.3 * whz[2], 62.3 * whz[2], 218.8 * whz[2], 141.8 * whz[2]],
+      [139.3 * whz[2], 62.3 * whz[2], 218.8 * whz[2], 141.8 * whz[2]],
+      [43.3 * whz[2], 154.3 * whz[2], 122.8 * whz[2], 233.8 * whz[2]],
+      [139.3 * whz[2], 154.3 * whz[2], 218.8 * whz[2], 233.8 * whz[2]],
+      [43.3 * whz[2], 246.3 * whz[2], 122.8 * whz[2], 325.8 * whz[2]],
+      [139.3 * whz[2], 246.3 * whz[2], 218.8 * whz[2], 325.8 * whz[2]]
+    ];
+    let colors = [new RGB(166, 248, 244), new RGB(181, 248, 145), new RGB(248, 145, 146), new RGB(248, 230, 146), new RGB(145, 178, 247), new RGB(181, 146, 248)]; // new RGB(145,248,244);
+    for (let i = 0; i < this.showUpgradeTank.length; i++) {
       let box = this.showUpgradeTank[i];
       let position = upgrades[i] ? positions[i] : [-10, -10, -9, -9];
       box.setPosition(...position);
       box.setColor(colors[i]);
-      box.onclick = () => socket.emit("upgradeTank", upgrades[i][1]);
+      if (upgrabox.onclick = () => socket.emit("upgradeTank", upgrades[i][1]);
     }
   }
 
-  this.loop = function (){
+  this.loop = function() {
     this.tick = Date.now() - this.lastTime;
     this.lastTime = Date.now();
 
-    socket.emit('ping!',Date.now());
+    socket.emit('ping!', Date.now());
 
     this.uiSet();
 
-    for (let key in this.objectList){
-      if (this.objectList[key]){
+    for (let key in this.objectList) {
+      if (this.objectList[key]) {
         this.objectList[key].animate(this.tick);
       }
     }
@@ -467,36 +466,23 @@ function System(name, key){ // 게임의 전체 진행 담당
     let camera = this.drawObject.camera;
 
     if (this.controlTank) {
-      let targetX = this.input.target.x/camera.z+camera.x;
-      let targetY = this.input.target.y/camera.z+camera.y;
-      if (this.input.autoC){
-        targetX = Math.cos(this.controlTank.rotate+0.02)*200+this.controlTank.x;
-        targetY = Math.sin(this.controlTank.rotate+0.02)*200+this.controlTank.y;
+      let targetX = this.input.target.x / camera.z + camera.x;
+      let targetY = this.input.target.y / camera.z + camera.y;
+      if (this.input.autoC) {
+        targetX = Math.cos(this.controlTank.rotate + 0.02) * 200 + this.controlTank.x;
+        targetY = Math.sin(this.controlTank.rotate + 0.02) * 200 + this.controlTank.y;
       }
-      if (this.isControlRotate){
-        this.controlTank.setRotate(Math.atan2(targetY-this.controlTank.y,targetX-this.controlTank.x));
+      if (this.isControlRotate) {
+        this.controlTank.setRotate(Math.atan2(targetY - this.controlTank.y, targetX - this.controlTank.x));
       }
-      socket.emit('mousemove',{
-        x:targetX,
-        y:targetY
+      socket.emit('mousemove', {
+        x: targetX,
+        y: targetY
       });
-      if (this.UPGRADES[this.controlTank.tankType] && false) {
-        //if (this.oldUps !== this.UPGRADES[this.controlTank.tankType]) for (let i = 0; i < 10; i ++) document.body.removeChild(document.getElementById("upgradeBox" + i));
-        this.oldUps = this.UPGRADES[this.controlTank.tankType];
-        let x = 25,
-            y = 25,
-            i = 0;
-        for (let up of this.UPGRADES[this.controlTank.tankType]) {
-          drawUpgrade(i, x, y, 100, up[0], up[1], "#00beff");
-          i ++;
-          x += 125;
-          if (i % 2 === 0) x = 25, y += 125;
-        }
-      }
     }
 
     this.drawObject.backgroundDraw();
-    this.drawObject.objectDraw(this.objectList,this.objectOrder);
+    this.drawObject.objectDraw(this.objectList, this.objectOrder);
     this.drawObject.objectStatusDraw(this.objectList);
     this.drawObject.uiDraw(this.uiObjectList);
 
@@ -504,25 +490,30 @@ function System(name, key){ // 게임의 전체 진행 담당
   }
   this.loop();
 
-  this.lastPos = {x:0,y:0};
+  this.lastPos = {
+    x: 0,
+    y: 0
+  };
 
-  window.onmousemove = function (e){
+  window.onmousemove = function(e) {
     let x = e.clientX * window.devicePixelRatio;
     let y = e.clientY * window.devicePixelRatio;
 
-    this.input.target = {x:x,y:y};
+    this.input.target = {
+      x: x,
+      y: y
+    };
     this.input.isMouseOverUi = false;
 
-    for (let i=0;i<this.uiObjectList.length;i++){
-      if (this.uiObjectList[i].inMousePoint(x,y)){
+    for (let i = 0; i < this.uiObjectList.length; i++) {
+      if (this.uiObjectList[i].inMousePoint(x, y)) {
         this.input.isMouseOverUi = true;
       }
     }
 
-    if (this.input.isMouseOverUi){
+    if (this.input.isMouseOverUi) {
       this.drawObject.setCursor("pointer");
-    }
-    else{
+    } else {
       this.drawObject.setCursor("default");
     }
 
@@ -530,151 +521,151 @@ function System(name, key){ // 게임의 전체 진행 담당
     this.lastPos.y = y;
   }.bind(this);
 
-  this.setMoveRotate = function (){
-    this.input.moveRotate = (this.input.moveVector.mag()>0)?Math.atan2(this.input.moveVector.y,this.input.moveVector.x):null;
+  this.setMoveRotate = function() {
+    this.input.moveRotate = (this.input.moveVector.mag() > 0) ? Math.atan2(this.input.moveVector.y, this.input.moveVector.x) : null;
   }
 
-  window.onmousedown = function (e){
+  window.onmousedown = function(e) {
     let camera = this.drawObject.getCameraSet();
 
-    switch (e.button){
+    switch (e.button) {
       case 0: // 좌클릭
-      if (!this.input.leftMouse){
-        this.input.shot++;
-        socket.emit('leftMouse',this.input.autoE || this.input.shot);
-        this.input.leftMouse = true;
-        let x = e.clientX * window.devicePixelRatio;
-        let y = e.clientY * window.devicePixelRatio;
-        for (let i=0;i<this.showUpgradeTank.length;i++){
-          if (this.showUpgradeTank[i].inMousePoint(x,y)){
-            if (this.showUpgradeTank[i].onclick) this.showUpgradeTank[i].onclick();
+        if (!this.input.leftMouse) {
+          this.input.shot++;
+          socket.emit('leftMouse', this.input.autoE || this.input.shot);
+          this.input.leftMouse = true;
+          let x = e.clientX * window.devicePixelRatio;
+          let y = e.clientY * window.devicePixelRatio;
+          for (let i = 0; i < this.showUpgradeTank.length; i++) {
+            if (this.showUpgradeTank[i].inMousePoint(x, y)) {
+              if (this.showUpgradeTank[i].onclick) this.showUpgradeTank[i].onclick();
+            }
           }
         }
-      }
-      break;
+        break;
       case 1: // 마우스 휠 클릭
-      break;
+        break;
       case 2: // 우클릭
-      if (!this.input.rightMouse){
-        this.input.rShot++;
-        socket.emit('rightMouse',this.input.rShot);
-        this.input.rightMouse = true;
-      }
-      break;
-      default:
-      break;
-    }
-/*
-    if (this.input.leftMouse){
-      this.drawObject.cameraMove({
-        x:this.input.target.x/camera.z+camera.x,
-        y:this.input.target.y/camera.z+camera.y
-      });
-    }
-*/
-    return false;
-  }.bind(this);
-
-  window.oncontextmenu = function (e){
-    return false;
-  }.bind(this);
-
-  window.onmouseup = function (e){
-    if (this.controlTank){
-      switch (e.button){
-        case 0: // 좌클릭
-        if (this.input.leftMouse){
-          this.input.shot--;
-          socket.emit('leftMouse',this.input.autoE || this.input.shot);
-          this.input.leftMouse = false;
-        }
-        break;
-        case 1: // 마우스 휠 클릭
-        break;
-        case 2: // 우클릭
-        if (this.input.rightMouse){
-          this.input.rShot--;
-          socket.emit('rightMouse',this.input.rShot);
-          this.input.rightMouse = false;
-        }
-        break;
-        default:
-        break;
-      }
-    }
-  }.bind(this);
-
-  window.onkeydown = function(e){
-    if (this.controlTank){
-      switch (e.keyCode){
-        case 16: // Shift키
-        if (!this.input.shift){
+        if (!this.input.rightMouse) {
           this.input.rShot++;
-          socket.emit('rightMouse',this.input.rShot);
-          this.input.shift = true;
+          socket.emit('rightMouse', this.input.rShot);
+          this.input.rightMouse = true;
         }
         break;
+      default:
+        break;
+    }
+    /*
+        if (this.input.leftMouse){
+          this.drawObject.cameraMove({
+            x:this.input.target.x/camera.z+camera.x,
+            y:this.input.target.y/camera.z+camera.y
+          });
+        }
+    */
+    return false;
+  }.bind(this);
+
+  window.oncontextmenu = function(e) {
+    return false;
+  }.bind(this);
+
+  window.onmouseup = function(e) {
+    if (this.controlTank) {
+      switch (e.button) {
+        case 0: // 좌클릭
+          if (this.input.leftMouse) {
+            this.input.shot--;
+            socket.emit('leftMouse', this.input.autoE || this.input.shot);
+            this.input.leftMouse = false;
+          }
+          break;
+        case 1: // 마우스 휠 클릭
+          break;
+        case 2: // 우클릭
+          if (this.input.rightMouse) {
+            this.input.rShot--;
+            socket.emit('rightMouse', this.input.rShot);
+            this.input.rightMouse = false;
+          }
+          break;
+        default:
+          break;
+      }
+    }
+  }.bind(this);
+
+  window.onkeydown = function(e) {
+    if (this.controlTank) {
+      switch (e.keyCode) {
+        case 16: // Shift키
+          if (!this.input.shift) {
+            this.input.rShot++;
+            socket.emit('rightMouse', this.input.rShot);
+            this.input.shift = true;
+          }
+          break;
         case 17: // Ctrl키
-        if (!this.input.ctrl){
-          this.input.ctrl = true;
-        }
-        break;
+          if (!this.input.ctrl) {
+            this.input.ctrl = true;
+          }
+          break;
         case 32: // Space키
-        if (!this.input.space){
-          this.input.shot++;
-          socket.emit('leftMouse',this.input.autoE || this.input.shot);
-          this.input.space = true;
-        }
-        break;
+          if (!this.input.space) {
+            this.input.shot++;
+            socket.emit('leftMouse', this.input.autoE || this.input.shot);
+            this.input.space = true;
+          }
+          break;
         case 38: // 위쪽 방향키
         case 87: // W키
-          if (!this.input.w){
-            this.input.moveVector.y-=1;
+          if (!this.input.w) {
+            this.input.moveVector.y -= 1;
             this.setMoveRotate();
-            socket.emit('moveRotate',this.input.moveRotate);
-            this.input.w=true;
+            socket.emit('moveRotate', this.input.moveRotate);
+            this.input.w = true;
           }
-        break;
+          break;
         case 37: // 왼쪽 방향키
         case 65: // A키
-          if (!this.input.a){
-            this.input.moveVector.x-=1;
+          if (!this.input.a) {
+            this.input.moveVector.x -= 1;
             this.setMoveRotate();
-            socket.emit('moveRotate',this.input.moveRotate);
-            this.input.a=true;
+            socket.emit('moveRotate', this.input.moveRotate);
+            this.input.a = true;
           }
-        break;
+          break;
         case 40: // 아래쪽 방향키
         case 83: // S키
-          if (!this.input.s){
-            this.input.moveVector.y+=1;
+          if (!this.input.s) {
+            this.input.moveVector.y += 1;
             this.setMoveRotate();
-            socket.emit('moveRotate',this.input.moveRotate);
-            this.input.s=true;
+            socket.emit('moveRotate', this.input.moveRotate);
+            this.input.s = true;
           }
-        break;
+          break;
         case 39: // 오른쪽 방향키
         case 68: // D키
-          if (!this.input.d){
-            this.input.moveVector.x+=1;
+          if (!this.input.d) {
+            this.input.moveVector.x += 1;
             this.setMoveRotate();
-            socket.emit('moveRotate',this.input.moveRotate);
-            this.input.d=true;
+            socket.emit('moveRotate', this.input.moveRotate);
+            this.input.d = true;
           }
-        break;
+          break;
         case 69: // E키
-        if (!this.input.e){
-          this.input.autoE=1-this.input.autoE;
-          socket.emit('leftMouse',this.input.autoE || this.input.shot);
-          this.input.e=true;
-        }
-        break;
+          if (!this.input.e) {
+            this.input.autoE = 1 - this.input.autoE;
+            socket.emit('leftMouse', this.input.autoE || this.input.shot);
+            this.input.e = true;
+          }
+          break;
         case 67: // C키
-        if (!this.input.c){
-          this.input.autoC=1-this.input.autoC;
-          this.input.c=true;
-        }
-        break;
+          if (!this.input.c) {
+            this.input.autoC = 1 - this.input.autoC;
+            this.input.c = true;
+          }
+          break;
         case 49:
         case 50:
         case 51:
@@ -683,103 +674,103 @@ function System(name, key){ // 게임의 전체 진행 담당
         case 54:
         case 55:
         case 56:
-        if (!this.input.num[e.keyCode-49]){
-          socket.emit('stat',e.keyCode-49);
-          this.input.num[e.keyCode-49]=true;
-        }
-        break;
+          if (!this.input.num[e.keyCode - 49]) {
+            socket.emit('stat', e.keyCode - 49);
+            this.input.num[e.keyCode - 49] = true;
+          }
+          break;
         case 75: // K키
-        if (!this.input.k){
-          socket.emit('keyK',true);
-          this.input.k = true;
-        }
-        break;
+          if (!this.input.k) {
+            socket.emit('keyK', true);
+            this.input.k = true;
+          }
+          break;
         case 76: // L키
-        if (!this.input.l){
-          this.showPing.setEnable(true);
-          this.input.l = true;
-        }
-        break;
+          if (!this.input.l) {
+            this.showPing.setEnable(true);
+            this.input.l = true;
+          }
+          break;
         case 79: // O키
-        if (!this.input.o){
-          socket.emit('keyO',true);
-          this.input.o = true;
-        }
-        break;
+          if (!this.input.o) {
+            socket.emit('keyO', true);
+            this.input.o = true;
+          }
+          break;
         case 188:
-        break;
+          break;
         case 190:
-        break;
+          break;
         case 220: // \키
-          if (!this.input.changeTank){
-            socket.emit('changeTank',true);
+          if (!this.input.changeTank) {
+            socket.emit('changeTank', true);
             this.input.changeTank = true;
           }
-        break;
+          break;
         default:
-        break;
+          break;
       }
     }
   }.bind(this);
 
-  window.onkeyup = function (e){
-    if (this.controlTank){
-      switch (e.keyCode){
+  window.onkeyup = function(e) {
+    if (this.controlTank) {
+      switch (e.keyCode) {
         case 16: // Shift키
-        if (this.input.shift){
-          this.input.rShot--;
-          socket.emit('rightMouse',this.input.rShot);
-          this.input.shift = false;
-        }
-        break;
+          if (this.input.shift) {
+            this.input.rShot--;
+            socket.emit('rightMouse', this.input.rShot);
+            this.input.shift = false;
+          }
+          break;
         case 17: // Ctrl키
-        if (this.input.ctrl){
-          this.input.ctrl = false;
-        }
-        break;
+          if (this.input.ctrl) {
+            this.input.ctrl = false;
+          }
+          break;
         case 32: // Space키
-        if (this.input.space){
-          this.input.shot--;
-          socket.emit('leftMouse',this.input.autoE || this.input.shot);
-          this.input.space = false;
-        }
-        break;
+          if (this.input.space) {
+            this.input.shot--;
+            socket.emit('leftMouse', this.input.autoE || this.input.shot);
+            this.input.space = false;
+          }
+          break;
         case 38: // 위쪽 방향키
         case 87: // W키
-        if (this.input.w){
-          this.input.moveVector.y+=1;
-          this.setMoveRotate();
-          socket.emit('moveRotate',this.input.moveRotate);
-          this.input.w=false;
-        }
-        break;
+          if (this.input.w) {
+            this.input.moveVector.y += 1;
+            this.setMoveRotate();
+            socket.emit('moveRotate', this.input.moveRotate);
+            this.input.w = false;
+          }
+          break;
         case 37: // 왼쪽 방향키
         case 65: // A키
-        if (this.input.a){
-          this.input.moveVector.x+=1;
-          this.setMoveRotate();
-          socket.emit('moveRotate',this.input.moveRotate);
-          this.input.a=false;
-        }
-        break;
+          if (this.input.a) {
+            this.input.moveVector.x += 1;
+            this.setMoveRotate();
+            socket.emit('moveRotate', this.input.moveRotate);
+            this.input.a = false;
+          }
+          break;
         case 40: // 아래쪽 방향키
         case 83: // S키
-        if (this.input.s){
-          this.input.moveVector.y-=1;
-          this.setMoveRotate();
-          socket.emit('moveRotate',this.input.moveRotate);
-          this.input.s=false;
-        }
-        break;
+          if (this.input.s) {
+            this.input.moveVector.y -= 1;
+            this.setMoveRotate();
+            socket.emit('moveRotate', this.input.moveRotate);
+            this.input.s = false;
+          }
+          break;
         case 39: // 오른쪽 방향키
         case 68: // D키
-        if (this.input.d){
-          this.input.moveVector.x-=1;
-          this.setMoveRotate();
-          socket.emit('moveRotate',this.input.moveRotate);
-          this.input.d=false;
-        }
-        break;
+          if (this.input.d) {
+            this.input.moveVector.x -= 1;
+            this.setMoveRotate();
+            socket.emit('moveRotate', this.input.moveRotate);
+            this.input.d = false;
+          }
+          break;
         case 49:
         case 50:
         case 51:
@@ -788,45 +779,45 @@ function System(name, key){ // 게임의 전체 진행 담당
         case 54:
         case 55:
         case 56:
-        if (this.input.num[e.keyCode-49]){
-          this.input.num[e.keyCode-49]=false;
-        }
-        break;
+          if (this.input.num[e.keyCode - 49]) {
+            this.input.num[e.keyCode - 49] = false;
+          }
+          break;
         case 69: // E키
-        if (this.input.e){
-          this.input.e=false;
-        }
-        break;
+          if (this.input.e) {
+            this.input.e = false;
+          }
+          break;
         case 67: // C키
-        if (this.input.c){
-          this.input.c=false;
-        }
-        break;
+          if (this.input.c) {
+            this.input.c = false;
+          }
+          break;
         case 75: // K키
-        if (this.input.k){
-          socket.emit('keyK',false);
-          this.input.k = false;
-        }
-        break;
+          if (this.input.k) {
+            socket.emit('keyK', false);
+            this.input.k = false;
+          }
+          break;
         case 76: // L키
-        if (this.input.l){
-          this.showPing.setEnable(false);
-          this.input.l = false;
-        }
-        break;
+          if (this.input.l) {
+            this.showPing.setEnable(false);
+            this.input.l = false;
+          }
+          break;
         case 79: // O키
-        if (this.input.o){
-          socket.emit('keyO',false);
-          this.input.o = false;
-        }
-        break;
+          if (this.input.o) {
+            socket.emit('keyO', false);
+            this.input.o = false;
+          }
+          break;
         case 220: // \키
-        if (this.input.changeTank){
-          this.input.changeTank = false;
-        }
-        break;
+          if (this.input.changeTank) {
+            this.input.changeTank = false;
+          }
+          break;
         default:
-        break;
+          break;
       }
     }
   }.bind(this);
