@@ -13,3 +13,7 @@ function start() {
         system.drawObject.resize();
     }
 }
+
+window.onload = () => {
+  document.getElementById("title").textContent = "diep.io";
+};

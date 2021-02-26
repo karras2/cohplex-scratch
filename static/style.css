@@ -4,7 +4,7 @@
 }
 
 body {
-	background-color: #ffffff;
+	background-image: url("https://cdn.glitch.com/cb589383-631b-4d6c-845a-0d18ce5a3ee3%2F3d92db3a-5c29-45ae-a216-de523b548952.image.png?v=1614343692503");
 }
 
 html, body, #canvas {
@@ -40,6 +40,30 @@ html, body, #canvas {
 
 	border: 6px solid black;
 
+	margin : 0 auto;
+	display: block;
+	/* border-color: 10px solid black; */
+}
+
+.token-input {
+	width: 493.568px;
+	height: 50px;
+	line-height: 47.5px;
+	font-size: 47.5px;
+	font-weight: bold;
+	padding-left: 5px;
+	padding-right: 5px;
+	border: 6px solid black;
+	margin : 0 auto;
+	display: block;
+	/* border-color: 10px solid black; */
+}
+
+.head {
+	font-size: 75px;
+	font-weight: bold;
+	padding-left: 5px;
+	padding-right: 5px;
 	margin : 0 auto;
 	display: block;
 	/* border-color: 10px solid black; */
