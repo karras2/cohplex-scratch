@@ -68,7 +68,7 @@ function System(name, key) { // 게임의 전체 진행 담당
     Commander,
     MegaSmasher,
     Hoinfodaman,
-    Summoner
+    FallenOverlord
   ];
 
   let findTankID = name => this.tankList.indexOf(this.tankList.find(r => new r().tankType === name));
