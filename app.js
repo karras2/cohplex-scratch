@@ -97,7 +97,8 @@ io.on('connection', (socket) => {
     changeTime: 0,
     controlObject: null,
     sendRecords: e => socket.emit("records", e),
-    team: ++gameSet.lastTeamID % 2 === 0 ? 0 : 1
+    team: ++gameSet.lastTeamID % 2 === 0 ? 0 : 1,
+    isAlive: false
   };
   //gameSet.mapSize.x+= 50;
   //gameSet.mapSize.y+= 50;
@@ -109,7 +110,12 @@ io.on('connection', (socket) => {
   io.emit('mapSize', gameSet.mapSize, gameSet.gameMode);
 
   socket.on('login', (name, key) => { // 탱크 생성.
-    if (sockets[socket.id] && currentPlayer.isDead) {
+    let testAlive = () => {
+      if (currentPlayer.controlObject == null) return true;
+      if (currentPlayer.controlObject.isDead) return false;
+      return true;
+    };
+    if (sockets[socket.id] && testAlive()) {
       console.log('New socket opened! (But closed)');
       return false;
     } else {
@@ -180,7 +186,8 @@ io.on('connection', (socket) => {
         isCollision: false, // 오브젝트가 충돌계산을 마쳤나?
         isDead: false, // 오브젝트가 죽었나?
         isShot: false,
-        isMove: false // 오브젝트가 현재 움직이는가?
+        isMove: false, // 오브젝트가 현재 움직이는가?
+        setAlive: () => currentPlayer.isAlive = false
       };
       obj.team = obj.id;
       if (gameSet.gameMode === "tdm") {
@@ -359,11 +366,14 @@ function tickObject(obj, index) {
   if (obj.health <= 0) {
     obj.health = 0;
     obj.isDead = true;
-    if (obj.objType === "tank" && obj.owner) obj.owner.sendRecords({
-      score: obj.exp,
-      level: obj.level,
-      killedBy: obj.hitObject.name
-    });
+    if (obj.objType === "tank" && obj.owner) {
+      obj.setAlive();
+      obj.owner.sendRecords({
+        score: obj.exp,
+        level: obj.level,
+        killedBy: obj.hitObject.name
+      });
+    }
     if (obj.hitObject && obj.hitObject.event) {
       if (obj.hitObject.event.killEvent) {
         if (!obj.hitObject.event.killEvent(obj.hitObject, obj)) return false;
@@ -454,11 +464,14 @@ function tickObject(obj, index) {
     if (obj.x > gameSet.mapSize.x * 0.7 && obj.team !== 1) coll = true;
     if (coll) {
       obj.isDead = true;
-      if (obj.objType === "tank" && obj.owner) obj.owner.sendRecords({
-        score: obj.exp,
-        level: obj.level,
-        killedBy: "A base"
-      });
+      if (obj.objType === "tank" && obj.owner) {
+        obj.setAlive();
+        obj.owner.sendRecords({
+          score: obj.exp,
+          level: obj.level,
+          killedBy: "A base"
+        });
+      }
     }
   }
   if (obj.guns) {
