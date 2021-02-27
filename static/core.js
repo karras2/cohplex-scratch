@@ -265,7 +265,10 @@ function System(name, key) { // 게임의 전체 진행 담당
     for (let key = 0; key < objectList.length; key++) { // 탱크 지정
       let obj = objectList[key];
       deleteList[obj.id] = false;
-      let color = this.gm === "tdm" ? [new RGB(241, 78, 84)][obj.teamID] : new RGB(241, 78, 84);
+      let color = new RGB(0, 176, 225);
+      (this.drawObject.gm === "tdm") && (color = [new RGB(84, 78, 241), new RGB(241, 78, 84)][obj.teamID]);
+      if (obj.objType === "tank") (obj.owner !== socket.id) && (color = new RGB(241, 78, 84));
+      else if (this.controlTank) (obj.owner !== this.controlTank.id) && (color = new RGB(241, 78, 84));
       switch (obj.objType) {
         case "tank":
           if (this.objectList[obj.id]) {
@@ -296,7 +299,7 @@ function System(name, key) { // 게임의 전체 진행 담당
             objO.setRotate(obj.rotate);
             objO.setHealth(obj.health, obj.maxHealth);
             if (obj.owner === socket.id) this.controlTank = objO;
-            else objO.setColor(new RGB(241, 78, 84));
+            objO.setColor(color);
           }
           break;
         case "bullet":
@@ -315,9 +318,7 @@ function System(name, key) { // 게임의 전체 진행 담당
             objO.setPosition(obj.x, obj.y);
             objO.setRadius(obj.radius);
             objO.setRotate(obj.rotate);
-            if (obj.owner !== this.controlTank.id) {
-              objO.setColor(new RGB(241, 78, 84));
-            }
+            objO.setColor(color);
           }
           break;
         case "shape":

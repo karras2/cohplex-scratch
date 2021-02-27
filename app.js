@@ -32,7 +32,8 @@ var gameSet = {
   mapSize: {
     x: 500,
     y: 500
-  }
+  },
+  lastTeamID: 0
 };
 
 let users = [];
@@ -103,7 +104,7 @@ io.on('connection', (socket) => {
 
   tree = sendTree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
 
-  io.emit('mapSize', gameSet.mapSize);
+  io.emit('mapSize', gameSet.mapSize, gameSet.gameMode);
 
   socket.on('login', (name, key) => { // 탱크 생성.
     if (sockets[socket.id]) {
@@ -187,11 +188,11 @@ io.on('connection', (socket) => {
 
       users.push(currentPlayer);
       objects.push(currentPlayer.controlObject);
-      socket.emit('mapSize', gameSet.mapSize);
+      socket.emit('mapSize', gameSet.mapSize, gameSet.gameMode);
       gameSet.mapSize.x += 100;
       gameSet.mapSize.y += 100;
       shapeUtil.extendMaxShape(-10);
-      io.emit('mapSize', gameSet.mapSize);
+      io.emit('mapSize', gameSet.mapSize, gameSet.gameMode);
     }
   });
 
@@ -264,7 +265,7 @@ io.on('connection', (socket) => {
       currentPlayer.controlObject.owner = null;
       users.splice(util.findIndex(users, currentPlayer.id), 1);
 
-      io.emit('mapSize', gameSet.mapSize);
+      io.emit('mapSize', gameSet.mapSize, gameSet.gameMode);
     }
   });
 });

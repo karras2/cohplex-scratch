@@ -5,6 +5,7 @@ function DrawObject(camera) { // 그리기 담당
   this.ctx = canvas.getContext("2d", {
     alpha: false
   });
+  this.gm = "ffa";
 
   this.objCanvas = document.createElement("canvas");
   this.objCtx = this.objCanvas.getContext("2d");
@@ -25,8 +26,9 @@ function DrawObject(camera) { // 그리기 담당
   this.sight = 1;
   this.showSight = 2.3;
 
-  socket.on('mapSize', (data) => {
+  socket.on('mapSize', (data, gamemode) => {
     this.mapSize = data;
+    this.gm = gamemode;
   });
 
   this.camera = {
