@@ -106,7 +106,7 @@ function DrawObject(camera) { // 그리기 담당
     this.ctx.fillRect((-this.mapSize.x - this.camera.x) * this.camera.z, (-this.mapSize.y - this.camera.y) * this.camera.z, this.mapSize.x * 2 * this.camera.z, this.mapSize.y * 2 * this.camera.z);
 
     this.ctx.globalAlpha = 0.15;
-    this.ctx.fillStyle = new RGB(0, 176, 255).getRGBValue();
+    this.ctx.fillStyle = new RGB(0, 176, 225).getRGBValue();
     this.ctx.fillRect((-this.mapSize.x - this.camera.x) * this.camera.z, (-this.mapSize.y - this.camera.y) * this.camera.z, (this.mapSize.x * 2 * 0.15) * this.camera.z, this.mapSize.y * 2 * this.camera.z);
     this.ctx.fillStyle = new RGB(241, 78, 84).getRGBValue();
     this.ctx.fillRect(((-this.mapSize.x - this.camera.x) + (this.mapSize.x * 2 * 0.85)) * this.camera.z, (-this.mapSize.y - this.camera.y) * this.camera.z, (this.mapSize.x * 2 * 0.15)* this.camera.z, this.mapSize.y * 2 * this.camera.z);
@@ -447,7 +447,7 @@ function MiniMap() {
     ctx.beginPath();
     ctx.rect(this.x - this.miniMapSize * z + 4 * z, this.y - this.miniMapSize * z + 4 * z, this.miniMapSize * z, this.miniMapSize * z);
     ctx.fill();
-    ctx.fillStyle = new RGB(0, 176, 255).getRGBValue();
+    ctx.fillStyle = new RGB(0, 176, 225).getRGBValue();
     ctx.fillRect(this.x - this.miniMapSize * z + 4 * z, this.y - this.miniMapSize * z + 4 * z, this.miniMapSize * z * 0.15, this.miniMapSize * z);
     ctx.fillStyle = new RGB(241, 78, 84).getRGBValue();
     ctx.fillRect((this.x - this.miniMapSize * z + 4 * z) + (this.miniMapSize * z * 0.85), this.y - this.miniMapSize * z + 4 * z, this.miniMapSize * z * 0.15, this.miniMapSize * z);
