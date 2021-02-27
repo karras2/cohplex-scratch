@@ -285,6 +285,14 @@ io.on('connection', (socket) => {
   });
 });
 
+function getParent(obj) {
+  let newObj = obj;
+  for (let i = 0; i < 100; i ++) {
+    if (!newObj.owner.objType)
+  }
+  return obj;
+}
+
 function collisionCheck(aUser, bUser) { // 충돌 시 계산
   let dir = Math.atan2(aUser.y - bUser.y, aUser.x - bUser.x);
 
@@ -368,11 +376,12 @@ function tickObject(obj, index) {
     obj.isDead = true;
     if (obj.objType === "tank" && obj.owner) {
       obj.setAlive();
-      console.log(obj.hitObject);
+      let parent = getParent(obj.hitObject);
+      console.log("\n\n\nPARENT:\n", parent);
       obj.owner.sendRecords({
         score: obj.exp,
         level: obj.level,
-        killedBy: obj.hitObject.name
+        killedBy: parent.name
       });
     }
     if (obj.hitObject && obj.hitObject.event) {
