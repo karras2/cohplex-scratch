@@ -47,7 +47,7 @@ global.objID = (function() {
 
 let sockets = {};
 
-let tankLength = 60;
+let tankLength = 61;
 
 let tree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
 let sendTree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
@@ -194,7 +194,7 @@ io.on('connection', (socket) => {
         obj.team = currentPlayer.team;
         let w = gameSet.mapSize.x * 2;
         if (obj.team === 0) obj.x = util.randomRange(-w / 2, -w / 2 + w * 0.15);
-        if (obj.team === 1) obj.x = util.randomRange(w * 0.85, w);
+        if (obj.team === 1) obj.x = util.randomRange((w / 2) * 0.85, w / 2);
       }
 
       currentPlayer.controlObject = obj;

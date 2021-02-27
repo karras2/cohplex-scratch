@@ -67,7 +67,8 @@ function System(name, key) { // 게임의 전체 진행 담당
     Dual,
     Commander,
     MegaSmasher,
-    Hoinfodaman
+    Hoinfodaman,
+    Summoner
   ];
 
   let findTankID = name => this.tankList.indexOf(this.tankList.find(r => new r().tankType === name));

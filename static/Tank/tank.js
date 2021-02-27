@@ -2080,3 +2080,40 @@ function Commander() {
 }
 Commander.prototype = new Tank();
 Commander.prototype.constructor = Commander;
+
+
+function Summoner() {
+  "use strict";
+  Tank.apply(this, arguments);
+  this.guns = [
+    new Gun([
+      [0.43, 0],
+      [0.73, 1.3],
+      [-0.73, 1.3],
+      [-0.43, 0]
+    ], 0),
+    new Gun([
+      [0.43, 0],
+      [0.73, 1.3],
+      [-0.73, 1.3],
+      [-0.43, 0]
+    ], Math.PI),
+    new Gun([
+      [0.43, 0],
+      [0.73, 1.3],
+      [-0.73, 1.3],
+      [-0.43, 0]
+    ], Math.PI / 2),
+    new Gun([
+      [0.43, 0],
+      [0.73, 1.3],
+      [-0.73, 1.3],
+      [-0.43, 0]
+    ], -Math.PI / 2)
+  ];
+  this.bodyVertex = 4;
+  this.bodySize = 1.3;
+  this.tankType = "Summoner";
+}
+Summoner.prototype = new Tank();
+Summoner.prototype.constructor = Summoner;
