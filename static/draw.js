@@ -187,6 +187,7 @@ function RGB(r, g, b) {
     return new RGB(r, g, b);
   }
   this.getLightRGB = function(per) {
+    if (per == null) per = 0.25;
     let r = (255 - this.r) * per + this.r;
     let g = (255 - this.g) * per + this.g;
     let b = (255 - this.b) * per + this.b;
@@ -271,12 +272,12 @@ function Button(text) {
   
   this.draw = function(ctx, z) {
     this.rot += 0.01;
-    ctx.fillStyle = this.darkened ? this.color.getDarkRGB().getRGBValue() : this.color.getRGBValue();
+    ctx.fillStyle = this.darkened ? this.color.getLightRGB().getRGBValue() : this.color.getRGBValue();
     ctx.strokeStyle = "#444444";
     ctx.lineWidth = 8 * z;
     ctx.strokeRect(this.x1, this.y1, this.x2 - this.x1, this.y2 - this.y1);
     ctx.fillRect(this.x1, this.y1, this.x2 - this.x1, this.y2 - this.y1);
-    ctx.fillStyle = this.darkened ? this.color.getDarkRGB().getRGBValue() : this.color.getDarkRGB().getRGBValue();
+    ctx.fillStyle = this.darkened ? this.color.getRGBValue() : this.color.getDarkRGB().getRGBValue();
     if (!this.isBeingHovered) ctx.fillRect(this.x1, (this.y1 + this.y2) / 2 + 6.5 * z, this.x2 - this.x1, (this.y2 - this.y1) / 2 - 6.5 * z);
     if (this.tankData) {
       let x = this.x1 + this.x2;
