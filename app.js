@@ -95,7 +95,8 @@ io.on('connection', (socket) => {
     o: false,
     changeTank: false,
     changeTime: 0,
-    controlObject: null
+    controlObject: null,
+    sendRecords: e => socket.emit("records", e)
   };
   //gameSet.mapSize.x+= 50;
   //gameSet.mapSize.y+= 50;
@@ -357,6 +358,14 @@ function tickObject(obj, index) {
   if (obj.health <= 0) {
     obj.health = 0;
     obj.isDead = true;
+    if (obj.objType === "tank" && obj.owner) obj.owner.sendRecords({
+      score: obj.exp,
+      level: obj.level,
+      killedBy: {
+        name: obj.hitObject.name,
+        type: obj.hitObject.objectType
+      }
+    });
     if (obj.hitObject && obj.hitObject.event) {
       if (obj.hitObject.event.killEvent) {
         if (!obj.hitObject.event.killEvent(obj.hitObject, obj)) return false;

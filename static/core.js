@@ -247,6 +247,10 @@ function System(name, key) { // 게임의 전체 진행 담당
   socket.on('disconnect', () => {
     this.status = "disconnected";
   });
+  
+  socket.on('records', r => {
+    console.log(r);
+  });
 
   socket.on('playerSet', (data) => {
     this.controlTankLevel = data.level;
