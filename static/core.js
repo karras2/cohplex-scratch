@@ -465,11 +465,9 @@ function System(name, key) { // 게임의 전체 진행 담당
       let box = this.showUpgradeTank[i];
       let position = upgrades[i] ? positions[i] : [-10, -10, -9, -9];
       box.setPosition(...position);
-      box.setColor(colors[i]);
+      box.setColor(colors[i], box.mouseOver);
       box.setTank(false);
       if (upgrades[i]) {
-        box.onmouseover = function () { box.isBeingHovered = true };
-        box.onmouseout = function () { box.isBeingHovered = false };
         box.text.text = upgrades[i][0];
         box.onclick = () => socket.emit("upgradeTank", upgrades[i][1]);
         box.setTank(upgrades[i][2]);
@@ -555,7 +553,8 @@ function System(name, key) { // 게임의 전체 진행 담당
     for (let i = 0; i < this.uiObjectList.length; i++) {
       if (this.uiObjectList[i].inMousePoint(x, y)) {
         this.input.isMouseOverUi = true;
-      }
+        this.uiObjectList[i].mouseOver = true;
+      } else this.uiObjectList[i].mouseOver = false;
     }
 
     if (this.input.isMouseOverUi) {

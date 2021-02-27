@@ -217,7 +217,7 @@ function Tank(radius, rotate) {
     if (this.opacity >= 1) {
       ctx.save();
       ctx.globalAlpha = 1;
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 4;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
 

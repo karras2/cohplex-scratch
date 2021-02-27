@@ -248,11 +248,13 @@ function Button(text) {
     this.x2 = x2;
     this.y2 = y2;
     this.rot = 0;
+    this.darkened = false;
     this.text.setPosition((x1 + x2) / 2, y1 + (y2 - y1) * 0.85);
   }
 
-  this.setColor = function(color) {
+  this.setColor = function(color, darkened) {
     this.color = color;
+    this.darkened = darkened || false;
   }
 
   this.inMousePoint = function(x, y) {
@@ -269,12 +271,12 @@ function Button(text) {
   
   this.draw = function(ctx, z) {
     this.rot += 0.01;
-    ctx.fillStyle = this.color.getRGBValue();
+    ctx.fillStyle = this.darkened ? this.color.getDarkRGB().getRGBValue() : this.color.getRGBValue();
     ctx.strokeStyle = "#444444";
     ctx.lineWidth = 8 * z;
     ctx.strokeRect(this.x1, this.y1, this.x2 - this.x1, this.y2 - this.y1);
     ctx.fillRect(this.x1, this.y1, this.x2 - this.x1, this.y2 - this.y1);
-    ctx.fillStyle = this.color.getDarkRGB().getRGBValue();
+    ctx.fillStyle = this.darkened ? this.color.getDarkRGB().getRGBValue() : this.color.getDarkRGB().getRGBValue();
     if (!this.isBeingHovered) ctx.fillRect(this.x1, (this.y1 + this.y2) / 2 + 6.5 * z, this.x2 - this.x1, (this.y2 - this.y1) / 2 - 6.5 * z);
     if (this.tankData) {
       let x = this.x1 + this.x2;
@@ -530,7 +532,6 @@ function ScoreBoard() {
       else this.scoreBoardText[i].setText(String(this.scoreBoardList[i].score));
       this.scoreBoardText[i].setPosition(x, y + (25 + 20 * i) * z); // what?
       this.scoreBoardBar[i].setTank(this.scoreBoardList[i].tank)
-      // set the tank here WINDOW AHHAHAHAHHASJFHJDEHFKLEWHFRJLGKRWLGJIJGPOR:
     }
   }
 
