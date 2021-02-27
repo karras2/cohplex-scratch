@@ -295,18 +295,19 @@ function Button(text) {
   }
 }
 
-function Bar(c, radius) {
+function Bar(c, radius, drawTank) {
   "use strict";
 
   this.x1;
   this.x2;
   this.y;
+  this.tankData = false;
   this.percent;
   this.radius = radius;
 
   this.color = c || new RGB(0, 0, 0);
-
-  this.setPosition = function(x1, x2, y, p) {
+  // this is totally not melting my brain, i wish there was a documentation
+  this.setPosition = function(x1, x2, y, p) {  // set and draw the tank here., no not here lmfao. in this general Bar function. put the draw in the this.draw, and make a function for it to be set.
     this.x1 = x1;
     this.x2 = x2;
     this.y = y;
@@ -322,9 +323,12 @@ function Bar(c, radius) {
   };
 
   this.inMousePoint = function(x, y) {
-    return false;
+    return false;  
   }
-
+  
+  this.setTank = function(tankData) {
+    this.tankData = tankData;
+  }
   this.draw = function(ctx, z) {
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
@@ -343,6 +347,21 @@ function Bar(c, radius) {
     ctx.lineWidth = this.radius / 2.7 * z;
     ctx.strokeStyle = this.color.getRGBValue();
     ctx.stroke();
+    if (this.tankData && drawTank) {
+      let x = this.x2;
+      x /= 2;
+      let y = this.y;
+      y /= 2;
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(this.rot);
+      this.tankData.x = 0;
+      this.tankData.y = 0;
+      this.tankData.imRotate += 0.01;
+      this.tankData.showRadius = 17.5;
+      this.tankData.drawUI(ctx);
+      ctx.restore();
+    }
   }
 }
 
@@ -488,7 +507,7 @@ function ScoreBoard() {
   this.scoreBoardList = [];
 
   for (let i = 0; i < 10; i++) {
-    this.scoreBoardBar[i] = new Bar(new RGB(66, 255, 145), 33);
+    this.scoreBoardBar[i] = new Bar(new RGB(66, 255, 145), 33); // wait wdym
     this.scoreBoardText[i] = new Text("", 13); // do it in the bar function. It will enable each thing to be separate.
   }
   this.setTank = function(tank) {
@@ -510,6 +529,7 @@ function ScoreBoard() {
       if (this.scoreBoardList[i].name) this.scoreBoardText[i].setText(this.scoreBoardList[i].name + ' - ' + String(this.scoreBoardList[i].score));
       else this.scoreBoardText[i].setText(String(this.scoreBoardList[i].score));
       this.scoreBoardText[i].setPosition(x, y + (25 + 20 * i) * z);
+      // set the tank here WINDOW AHHAHAHAHHASJFHJDEHFKLEWHFRJLGKRWLGJIJGPOR:
     }
   }
 
@@ -518,6 +538,21 @@ function ScoreBoard() {
     for (var i = 0; i < this.scoreBoardList.length; i++) {
       this.scoreBoardBar[i].draw(ctx, z);
       this.scoreBoardText[i].draw(ctx, z);
+    }
+    if (this.tankData) {
+      let x = this.x;
+      x /= 2;
+      let y = this.y1 + this.y2;
+      y /= 2;
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(this.rot);
+      this.tankData.x = 0;
+      this.tankData.y = 0;
+      this.tankData.imRotate += 0.01;
+      this.tankData.showRadius = 17.5;
+      this.tankData.drawUI(ctx);
+      ctx.restore();
     }
   };
 

@@ -446,8 +446,8 @@ function System(name, key) { // 게임의 전체 진행 담당
       if (this.drawObject.mapSize) {
         this.showMiniMap.setPosition(whz[0] - 21 * whz[2], whz[1] - 21 * whz[2]);
         this.showMiniMap.setPointPosition((this.controlTank.x + this.drawObject.mapSize.x) / 2 / this.drawObject.mapSize.x, (this.controlTank.y + this.drawObject.mapSize.y) / 2 / this.drawObject.mapSize.y, this.controlTank.rotate);
-      }
-
+      } // ok back
+      // my brain has been succesfully melted 👍 gimme a sec
       this.showScoreBoard.setPosition(whz[0] - 108 * whz[2], 34 * whz[2], whz[2], this.scoreBoard);
     }
 
