@@ -265,6 +265,7 @@ function System(name, key) { // 게임의 전체 진행 담당
     for (let key = 0; key < objectList.length; key++) { // 탱크 지정
       let obj = objectList[key];
       deleteList[obj.id] = false;
+      let color = this.gm === "tdm" ? [new RGB(241, 78, 84)][obj.teamID] : new RGB(241, 78, 84);
       switch (obj.objType) {
         case "tank":
           if (this.objectList[obj.id]) {
