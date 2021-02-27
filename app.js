@@ -445,7 +445,7 @@ function tickObject(obj, index) {
     let coll = false;
     if (obj.x < -gameSet.mapSize.x + gameSet.mapSize.x * 0.3 && obj.team !== 0) coll = true;
     if (obj.x > gameSet.mapSize.x * 0.7 && obj.team !== 1) coll = true;
-    if (coll) obj.isDead = true, obj.isInBase = true;
+    if (coll) obj.isDead = true;
   }
   if (obj.guns) {
     bulletUtil.gunSet(obj, index, io);
