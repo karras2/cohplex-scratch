@@ -40,9 +40,19 @@ function DrawObject(camera) { // 그리기 담당
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.globalAlpha = 1;
     let textConfig = [{
-      text: "Hello",
-      x: innerWidth * 0.25,
-      y: innerHeight * 0.25,
+      text: "You were killed by: " + this.recordData.killedBy,
+      x: innerWidth * 0.5,
+      y: innerHeight * 0.2,
+      size: 40
+    }, {
+      text: "Final Score: " + this.recordData.score,
+      x: innerWidth * 0.3,
+      y: innerHeight * 0.4,
+      size: 30
+    }, {
+      text: "Level: " + this.recordData.level,
+      x: innerWidth * 0.3,
+      y: innerHeight * 0.55,
       size: 30
     }];
     for (let textObj of textConfig) {
