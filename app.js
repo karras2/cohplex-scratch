@@ -405,7 +405,8 @@ function tickObject(obj, index) {
     case "bullet":
       obj.time -= 1000 / 60;
       obj.isOwnCol = Math.max(obj.isOwnCol - 1000 / 60, 0);
-      if (obj.time <= 0) {
+      if (obj.time <= 0 && obj.isInBase) {
+        if (obj.isInBase) console.log("In base");
         obj.isDead = true;
         if (obj.hitObject && obj.hitObject.event) {
           if (obj.hitObject.event.killEvent) {
@@ -443,7 +444,7 @@ function tickObject(obj, index) {
       let coll = false;
       if (obj.x < -gameSet.mapSize.x + gameSet.mapSize.x * 0.3 && obj.team !== 0) coll = true;
       if (obj.x > gameSet.mapSize.x * 0.7 && obj.team !== 1) coll = true;
-      if (coll) obj.time = -1;
+      if (coll) obj.isDead = true, obj.isInBase = true;
     }
   }
   if (obj.guns) {
