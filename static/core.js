@@ -244,7 +244,9 @@ function System(name, key) { // 게임의 전체 진행 담당
     this.ping = Date.now() - data;
   }.bind(this));
   
-  socket.on('disconnected')
+  socket.on('disconnect', () => {
+    this.status = "disconnected";
+  });
 
   socket.on('playerSet', (data) => {
     this.controlTankLevel = data.level;
@@ -530,6 +532,8 @@ function System(name, key) { // 게임의 전체 진행 담당
     this.drawObject.objectDraw(this.objectList, this.objectOrder);
     this.drawObject.objectStatusDraw(this.objectList);
     this.drawObject.uiDraw(this.uiObjectList);
+    
+    if (this.status === "disconnected") this.drawObject.drawDisconnected();
     
     this.fps = getFps();
 

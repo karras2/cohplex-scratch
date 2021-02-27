@@ -17,6 +17,22 @@ function DrawObject(camera) { // 그리기 담당
   this.uiCtx = this.uiCanvas.getContext("2d");
 
   this.backgroundColor = new RGB(205, 205, 205);
+  
+  this.drawDisconnected = function() {
+    this.ctx.globalAlpha = 0.3;
+    this.ctx.fillStyle = "#990000";
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.globalAlpha = 1;
+    let text = "Disconnected. Refresh to play again!";
+    this.ctx.font = "50px Ubuntu";
+    let width = this.ctx.measureText(text).width;
+    let height = this.ctx.measureText("M").width;
+    this.ctx.fillStyle = "#fff";
+    this.ctx.strokeStyle = "#000";
+    this.ctx.lineWidth = 5;
+    this.ctx.strokeText(text, this.canvas.width / 2 - width / 2, this.canvas.height / 2 - height / 2);
+    this.ctx.fillText(text, this.canvas.width / 2 - width / 2, this.canvas.height / 2 - height / 2);
+  };
 
   this.mapSize = {
     x: 0,
