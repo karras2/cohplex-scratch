@@ -103,7 +103,7 @@ io.on('connection', (socket) => {
   //gameSet.mapSize.x+= 50;
   //gameSet.mapSize.y+= 50;
 
-  //shapeUtil.extendMaxShape(10);
+  shapeUtil.extendMaxShape(10);
 
   tree = sendTree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
 
@@ -206,7 +206,7 @@ io.on('connection', (socket) => {
       socket.emit('mapSize', gameSet.mapSize, gameSet.gameMode);
       //gameSet.mapSize.x += 100;
       //gameSet.mapSize.y += 100;
-      //shapeUtil.extendMaxShape(-10);
+      shapeUtil.extendMaxShape(-10);
       io.emit('mapSize', gameSet.mapSize, gameSet.gameMode);
     }
   });
