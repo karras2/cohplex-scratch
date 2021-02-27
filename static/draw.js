@@ -54,6 +54,11 @@ function DrawObject(camera) { // 그리기 담당
       x: innerWidth * 0.3,
       y: innerHeight * 0.55,
       size: 30
+    }, {
+      text: "(Press enter to respawn)",
+      x: innerWidth * 0.5,
+      y: innerHeight * 0.625,
+      size: 20
     }];
     for (let textObj of textConfig) {
       let { text, x, y, size } = textObj;
