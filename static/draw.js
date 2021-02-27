@@ -101,15 +101,18 @@ function DrawObject(camera) { // 그리기 담당
 
     this.ctx.fillStyle = this.backgroundColor.getDarkRGB(0.1).getRGBValue();
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    
+    this.ctx.globalAlpha = 0.1;
 
     this.ctx.fillStyle = this.backgroundColor.getRGBValue();
     this.ctx.fillRect((-this.mapSize.x - this.camera.x) * this.camera.z, (-this.mapSize.y - this.camera.y) * this.camera.z, this.mapSize.x * 2 * this.camera.z, this.mapSize.y * 2 * this.camera.z);
 
     this.ctx.fillStyle = new RGB(0, 176, 255).getRGBValue();
-    this.ctx.fillRect(this.x - this.miniMapSize * z + 4 * z, this.y - this.miniMapSize * z + 4 * z, this.miniMapSize * z * 0.175, this.miniMapSize * z);
+    this.ctx.fillRect((-this.mapSize.x - this.camera.x) * this.camera.z, (-this.mapSize.y - this.camera.y) * this.camera.z, (this.mapSize.x * 2 * 0.15) * this.camera.z, this.mapSize.y * 2 * this.camera.z);
     this.ctx.fillStyle = new RGB(241, 78, 84).getRGBValue();
-    this.ctx.fillRect((this.x - this.miniMapSize * z + 4 * z) + (this.miniMapSize * z * 0.825), this.y - this.miniMapSize * z + 4 * z, this.miniMapSize * z * 0.175, this.miniMapSize * z);
+    this.ctx.fillRect(((-this.mapSize.x - this.camera.x) + (this.mapSize.x)) * this.camera.z, (-this.mapSize.y - this.camera.y) * this.camera.z, (this.mapSize.x * 2 * 0.15)* this.camera.z, this.mapSize.y * 2 * this.camera.z);
 
+    this.ctx.globalAlpha = 1;
     this.ctx.beginPath(); // 격자 그리기
     for (let i = -this.camera.x % 12.9 * this.camera.z; i <= this.canvas.width; i += 12.9 * this.camera.z) {
       this.ctx.moveTo(i, 0);
