@@ -479,7 +479,7 @@ function ScoreBoard() {
 
   this.x;
   this.y;
-
+  this.tankData = false;
   this.width = 167;
 
   this.scoreBoardTitle = new Text("Scoreboard:", 20);
@@ -489,9 +489,11 @@ function ScoreBoard() {
 
   for (let i = 0; i < 10; i++) {
     this.scoreBoardBar[i] = new Bar(new RGB(66, 255, 145), 33);
-    this.scoreBoardText[i] = new Text("", 13);
+    this.scoreBoardText[i] = new Text("", 13); // do it in the bar function. It will enable each thing to be separate.
   }
-
+  this.setTank = function(tank) {
+    this.tankData = tank;
+  }
   this.setPosition = function(x, y, z, a) {
     this.x = x;
     this.y = y;
