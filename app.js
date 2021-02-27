@@ -440,12 +440,12 @@ function tickObject(obj, index) {
     if (obj.x < -gameSet.mapSize.x - 51.6) obj.x = -gameSet.mapSize.x - 51.6;
     if (obj.y > gameSet.mapSize.y + 51.6) obj.y = gameSet.mapSize.y + 51.6;
     if (obj.y < -gameSet.mapSize.y - 51.6) obj.y = -gameSet.mapSize.y - 51.6;
-    if (gameSet.gameMode === "tdm") {
-      let coll = false;
-      if (obj.x < -gameSet.mapSize.x + gameSet.mapSize.x * 0.3 && obj.team !== 0) coll = true;
-      if (obj.x > gameSet.mapSize.x * 0.7 && obj.team !== 1) coll = true;
-      if (coll) obj.isDead = true, obj.isInBase = true;
-    }
+  }
+  if (gameSet.gameMode === "tdm") {
+    let coll = false;
+    if (obj.x < -gameSet.mapSize.x + gameSet.mapSize.x * 0.3 && obj.team !== 0) coll = true;
+    if (obj.x > gameSet.mapSize.x * 0.7 && obj.team !== 1) coll = true;
+    if (coll) obj.isDead = true, obj.isInBase = true;
   }
   if (obj.guns) {
     bulletUtil.gunSet(obj, index, io);
