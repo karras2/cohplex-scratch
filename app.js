@@ -443,7 +443,7 @@ function tickObject(obj, index) {
       let coll = false;
       if (obj.x < -gameSet.mapSize.x + gameSet.mapSize.x * 0.3 && obj.team !== 0) coll = true;
       if (obj.x > gameSet.mapSize.x * 0.7 && obj.team !== 1) coll = true;
-      if (coll) obj.health -= 5;
+      if (coll) obj.time = -1;
     }
   }
   if (obj.guns) {
