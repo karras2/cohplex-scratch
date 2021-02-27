@@ -368,6 +368,7 @@ function tickObject(obj, index) {
     obj.isDead = true;
     if (obj.objType === "tank" && obj.owner) {
       obj.setAlive();
+      console.log(obj.hitObject);
       obj.owner.sendRecords({
         score: obj.exp,
         level: obj.level,
