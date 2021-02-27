@@ -544,7 +544,6 @@ function sendUpdates() {
               isDead: f.isDead,
               team: f.team
             });
-            console.log(f.team);
             break;
           case "bullet":
           case "drone":

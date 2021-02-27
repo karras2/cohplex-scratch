@@ -266,9 +266,11 @@ function System(name, key) { // 게임의 전체 진행 담당
       let obj = objectList[key];
       deleteList[obj.id] = false;
       let color = new RGB(0, 176, 225);
-      (this.drawObject.gm === "tdm") && (color = [new RGB(84, 78, 241), new RGB(241, 78, 84)][obj.team]);
-      if (obj.objType === "tank") (obj.owner !== socket.id) && (color = new RGB(241, 78, 84));
-      else if (this.controlTank) (obj.owner !== this.controlTank.id) && (color = new RGB(241, 78, 84));
+      if (this.drawObject.gm === "tdm") (color = [new RGB(0, 176, 255), new RGB(241, 78, 84)][obj.team]);
+      else {
+        if (obj.objType === "tank") (obj.owner !== socket.id) && (color = new RGB(241, 78, 84));
+        else if (this.controlTank) (obj.owner !== this.controlTank.id) && (color = new RGB(241, 78, 84));
+      }
       switch (obj.objType) {
         case "tank":
           if (this.objectList[obj.id]) {
