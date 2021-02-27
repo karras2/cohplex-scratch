@@ -96,7 +96,8 @@ io.on('connection', (socket) => {
     changeTank: false,
     changeTime: 0,
     controlObject: null,
-    sendRecords: e => socket.emit("records", e)
+    sendRecords: e => socket.emit("records", e),
+    team: ++gameSet.lastTeamID % 2 === 0 ? 0 : 1
   };
   //gameSet.mapSize.x+= 50;
   //gameSet.mapSize.y+= 50;
@@ -108,7 +109,7 @@ io.on('connection', (socket) => {
   io.emit('mapSize', gameSet.mapSize, gameSet.gameMode);
 
   socket.on('login', (name, key) => { // 탱크 생성.
-    if (sockets[socket.id]) {
+    if (sockets[socket.id] && currentPlayer.isDead) {
       console.log('New socket opened! (But closed)');
       return false;
     } else {
@@ -183,7 +184,7 @@ io.on('connection', (socket) => {
       };
       obj.team = obj.id;
       if (gameSet.gameMode === "tdm") {
-        obj.team = ++gameSet.lastTeamID % 2 === 0 ? 0 : 1;
+        obj.team = currentPlayer.team;
         let w = gameSet.mapSize.x * 2;
         if (obj.team === 0) obj.x = util.randomRange(-w / 2, -w / 2 + w * 0.15);
         if (obj.team === 1) obj.x = util.randomRange(w * 0.85, w);
@@ -361,10 +362,7 @@ function tickObject(obj, index) {
     if (obj.objType === "tank" && obj.owner) obj.owner.sendRecords({
       score: obj.exp,
       level: obj.level,
-      killedBy: {
-        name: obj.hitObject.name,
-        type: obj.hitObject.objectType
-      }
+      killedBy: obj.hitObject.name
     });
     if (obj.hitObject && obj.hitObject.event) {
       if (obj.hitObject.event.killEvent) {
@@ -454,7 +452,14 @@ function tickObject(obj, index) {
     let coll = false;
     if (obj.x < -gameSet.mapSize.x + gameSet.mapSize.x * 0.3 && obj.team !== 0) coll = true;
     if (obj.x > gameSet.mapSize.x * 0.7 && obj.team !== 1) coll = true;
-    if (coll) obj.isDead = true;
+    if (coll) {
+      obj.isDead = true;
+      if (obj.objType === "tank" && obj.owner) obj.owner.sendRecords({
+        score: obj.exp,
+        level: obj.level,
+        killedBy: "A base"
+      });
+    }
   }
   if (obj.guns) {
     bulletUtil.gunSet(obj, index, io);
