@@ -288,9 +288,10 @@ io.on('connection', (socket) => {
 function getParent(obj) {
   let newObj = obj;
   for (let i = 0; i < 100; i ++) {
-    if (!newObj.owner.objType)
+    if (!newObj.owner.objType) continue;
+    newObj = newObj.owner;
   }
-  return obj;
+  return newObj;
 }
 
 function collisionCheck(aUser, bUser) { // 충돌 시 계산
@@ -377,7 +378,6 @@ function tickObject(obj, index) {
     if (obj.objType === "tank" && obj.owner) {
       obj.setAlive();
       let parent = getParent(obj.hitObject);
-      console.log("\n\n\nPARENT:\n", parent);
       obj.owner.sendRecords({
         score: obj.exp,
         level: obj.level,
@@ -471,7 +471,7 @@ function tickObject(obj, index) {
     let coll = false;
     if (obj.x < -gameSet.mapSize.x + gameSet.mapSize.x * 0.3 && obj.team !== 0) coll = true;
     if (obj.x > gameSet.mapSize.x * 0.7 && obj.team !== 1) coll = true;
-    if (coll) {
+    if (coll && ["tank", "drone", "bullet"].includes(obj.objType)) {
       obj.isDead = true;
       if (obj.objType === "tank" && obj.owner) {
         obj.setAlive();
