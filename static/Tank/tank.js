@@ -842,7 +842,7 @@ function Necromanser() {
   ];
   this.bodyVertex = 4;
   this.bodySize = 1.3;
-  this.tankType = "Necromanser";
+  this.tankType = "Necromancer";
 }
 Necromanser.prototype = new Tank();
 Necromanser.prototype.constructor = Necromanser;

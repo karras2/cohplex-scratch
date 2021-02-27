@@ -84,7 +84,7 @@ function System(name, key) { // 게임의 전체 진행 담당
   this.UPGRADES["Gunner"] = ["Auto-Gunner", "Streamliner", "Gunner Trapper", "Sprayer"];
   this.UPGRADES["Assassin"] = ["Ranger", "Stalker"];
   this.UPGRADES["Hunter"] = ["Predator", "Streamliner"];
-  this.UPGRADES["Overseer"] = ["Overlord", "Over Trapper", "Factory", "Battleship"];
+  this.UPGRADES["Overseer"] = ["Overlord", "Over Trapper", "Factory", "Battleship", "Manager", "Necromancer"];
   this.UPGRADES["Trapper"] = ["Mega Trapper", "Auto-Trapper", "Gunner Trapper", "Over Trapper", "Tri Trapper"];
   this.UPGRADES["Tri Angle"] = ["Fighter", "Booster"];
   this.UPGRADES["Smasher"] = ["Spike", "Landmine", "Auto-Smasher", "Mega Smasher"];
