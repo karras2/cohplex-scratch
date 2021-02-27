@@ -441,6 +441,8 @@ function MiniMap() {
     ctx.beginPath();
     ctx.rect(this.x - this.miniMapSize * z + 4 * z, this.y - this.miniMapSize * z + 4 * z, this.miniMapSize * z, this.miniMapSize * z);
     ctx.fill();
+    ctx.fillStyle = new RGB(0, 176, 255);
+    ctx.fillRect(this.x, this.y, this.miniMapSize, this.miniMapSize);
 
     ctx.save();
 

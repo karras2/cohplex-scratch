@@ -30,8 +30,8 @@ var gameSet = {
   maxPlayer: 10,
   tokens: ["TOKEN_wrjgdsnfTihD48970MFBlw_TOKEN"],
   mapSize: {
-    x: 500,
-    y: 500
+    x: 2500,
+    y: 2500
   },
   lastTeamID: 0
 };
@@ -190,9 +190,9 @@ io.on('connection', (socket) => {
       users.push(currentPlayer);
       objects.push(currentPlayer.controlObject);
       socket.emit('mapSize', gameSet.mapSize, gameSet.gameMode);
-      gameSet.mapSize.x += 100;
-      gameSet.mapSize.y += 100;
-      shapeUtil.extendMaxShape(-10);
+      //gameSet.mapSize.x += 100;
+      //gameSet.mapSize.y += 100;
+      //shapeUtil.extendMaxShape(-10);
       io.emit('mapSize', gameSet.mapSize, gameSet.gameMode);
     }
   });
@@ -256,12 +256,12 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => { // 연결 끊김
     if (sockets[socket.id]) {
       console.log('Socket closed.');
-      gameSet.mapSize.x -= 100;
-      gameSet.mapSize.y -= 100;
+      //gameSet.mapSize.x -= 100;
+      //gameSet.mapSize.y -= 100;
 
       tree = sendTree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
 
-      shapeUtil.extendMaxShape(-10);
+      //shapeUtil.extendMaxShape(-10);
 
       currentPlayer.controlObject.owner = null;
       users.splice(util.findIndex(users, currentPlayer.id), 1);
@@ -430,6 +430,12 @@ function tickObject(obj, index) {
     if (obj.x < -gameSet.mapSize.x - 51.6) obj.x = -gameSet.mapSize.x - 51.6;
     if (obj.y > gameSet.mapSize.y + 51.6) obj.y = gameSet.mapSize.y + 51.6;
     if (obj.y < -gameSet.mapSize.y - 51.6) obj.y = -gameSet.mapSize.y - 51.6;
+    if (gameSet.gameMode === "tdm") {
+      let coll = false;
+      if (obj.x < gameSet.mapSize * 0.175 && obj.team !== 0) coll = true;
+      if (obj.x > gameSet.mapSize - (gameSet.mapSize * 0.175) && obj.team !== 1) coll = true;
+      if (coll) userUtil.baseKill(obj);
+    }
   }
   if (obj.guns) {
     bulletUtil.gunSet(obj, index, io);
