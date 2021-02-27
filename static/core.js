@@ -249,8 +249,9 @@ function System(name, key) { // 게임의 전체 진행 담당
   });
   
   socket.on('records', r => {
-    console.log(r);
-    socket.emit('login', name, key);
+    this.drawObject.recordData = r;
+    this.isDead = true;
+    //socket.emit('login', name, key);
   });
 
   socket.on('playerSet', (data) => {
@@ -537,6 +538,8 @@ function System(name, key) { // 게임의 전체 진행 담당
     this.drawObject.objectDraw(this.objectList, this.objectOrder);
     this.drawObject.objectStatusDraw(this.objectList);
     this.drawObject.uiDraw(this.uiObjectList);
+    
+    if (this.isDead) this.drawObject.drawRecords();
     
     if (this.status === "disconnected") this.drawObject.drawDisconnected();
     
