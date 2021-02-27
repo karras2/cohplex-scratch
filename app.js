@@ -293,10 +293,10 @@ function collisionCheck(aUser, bUser) { // 충돌 시 계산
   if (gameSet.gameMode === "tdm" && aUser.team == bUser.team && (aUser.objType === "tank" || bUser.objType === "tank") && (["bullet", "drone"].includes(aUser.objType) || ["bullet", "drone"].includes(bUser.objType))) doMotion = false
 
   if (doMotion) {
-    aUser.dx += Math.cos(dir) * Math.min(bUser.bound * aUser.stance, 6) / (aUser.realSize || 1);
-    aUser.dy += Math.sin(dir) * Math.min(bUser.bound * aUser.stance, 6) / (aUser.realSize || 1);
-    bUser.dx -= Math.cos(dir) * Math.min(aUser.bound * bUser.stance, 6) / (bUser.realSize || 1);
-    bUser.dy -= Math.sin(dir) * Math.min(aUser.bound * bUser.stance, 6) / (bUser.realSize || 1);
+    aUser.dx += Math.cos(dir) * Math.min(bUser.bound * aUser.stance, 6) / 5;
+    aUser.dy += Math.sin(dir) * Math.min(bUser.bound * aUser.stance, 6) / 5;
+    bUser.dx -= Math.cos(dir) * Math.min(aUser.bound * bUser.stance, 6) / 5;
+    bUser.dy -= Math.sin(dir) * Math.min(aUser.bound * bUser.stance, 6) / 5;
   }
 
   if (aUser.team !== -1 && bUser.team !== -1 && aUser.team === bUser.team) return;
@@ -422,8 +422,7 @@ function tickObject(obj, index) {
     case "bullet":
       obj.time -= 1000 / 60;
       obj.isOwnCol = Math.max(obj.isOwnCol - 1000 / 60, 0);
-      if (obj.time <= 0 && obj.isInBase) {
-        if (obj.isInBase) console.log("In base");
+      if (obj.time <= 0) {
         obj.isDead = true;
         if (obj.hitObject && obj.hitObject.event) {
           if (obj.hitObject.event.killEvent) {
