@@ -235,6 +235,7 @@ function Button(text) {
   this.y1;
   this.x2;
   this.y2;
+  this.isBeingHovered = false;
   this.tankData = false;
 
   this.text = new Text(text, 12.5);
@@ -272,10 +273,9 @@ function Button(text) {
     ctx.strokeStyle = "#444444";
     ctx.lineWidth = 8 * z;
     ctx.strokeRect(this.x1, this.y1, this.x2 - this.x1, this.y2 - this.y1);
-
     ctx.fillRect(this.x1, this.y1, this.x2 - this.x1, this.y2 - this.y1);
     ctx.fillStyle = this.color.getDarkRGB().getRGBValue();
-    ctx.fillRect(this.x1, (this.y1 + this.y2) / 2 + 6.5 * z, this.x2 - this.x1, (this.y2 - this.y1) / 2 - 6.5 * z);
+    if (!this.isBeingHovered) ctx.fillRect(this.x1, (this.y1 + this.y2) / 2 + 6.5 * z, this.x2 - this.x1, (this.y2 - this.y1) / 2 - 6.5 * z);
     if (this.tankData) {
       let x = this.x1 + this.x2;
       x /= 2;
@@ -528,7 +528,8 @@ function ScoreBoard() {
       this.scoreBoardBar[i].setPosition(x - this.width / 2 * z, x + this.width / 2 * z, y + (5 + 20 * i) * z, per);
       if (this.scoreBoardList[i].name) this.scoreBoardText[i].setText(this.scoreBoardList[i].name + ' - ' + String(this.scoreBoardList[i].score));
       else this.scoreBoardText[i].setText(String(this.scoreBoardList[i].score));
-      this.scoreBoardText[i].setPosition(x, y + (25 + 20 * i) * z);
+      this.scoreBoardText[i].setPosition(x, y + (25 + 20 * i) * z); // what?
+      this.scoreBoardBar[i].setTank(this.scoreBoardList[i].tank)
       // set the tank here WINDOW AHHAHAHAHHASJFHJDEHFKLEWHFRJLGKRWLGJIJGPOR:
     }
   }

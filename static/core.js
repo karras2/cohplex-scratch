@@ -468,6 +468,8 @@ function System(name, key) { // 게임의 전체 진행 담당
       box.setColor(colors[i]);
       box.setTank(false);
       if (upgrades[i]) {
+        box.onmouseover = function () { box.isBeingHovered = true };
+        box.onmouseout = function () { box.isBeingHovered = false };
         box.text.text = upgrades[i][0];
         box.onclick = () => socket.emit("upgradeTank", upgrades[i][1]);
         box.setTank(upgrades[i][2]);
