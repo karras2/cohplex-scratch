@@ -387,12 +387,12 @@ function tickObject(obj, index) {
     }
     if (obj.hitObject && obj.hitObject.event) {
       if (obj.hitObject.event.killEvent) {
-        if (!obj.hitObject.event.killEvent(getParent(obj.hitObject), obj)) return false;
+        if (!obj.hitObject.event.killEvent(obj.hitObject, obj)) return false;
       }
     }
     if (obj.event) {
       if (obj.event.deadEvent) {
-        if (!obj.event.deadEvent(getParent(obj), obj.hitObject)) return false;
+        if (!obj.event.deadEvent(obj, obj.hitObject)) return false;
       }
     }
   }
