@@ -387,12 +387,12 @@ function tickObject(obj, index) {
     }
     if (obj.hitObject && obj.hitObject.event) {
       if (obj.hitObject.event.killEvent) {
-        if (!obj.hitObject.event.killEvent(obj.hitObject, obj)) return false;
+        if (!obj.hitObject.event.killEvent(getParent(obj.hitObject), obj)) return false;
       }
     }
     if (obj.event) {
       if (obj.event.deadEvent) {
-        if (!obj.event.deadEvent(obj, obj.hitObject)) return false;
+        if (!obj.event.deadEvent(getParent(obj), obj.hitObject)) return false;
       }
     }
   }
@@ -473,7 +473,7 @@ function tickObject(obj, index) {
     if (obj.x < -gameSet.mapSize.x + gameSet.mapSize.x * 0.3 && obj.team !== 0) coll = true;
     if (obj.x > gameSet.mapSize.x * 0.7 && obj.team !== 1) coll = true;
     if (coll && ["tank", "drone", "bullet"].includes(obj.objType)) {
-      obj.isDead = true;
+      obj.health = -1;
       if (obj.objType === "tank" && obj.owner) {
         obj.setAlive();
         obj.owner.sendRecords({
