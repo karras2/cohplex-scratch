@@ -26,7 +26,7 @@ let V = SAT.Vector;
 let C = SAT.Circle;
 
 var gameSet = {
-  gameMode: "ffa",
+  gameMode: "tdm",
   maxPlayer: 10,
   tokens: ["TOKEN_wrjgdsnfTihD48970MFBlw_TOKEN"],
   mapSize: {
@@ -181,6 +181,7 @@ io.on('connection', (socket) => {
         isMove: false // 오브젝트가 현재 움직이는가?
       };
       obj.team = obj.id;
+      if (gameSet.gameMode === "tdm") obj.team = ++gameSet.lastTeamID % 2 === 0 ? 0 : 1;
 
       currentPlayer.controlObject = obj;
 
@@ -540,8 +541,10 @@ function sendUpdates() {
               score: f.exp,
               name: f.name,
               owner: (f.owner) ? f.owner.id : null,
-              isDead: f.isDead
+              isDead: f.isDead,
+              team: f.team
             });
+            console.log(f.team);
             break;
           case "bullet":
           case "drone":
@@ -554,7 +557,8 @@ function sendUpdates() {
               rotate: util.floor(f.rotate, 2),
               type: f.type,
               owner: f.owner.id,
-              isDead: f.isDead
+              isDead: f.isDead,
+              team: f.team
             });
             break;
           case "shape":
