@@ -30,10 +30,10 @@ var gameSet = {
   maxPlayer: 10,
   tokens: ["TOKEN_wrjgdsnfTihD48970MFBlw_TOKEN"],
   mapSize: {
-    x: 2500,
-    y: 2500
+    x: 1250,
+    y: 1250
   },
-  lastTeamID: 0
+  lastTeamID: -1
 };
 
 let users = [];
@@ -181,7 +181,12 @@ io.on('connection', (socket) => {
         isMove: false // 오브젝트가 현재 움직이는가?
       };
       obj.team = obj.id;
-      if (gameSet.gameMode === "tdm") obj.team = ++gameSet.lastTeamID % 2 === 0 ? 0 : 1;
+      if (gameSet.gameMode === "tdm") {
+        obj.team = ++gameSet.lastTeamID % 2 === 0 ? 0 : 1;
+        let w = gameSet.mapSize.x * 2;
+        if (obj.team === 0) obj.x = util.randomRange(-w / 2, -w / 2 + w * 0.15);
+        if (obj.team === 1) obj.x = util.randomRange(w * 0.85, w);
+      }
 
       currentPlayer.controlObject = obj;
 
