@@ -635,6 +635,38 @@ function Overseer() {
 Overseer.prototype = new Tank();
 Overseer.prototype.constructor = Overseer;
 
+function Hoinfodaman() {
+  "use strict";
+  Tank.apply(this, arguments);
+  this.guns = [
+    new Gun([
+      [0.43, 0],
+      [0.73, 1.4],
+      [-0.73, 1.4],
+      [-0.43, 0]
+    ], Math.PI / 2),
+    new Gun([
+      [0.43, 0],
+      [0.73, 1.4],
+      [-0.73, 1.4],
+      [-0.43, 0]
+    ], -Math.PI / 2),
+    new Gun([
+      [0.4, 0.9],
+      [0, 1.5],
+      [-0.4, 0.9]
+    ], Math.PI / 2),
+    new Gun([
+      [0.4, 0.9],
+      [0, 1.5],
+      [-0.4, 0.9]
+    ], -Math.PI / 2)
+  ];
+  this.tankType = "Hoinfodaman";
+}
+Hoinfodaman.prototype = new Tank();
+Hoinfodaman.prototype.constructor = Hoinfodaman;
+
 
 function Overload() {
   "use strict";
