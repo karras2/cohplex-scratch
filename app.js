@@ -280,11 +280,15 @@ function collisionCheck(aUser, bUser) { // 충돌 시 계산
   let dir = Math.atan2(aUser.y - bUser.y, aUser.x - bUser.x);
 
   if (aUser === bUser.owner || bUser === aUser.owner) return;
+  let doMotion = true;
+  if (gameSet.gameMode === "tdm" && aUser.team == bUser.team && (aUser.objType === "tank" || bUser.objType === "tank") && (["bullet", "drone"].includes(aUser.objType) || ["bullet", "drone"].includes(bUser.objType))) doMotion = false
 
-  aUser.dx += Math.cos(dir) * Math.min(bUser.bound * aUser.stance, 6) / (aUser.realSize || 1);
-  aUser.dy += Math.sin(dir) * Math.min(bUser.bound * aUser.stance, 6) / (aUser.realSize || 1);
-  bUser.dx -= Math.cos(dir) * Math.min(aUser.bound * bUser.stance, 6) / (bUser.realSize || 1);
-  bUser.dy -= Math.sin(dir) * Math.min(aUser.bound * bUser.stance, 6) / (bUser.realSize || 1);
+  if (doMotion) {
+    aUser.dx += Math.cos(dir) * Math.min(bUser.bound * aUser.stance, 6) / (aUser.realSize || 1);
+    aUser.dy += Math.sin(dir) * Math.min(bUser.bound * aUser.stance, 6) / (aUser.realSize || 1);
+    bUser.dx -= Math.cos(dir) * Math.min(aUser.bound * bUser.stance, 6) / (bUser.realSize || 1);
+    bUser.dy -= Math.sin(dir) * Math.min(aUser.bound * bUser.stance, 6) / (bUser.realSize || 1);
+  }
 
   if (aUser.team !== -1 && bUser.team !== -1 && aUser.team === bUser.team) return;
 
@@ -437,9 +441,9 @@ function tickObject(obj, index) {
     if (obj.y < -gameSet.mapSize.y - 51.6) obj.y = -gameSet.mapSize.y - 51.6;
     if (gameSet.gameMode === "tdm") {
       let coll = false;
-      if (obj.x < gameSet.mapSize * 0.175 && obj.team !== 0) coll = true;
-      if (obj.x > gameSet.mapSize - (gameSet.mapSize * 0.175) && obj.team !== 1) coll = true;
-      if (coll) userUtil.baseKill(obj);
+      if (obj.x < -gameSet.mapSize + gameSet.mapSize * 0.15 && obj.team !== 0) coll = true;
+      if (obj.x > gameSet.mapSize - (gameSet.mapSize * 0.15) && obj.team !== 1) coll = true;
+      if (coll) obj.health = -1;
     }
   }
   if (obj.guns) {
