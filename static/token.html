@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>diep.io</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700">
+</head>
+<body>
+  <p>Press <code>k</code> to level up.</p>
+  <p>Press <code>o</code> to instantly kill your tank.</p>
+  <p>Press <code>\</code> for more tanks.</p>
+  <div id="token-box">
+    <input id="token" placeholder="Token">
+    <br>
+    <button id="token-save">Save</button>
+    <button id="token-clear">Clear</button>
+    <button id="token-recall">Recall</button>
+  </div>
+  <script>
+    var makeInput = function(id) {
+      var box = document.getElementById(id + '-box');
+      box.style.display = 'block';
+      var input = document.getElementById(id);
+      input.value = localStorage[id] || '';
+      document.getElementById(id + '-save').onclick = function() { localStorage[id] = input.value };
+      document.getElementById(id + '-clear').onclick = function() { localStorage[id] = input.value = '' };
+      document.getElementById(id + '-recall').onclick = function() { input.value = localStorage[id] };
+    }
+  </script>
+</body>
+</html>
