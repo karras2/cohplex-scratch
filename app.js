@@ -26,7 +26,7 @@ let V = SAT.Vector;
 let C = SAT.Circle;
 
 var gameSet = {
-  gameMode: "2tdm",
+  gameMode: "ffa",
   maxPlayer: 10,
   tokens: ["TOKEN_wrjgdsnfTihD48970MFBlw_TOKEN"],
   mapSize: {
@@ -47,7 +47,7 @@ global.objID = (function() {
 
 let sockets = {};
 
-let tankLength = 61;
+let tankLength = 65;
 
 let tree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
 let sendTree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
@@ -63,9 +63,10 @@ app.get('/token', (req, res) => {
 });
 
 app.get("/data", (req, res) => {
+  let mode = gameSet.gameMode;
   res.json({
     players: users.length + "/" + gameSet.maxPlayer,
-    mode: gameSet.gameMode.replace("ffa", "Free For All").replace("tdm", " Team Death Match")
+    mode: mode.replace("ffa", "Free For All").replace("tdm", " Team Death Match")
   });
 });
 
@@ -367,7 +368,7 @@ function tickPlayer(p) { // 플레이어를 기준으로 반복되는 코드입�
       p.controlObject.rotate = Math.atan2(p.target.y, p.target.x);
     }
 
-    if (gameSet.gameMode === "sandbox" || p.isDev) {
+    if (p.isDev) {
       if (p.o) {
         p.controlObject.hitObject = p.controlObject;
         p.controlObject.health = 0;
@@ -418,7 +419,7 @@ function tickObject(obj, index) {
       }
       if (obj.owner) {
         userUtil.healTank(obj);
-        if (gameSet.gameMode === "sandbox" || obj.owner.isDev) {
+        if (obj.owner.isDev) {
           if (obj.owner.k && obj.level < 45 && obj.owner.kTime <= 0) {
             obj.exp = sc;
             obj.owner.kTime += 50;

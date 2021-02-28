@@ -68,7 +68,11 @@ function System(name, key) { // 게임의 전체 진행 담당
     Commander,
     MegaSmasher,
     Hoinfodaman,
-    FallenOverlord
+    FallenOverlord,
+    BetaTanks,
+    Dominators,
+    Bosses,
+    Developer
   ];
 
   let findTankID = name => this.tankList.indexOf(this.tankList.find(r => new r().tankType === name));
@@ -89,6 +93,7 @@ function System(name, key) { // 게임의 전체 진행 담당
   this.UPGRADES["Trapper"] = ["Mega Trapper", "Auto-Trapper", "Gunner Trapper", "Over Trapper", "Tri Trapper"];
   this.UPGRADES["Tri Angle"] = ["Fighter", "Booster"];
   this.UPGRADES["Smasher"] = ["Spike", "Landmine", "Auto-Smasher", "Mega Smasher"];
+  this.UPGRADES["Developer"] = ["Beta Tanks", "Dominators", "Mothership", "Arena Closer", "Bosses"];
   for (let path in this.UPGRADES) this.UPGRADES[path] = this.UPGRADES[path].map(up => [up, findTankID(up), new this.tankList[findTankID(up)]()]);
   window.UPS = this.UPGRADES;
   this.bulletList = [
@@ -277,7 +282,7 @@ function System(name, key) { // 게임의 전체 진행 담당
       let obj = objectList[key];
       deleteList[obj.id] = false;
       let color = new RGB(0, 176, 225);
-      if (this.drawObject.gm === "tdm") (color = [new RGB(0, 176, 225), new RGB(241, 78, 84)][obj.team]);
+      if (this.drawObject.gm.includes("tdm")) (color = [new RGB(0, 176, 225), new RGB(241, 78, 84)][obj.team]);
       else {
         if (obj.objType === "tank") (obj.owner !== socket.id) && (color = new RGB(241, 78, 84));
         else if (this.controlTank) (obj.owner !== this.controlTank.id) && (color = new RGB(241, 78, 84));

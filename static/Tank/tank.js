@@ -817,7 +817,7 @@ function ArenaCloser() {
       [-0.42, 0]
     ], 0)
   ];
-  this.tankType = "ArenaCloser";
+  this.tankType = "Arena Closer";
 }
 ArenaCloser.prototype = new Tank();
 ArenaCloser.prototype.constructor = ArenaCloser;
@@ -2115,3 +2115,71 @@ function FallenOverlord() {
 }
 FallenOverlord.prototype = new Tank();
 FallenOverlord.prototype.constructor = FallenOverlord;
+
+function Developer() {
+  "use strict";
+  Tank.apply(this, arguments);
+  this.guns = [
+    new Gun([
+      [0, 0],
+      [0.75, 0],
+      [0.42, 1.88],
+      [-0.42, 1.88],
+      [-0.75, 0]
+    ], 0)
+  ];
+  this.tankType = "Developer";
+}
+Developer.prototype = new Tank();
+Developer.prototype.constructor = Developer;
+
+function BetaTanks() {
+  "use strict";
+  Tank.apply(this, arguments);
+  this.guns = [
+    new Gun([
+      [0, 0],
+      [0.75, 0],
+      [0.42, 1.88],
+      [-0.42, 1.88],
+      [-0.75, 0]
+    ], 0)
+  ];
+  this.tankType = "Beta Tanks";
+}
+BetaTanks.prototype = new Tank();
+BetaTanks.prototype.constructor = BetaTanks;
+
+function Dominators() {
+  "use strict";
+  Tank.apply(this, arguments);
+  this.guns = [
+    new Gun([
+      [0, 0],
+      [0.75, 0],
+      [0.42, 1.88],
+      [-0.42, 1.88],
+      [-0.75, 0]
+    ], 0)
+  ];
+  this.tankType = "Dominators";
+}
+Dominators.prototype = new Tank();
+Dominators.prototype.constructor = Dominators;
+
+function Bosses() {
+  "use strict";
+  Tank.apply(this, arguments);
+  this.guns = [
+    new Gun([
+      [0, 0],
+      [0.75, 0],
+      [0.42, 1.88],
+      [-0.42, 1.88],
+      [-0.75, 0]
+    ], 0)
+  ];
+  this.tankType = "Bosses";
+}
+Bosses.prototype = new Tank();
+Bosses.prototype.constructor = Bosses;
