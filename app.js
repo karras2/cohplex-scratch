@@ -26,7 +26,10 @@ let V = SAT.Vector;
 let C = SAT.Circle;
 
 const upgrades = {
-  "Tank": [1, 6, 7, 8, 35],
+  "Tank": {
+    "lvl15": [1, 6, 7, 8],
+    "lvl30": [35]
+  },
   "Twin": [3, 13, 4],
   "Sniper": [15, 19, 11, 30],
   "Machine Gun": [10, 20],
@@ -46,6 +49,16 @@ const upgrades = {
   "Beta Tanks": [53, 55, 54, 56, 57],
   "Dominators": [43, 44, 45],
   "Bosses": [60],
+};
+
+let getUpgrades = u => {
+  if (u.controlObject.level < 15) return [];
+  if (!upgrades[u.controlObject.tankType]) return [];
+  let ups = [];
+  if (upgrades[u.controlObject.tankType].lvl15 && u.controlObject.level >= 15) ups.push(...upgrades[u.controlObject.tankType].lvl15);
+  if (upgrades[u.controlObject.tankType].lvl30 && u.controlObject.level >= 30) ups.push(...upgrades[u.controlObject.tankType].lvl30);
+  if (upgrades[u.controlObject.tankType].lvl45 && u.controlObject.level >= 45) ups.push(...upgrades[u.controlObject.tankType].lvl45);
+  return ups;
 };
 
 var gameSet = {
