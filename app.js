@@ -128,6 +128,8 @@ let tankLength = 65;
 let tree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
 let sendTree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
 
+let reconnectInfo = {};
+
 app.use(express.static(__dirname + '/static'));
 
 app.get('/', (req, res) => {
@@ -138,7 +140,14 @@ app.get('/token', (req, res) => {
   res.sendFile(__dirname + '/static/token.html');
 });
 
-app.get('/ping', (req, res) => {
+app.get('/reconnect/:data', (req, res) => {
+  let data = false;
+  try {
+    data = JSON.parse(req.params.data);
+  } catch (e) {
+    return res.json({ ok: false })
+  }
+  console.log(JSON.parse(req.params.data));
   res.json({
     ok: true
   });
@@ -734,7 +743,8 @@ function sendUpdates() {
       stat: u.controlObject.stat,
       stats: u.controlObject.stats,
       maxStats: u.controlObject.maxStats,
-      upgrades: getUpgrades(u)
+      upgrades: getUpgrades(u),
+      playerId: u.id
     });
     sockets[u.id].emit('scoreboardlist', scoreBoardList);
   };
