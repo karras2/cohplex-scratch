@@ -6,6 +6,7 @@ function System(name, key) { // 게임의 전체 진행 담당
   this.uiObjectList = [];
   this.fps = 0;
   this.upgrades = [];
+  this.playerId = localStorage.playerId || "";
 
   this.tankList = [
     Basic, //// 구현 완료
@@ -284,7 +285,7 @@ function System(name, key) { // 게임의 전체 진행 담당
     this.stats = data.stats;
     this.maxStats = data.maxStats;
     this.upgrades = window.upgrades = data.upgrades;
-    this.playerId = data.playerId;
+    localStorage.playerId = this.playerId = data.playerId;
   });
 
   socket.on('objectList', (objectList) => {
