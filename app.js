@@ -26,8 +26,8 @@ let V = SAT.Vector;
 let C = SAT.Circle;
 
 const upgrades = {
-  "0": [1, 6, 7, 8, 35],
-  "1": [3, 13, 4],
+  "Tank": [1, 6, 7, 8, 35],
+  "Twin": [3, 13, 4],
   "Sniper": [15, 19, 11, 30],
   "Machine Gun": [10, 20],
   "Flank Guard": [4, 9],
