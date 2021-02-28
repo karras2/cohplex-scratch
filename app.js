@@ -391,7 +391,7 @@ io.on('connection', (socket) => {
         id: currentPlayer.id,
         name: currentPlayer.name,
         tankName: currentPlayer.controlObject.tankType,
-        level: currentPlayer.contr
+        level: currentPlayer.controlObject.level
       };
 
       tree = sendTree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
