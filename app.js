@@ -145,9 +145,12 @@ app.get('/reconnect/:data', (req, res) => {
   try {
     data = JSON.parse(req.params.data);
   } catch (e) {
-    return res.json({ ok: false })
+    return res.json({ ok: false });
   }
-  console.log(JSON.parse(req.params.data));
+  if (!reconnectInfo[data.id]) return res.json({ ok: false });
+  let ok = true;
+  for (let key in reconnectInfo[data.id]) if (reconnectInfo[data.id] !== data[key]) return res.json({ ok: false });
+  let user = users.find(r => r.id === data.id);
   res.json({
     ok: true
   });
