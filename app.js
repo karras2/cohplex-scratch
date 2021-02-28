@@ -48,6 +48,77 @@ const upgrades = {
   "Bosses": [60],
 };
 
+let getTankId = name => {
+  let id = { 
+    Basic: 0, //// 구현 완료
+    Twin: 1, ////
+    Triplet: 2, ////
+    TripleShot: 3, ////
+    QuadTank: 3, ////
+    OctoTank, ////
+    Sniper, ////
+    MachineGun, ////
+    FlankGuard, ////
+    TriAngle, ////
+    Destroyer, ////
+    Overseer, ////
+    Overload, ////
+    TwinFlank, ////
+    PentaShot, ////
+    Assasin, ////
+    ArenaCloser, /// 디자인만 완료
+    Necromanser, ////
+    TripleTwin, ////
+    Hunter, ////
+    Gunner, ////
+    Stalker, ////
+    Ranger, ////
+    Booster, ////
+    Fighter, ////
+    Hybrid, ////
+    Manager, ////
+    MotherShip, ////
+    Predator, ////
+    Sprayer, ////
+    Trapper, ////
+    GunnerTrapper, ////
+    OverTrapper, ////
+    MegaTrapper, ////
+    TriTrapper, ////
+    Smasher, ////
+    Landmine, ////
+    AutoGunner, ///
+    Auto5, ///
+    Auto3, ///
+    SpreadShot, ////
+    Streamliner, ////
+    AutoTrapper, ///
+    BasicDominator, ////
+    GunnerDominator, ////
+    TrapperDominator, ////
+    BattleShip, ////
+    Annihilator, ////
+    AutoSmasher, ///
+    Spike, ////
+    Factory, ////
+    Skimmer, ////
+    Rocketeer, ////
+
+    Bumper,
+    Dispersion,
+    Diffusion,
+    Dual,
+    Commander,
+    MegaSmasher,
+    Hoinfodaman,
+    FallenOverlord,
+    Developer,
+    BetaTanks,
+    Dominators,
+    Bosses
+  };
+};
+
 var gameSet = {
   gameMode: "ffa",
   maxPlayer: 10,
