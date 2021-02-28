@@ -437,7 +437,7 @@ function tickObject(obj, index) {
         obj.isDead = true;
         if (obj.hitObject && obj.hitObject.event) {
           if (obj.hitObject.event.killEvent) {
-            if (!obj.hitObject.event.killEvent(obj.hitObject, obj)) return false;
+            if (!obj.hitObject.event.killEvent(getParent(obj.hitObject), obj)) return false;
           }
         }
         if (obj.event) {
