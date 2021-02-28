@@ -57,6 +57,13 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/static/index.html');
 })
 
+app.get("/data", (req, res) => {
+  res.json({
+    yes: "a",
+    no: "b"
+  });
+});
+
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout

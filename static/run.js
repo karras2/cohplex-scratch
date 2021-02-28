@@ -2,7 +2,12 @@ var socket = io.connect({ transports: ['websocket'] });
 let storage = ["textInput"];
 
 let system;
-let resources = [];
+let resources = [{
+  url: `https://${window.location.hostname}/data`,
+  then: console.log,
+  crucial: true,
+  script: "Something"
+}];
 let resourcesLoaded = 0;
 let loaded = resources.length ? 0 : 1;
 
@@ -31,14 +36,14 @@ for (let { url, then, crucial, script } of resources) fetch(url).then(res => res
 window.onload = () => {
   if (loaded < 0) return;
   window.lerp = (a, b, x) => a + x * (b - a);
-  removeElement(document.querySelector("center"), "loadingText");
-  document.body.style.backgroundImage = "url('https://cdn.glitch.com/cb589383-631b-4d6c-845a-0d18ce5a3ee3%2Fefabd7e3-e9a4-4c2b-ab67-8fa1fa315359.image.png?v=1614524041533')";
-  document.body.style.backgroundRepeat = "repeat";
-  document.body.style.backgroundSize = "cover";
   loaded ++;
 };
 
 function onLoad() {
+  removeElement(document.querySelector("center"), "loadingText");
+  document.body.style.backgroundImage = "url('https://cdn.glitch.com/cb589383-631b-4d6c-845a-0d18ce5a3ee3%2Fefabd7e3-e9a4-4c2b-ab67-8fa1fa315359.image.png?v=1614524041533')";
+  document.body.style.backgroundRepeat = "repeat";
+  document.body.style.backgroundSize = "cover";
   document.body.innerHTML += `
   <center>
     <div id="textInputContainer" position="fixed" style="width: 600px;left: calc(50%)">
@@ -51,7 +56,8 @@ function onLoad() {
 }
 
 function crucialError(e) {
-  document.getElementById("loadingText").textContent = "Error!";
+  document.getElementById("loadingText").textContent = "Error, please check logs and report it in the discord server!";
+  console.log("Unable to load a crucial script. Script name:", e[0], "Error:", e[1]);
   loaded -= 10;
 }
 
