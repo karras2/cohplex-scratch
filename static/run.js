@@ -23,4 +23,8 @@ function start() {
 window.onload = () => {
   document.getElementById("title").textContent = "diep.io";
   loaded = true;
+  document.body.style.backgroundImage = "url('https://cdn.glitch.com/cb589383-631b-4d6c-845a-0d18ce5a3ee3%2Fefabd7e3-e9a4-4c2b-ab67-8fa1fa315359.image.png?v=1614524041533')";
+  //document.body.style.backgroundPosition = "center";
+  document.body.style.backgroundRepeat = "repeat";
+  document.body.style.backgroundSize = "cover";
 };
