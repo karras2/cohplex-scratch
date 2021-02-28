@@ -30,25 +30,64 @@ const upgrades = {
     "lvl15": [1, 6, 7, 8],
     "lvl30": [35]
   },
-  "Twin": [3, 13, 4],
-  "Sniper": [15, 19, 11, 30],
-  "Machine Gun": [10, 20],
-  "Flank Guard": [4, 9],
-  "Triple Shot": [14, 40, 2],
-  "Twin Flank": [18, 46],
-  "Quad Tank": [5],
-  "Destroyer": [47, 25, 51, 52],
-  "Gunner": [37, 41, 31, 29],
-  "Assassin": [22, 21],
-  "Hunter": [28, 41],
-  "Overseer": [12, 32, 50, 46, 26, 17],
-  "Trapper": [33, 42, 31, 32, 34],
-  "Tri Angle": [24, 23],
-  "Smasher": [49, 36, 48, 58],
-  "Developer": [62, 63, 27, 16, 64],
-  "Beta Tanks": [53, 55, 54, 56, 57],
-  "Dominators": [43, 44, 45],
-  "Bosses": [60],
+  "Twin": {
+    "lvl30": [3, 13, 4],
+  },
+  "Sniper": {
+    "lvl30": [15, 19, 11, 30]
+  },
+  "Machine Gun": {
+    "lvl30": [10, 20],
+    "lvl45": [29]
+  },
+  "Flank Guard": {
+    "lvl30": [4, 9]
+  },
+  "Triple Shot": {
+    "lvl45": [14, 40, 2],
+  },
+  "Twin Flank": {
+    "lvl45": [18, 46]
+  },
+  "Quad Tank": {
+    "lvl45": [5]
+  },
+  "Destroyer": {
+    "lvl45": [47, 25, 51, 52]
+  },
+  "Gunner": {
+    "lvl45": [37, 41, 31]
+  },
+  "Assassin": {
+    "lvl45": [22, 21]
+  },
+  "Hunter": {
+    "lvl45": [28, 41]
+  },
+  "Overseer": {
+    "lvl45": [12, 32, 50, 46, 26, 17]
+  },
+  "Trapper": {
+    "lvl45": [33, 42, 31, 32, 34]
+  },
+  "Tri Angle": {
+    "lvl45": [24, 23]
+  },
+  "Smasher": {
+    "lvl45": [49, 36, 48, 58]
+  },
+  "Developer": {
+    "dev": [62, 63, 27, 16, 64]
+  },
+  "Beta Tanks": {
+    "dev": [53, 55, 54, 56, 57]
+  },
+  "Dominators": {
+    "dev": [43, 44, 45]
+  },
+  "Bosses": {
+    "dev": [60]
+  }
 };
 
 let getUpgrades = u => {
@@ -58,6 +97,7 @@ let getUpgrades = u => {
   if (upgrades[u.controlObject.tankType].lvl15 && u.controlObject.level >= 15) ups.push(...upgrades[u.controlObject.tankType].lvl15);
   if (upgrades[u.controlObject.tankType].lvl30 && u.controlObject.level >= 30) ups.push(...upgrades[u.controlObject.tankType].lvl30);
   if (upgrades[u.controlObject.tankType].lvl45 && u.controlObject.level >= 45) ups.push(...upgrades[u.controlObject.tankType].lvl45);
+  if (upgrades[u.controlObject.tankType].dev) ups.push(...upgrades[u.controlObject.tankType].dev);
   return ups;
 };
 
@@ -301,7 +341,7 @@ io.on('connection', (socket) => {
   });
   
   socket.on("upgradeTank", (data) => {
-    let ups = upgrades[currentPlayer.controlObject.tankType] || [];
+    let ups = getUpgrades(currentPlayer);
     if (!ups.includes(data)) return;
     console.log("Valid upgrade!");
     currentPlayer.controlObject.type = data;
@@ -688,7 +728,7 @@ function sendUpdates() {
       stat: u.controlObject.stat,
       stats: u.controlObject.stats,
       maxStats: u.controlObject.maxStats,
-      upgrades: upgrades[u.controlObject.tankType] || []
+      upgrades: getUpgrades(u)
     });
     sockets[u.id].emit('scoreboardlist', scoreBoardList);
   };
