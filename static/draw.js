@@ -34,6 +34,22 @@ function DrawObject(camera) { // 그리기 담당
     this.ctx.fillText(text, this.canvas.width / 2 - width / 2, this.canvas.height / 2 - height / 2);
   };
   
+  this.drawReconnecting = function() {
+    this.ctx.globalAlpha = 0.3;
+    this.ctx.fillStyle = "#000000";
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.globalAlpha = 1;
+    let text = "Attempting to reconnect, please wait...";
+    this.ctx.font = "50px Ubuntu";
+    let width = this.ctx.measureText(text).width;
+    let height = this.ctx.measureText("M").width;
+    this.ctx.fillStyle = "#fff";
+    this.ctx.strokeStyle = "#000";
+    this.ctx.lineWidth = 5;
+    this.ctx.strokeText(text, this.canvas.width / 2 - width / 2, this.canvas.height / 2 - height / 2);
+    this.ctx.fillText(text, this.canvas.width / 2 - width / 2, this.canvas.height / 2 - height / 2);
+  };
+  
   this.drawRecords = function() {
     this.ctx.globalAlpha = 0.3;
     this.ctx.fillStyle = "#000000";

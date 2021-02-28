@@ -138,6 +138,12 @@ app.get('/token', (req, res) => {
   res.sendFile(__dirname + '/static/token.html');
 });
 
+app.get('/ping', (req, res) => {
+  res.json({
+    ok: true
+  });
+});
+
 app.get("/data", (req, res) => {
   let mode = gameSet.gameMode;
   res.json({

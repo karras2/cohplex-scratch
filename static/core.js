@@ -255,7 +255,11 @@ function System(name, key) { // 게임의 전체 진행 담당
   }.bind(this));
   
   socket.on('disconnect', () => {
-    this.status = "disconnected";
+    this.status = "reconnecting";
+    fetch(`https://${window.location.hostname}/ping`).then(res => res.json()).then(json => {
+      if (!json.ok) return this.status = "disconnected";
+      this.status = "";
+    }).catch(e => this.status = "disconnected");
   });
   
   socket.on('records', r => {
@@ -553,6 +557,7 @@ function System(name, key) { // 게임의 전체 진행 담당
     if (this.isDead) this.drawObject.drawRecords();
     
     if (this.status === "disconnected") this.drawObject.drawDisconnected();
+    if (this.status === "reconnecting") this.drawObject.drawReconnecting();
     
     this.fps = getFps();
 
