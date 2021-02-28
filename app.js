@@ -159,7 +159,7 @@ app.get('/reconnect/:data', (req, res) => {
   let ok = true;
   for (let key in reconnectInfo[data.id]) if (!["x", "y"].includes(key)) if (reconnectInfo[data.id] !== data[key]) return res.json({ ok: false });
   let key = getKey();
-  reconnectQueue.push([key, reconnectInfo[data.id]]);
+  reconnectQueue[key] = reconnectInfo[data.id];
   res.json({
     ok: true,
     key: key
@@ -246,20 +246,20 @@ io.on('connection', (socket) => {
       console.log('New socket opened.');
       sockets[socket.id] = socket;
       if (currentPlayer.isDev) console.log("A dev joined!");
-      let spawnData
-      if (oldId && reconnectQueue[oldId]) {}
+      let spawnData = false;
+      if (oldId && reconnectQueue[oldId]) spawnData = reconnectQueue[oldId], delete reconnectQueue[oldId];
       let obj = {
         objType: 'tank', // 오브젝트 타입. tank, bullet, drone, shape, boss 총 5가지가 있다.
-        type: 0, // 오브젝트의 종류값.
+        type: spawnData ? spawnData.type : 0, // 오브젝트의 종류값.
         owner: currentPlayer, // 오브젝트의 부모.
         id: objID(), // 오브젝트의 고유 id.
         team: -1, // 오브젝트의 팀값.
-        x: util.randomRange(-gameSet.mapSize.x, gameSet.mapSize.x), // 오브젝트의 좌표값.
-        y: util.randomRange(-gameSet.mapSize.y, gameSet.mapSize.y),
+        x: spawnData ? spawnData.x : util.randomRange(-gameSet.mapSize.x, gameSet.mapSize.x), // 오브젝트의 좌표값.
+        y: spawnData ? spawnData.y : util.randomRange(-gameSet.mapSize.y, gameSet.mapSize.y),
         dx: 0.0, // 오브젝트의 속도값.
         dy: 0.0,
         level: 1, // 오브젝트의 레벨값.
-        exp: 0, // 오브젝트의 경험치값.
+        exp: spawnData ? spawnData.exp : 0, // 오브젝트의 경험치값.
         speed: function() {
           return (0.07 + (0.007 * obj.stats[7])) * Math.pow(0.985, obj.level - 1);
         }, // (0.07+(0.007*speedStat))*0.0985^(level-1)
@@ -392,7 +392,7 @@ io.on('connection', (socket) => {
       reconnectInfo[currentPlayer.id] = {
         id: currentPlayer.id,
         name: currentPlayer.name,
-        tankName: currentPlayer.controlObject.tankType,
+        tankId: currentPlayer.controlObject.type,
         level: currentPlayer.controlObject.level,
         x: currentPlayer.controlObject.x,
         y: currentPlayer.controlObject.y
@@ -768,7 +768,8 @@ function sendUpdates() {
       stats: u.controlObject.stats,
       maxStats: u.controlObject.maxStats,
       upgrades: getUpgrades(u),
-      playerId: u.id
+      playerId: u.id,
+      tankId: u.controlObject.type
     });
     sockets[u.id].emit('scoreboardlist', scoreBoardList);
   };

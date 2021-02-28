@@ -259,14 +259,14 @@ function System(name, key) { // 게임의 전체 진행 담당
     this.status = "reconnecting";
     let reconnectJSON = JSON.stringify({
       name: name.replace(" ", "|-=-|"),
-      tankName: this.controlTank ? this.controlTank.tankType : "Not spawned in",
+      tankId: this.tankId ? this.tankId : 0,
       level: this.controlTankLevel,
       id: this.playerId || -1
     });
     fetch(`https://${window.location.hostname}/reconnect/${reconnectJSON}`).then(res => res.json()).then(json => {
       if (!json.ok) return this.status = "disconnected";
       this.status = "";
-      socket.emit("login", name, key, this.playerId);
+      socket.emit("login", name, key, json.key || "");
     }).catch(e => this.status = "disconnected");
   });
   
@@ -286,6 +286,7 @@ function System(name, key) { // 게임의 전체 진행 담당
     this.maxStats = data.maxStats;
     this.upgrades = window.upgrades = data.upgrades;
     localStorage.playerId = this.playerId = data.playerId;
+    this.tankId = data.tankId;
   });
 
   socket.on('objectList', (objectList) => {
