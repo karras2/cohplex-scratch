@@ -4,7 +4,7 @@
 }
 
 body {
-	background-image: url("https://cdn.glitch.com/cb589383-631b-4d6c-845a-0d18ce5a3ee3%2F3d92db3a-5c29-45ae-a216-de523b548952.image.png?v=1614343692503");
+	background-color: #000000;
 }
 
 html, body, #canvas {
@@ -24,6 +24,13 @@ html, body, #canvas {
 	width: 100%;
 	height: 100%;
 	cursor: default;
+}
+
+#loadingText {
+  padding-top: 15%;
+  font-size: 100px;
+  color: white;
+  display: block;
 }
 
 
