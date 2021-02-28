@@ -155,7 +155,7 @@ app.get('/reconnect/:data', (req, res) => {
   } catch (e) {
     return res.json({ ok: false });
   }
-  if (!reconnectInfo[data.id]) return res.json({ ok: false });
+  if (!reconnectInfo[data.id]) return res.json({ ok: true });
   let ok = true;
   for (let key in reconnectInfo[data.id]) if (reconnectInfo[data.id] !== data[key]) return res.json({ ok: false });
   let key = getKey();
@@ -386,6 +386,13 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => { // 연결 끊김
     if (sockets[socket.id]) {
       console.log('Socket closed.');
+      
+      reconnectInfo[currentPlayer.id] = {
+        id: currentPlayer.id,
+        name: currentPlayer.name,
+        tankName: currentPlayer.controlObject.tankType,
+        level: currentPlayer.contr
+      };
 
       tree = sendTree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
 
