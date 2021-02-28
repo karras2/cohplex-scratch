@@ -59,8 +59,8 @@ app.get('/', (req, res) => {
 
 app.get("/data", (req, res) => {
   res.json({
-    yes: "a",
-    no: "b"
+    players: users.length + "/" + gameSet.maxPlayer,
+    mode: gameSet.gameMode.replace("ffa", "Free For All").replace("tdm", "Team Death Match")
   });
 });
 
@@ -570,7 +570,7 @@ function sendUpdates() {
   }).slice(0, 10);
   const ulen = users.length;
   for (let i = 0; i < ulen; i++) {
-    let u = users[i];
+    let u = users[i]; // what are you doing?
     let objList = sendTree.retrieve({
       x: u.camera.x + 1280 / u.camera.z,
       y: u.camera.y + 720 / u.camera.z,
