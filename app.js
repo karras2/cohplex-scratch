@@ -288,7 +288,8 @@ io.on('connection', (socket) => {
   });
   
   socket.on("upgradeTank", (data) => {
-    //if (!currentPlayer.upgrades.includes(data)) return;
+    let ups = upgrades[currentPlayer.controlObject.tankType] || [];
+    if (!ups.includes(data)) return;
     console.log("Valid upgrade!");
     currentPlayer.controlObject.type = data;
     userUtil.setUserTank(currentPlayer.controlObject);
