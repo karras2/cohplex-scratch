@@ -158,11 +158,9 @@ app.get('/reconnect/:data', (req, res) => {
   if (!reconnectInfo[data.id]) return res.json({ ok: true });
   let ok = true;
   for (let key in reconnectInfo[data.id]) if (!["x", "y"].includes(key)) if (reconnectInfo[data.id] !== data[key]) return res.json({ ok: false });
-  let key = getKey();
-  reconnectQueue[key] = reconnectInfo[data.id];
+  reconnectQueue[data.id] = reconnectInfo[data.id];
   res.json({
-    ok: true,
-    key: key
+    ok: true
   });
 });
 
@@ -259,7 +257,7 @@ io.on('connection', (socket) => {
         dx: 0.0, // 오브젝트의 속도값.
         dy: 0.0,
         level: 1, // 오브젝트의 레벨값.
-        exp: spawnData ? spawnData.exp : 0, // 오브젝트의 경험치값.
+        exp: spawnData ? spawnData.xp : 0, // 오브젝트의 경험치값.
         speed: function() {
           return (0.07 + (0.007 * obj.stats[7])) * Math.pow(0.985, obj.level - 1);
         }, // (0.07+(0.007*speedStat))*0.0985^(level-1)
@@ -393,7 +391,7 @@ io.on('connection', (socket) => {
         id: currentPlayer.id,
         name: currentPlayer.name,
         tankId: currentPlayer.controlObject.type,
-        level: currentPlayer.controlObject.level,
+        xp: currentPlayer.controlObject.exp,
         x: currentPlayer.controlObject.x,
         y: currentPlayer.controlObject.y
       };
@@ -769,7 +767,8 @@ function sendUpdates() {
       maxStats: u.controlObject.maxStats,
       upgrades: getUpgrades(u),
       playerId: u.id,
-      tankId: u.controlObject.type
+      tankId: u.controlObject.type,
+      xp: u.controlObject.exp
     });
     sockets[u.id].emit('scoreboardlist', scoreBoardList);
   };

@@ -248,7 +248,7 @@ function System(name, key) { // 게임의 전체 진행 담당
   this.ping;
   this.scoreBoard = [];
 
-  socket.emit('login', name, key);
+  socket.emit('login', name, key, localStorage.tankId || "");
   window.UPGRADE = id => socket.emit("upgradeTank", id);
 
   socket.on('pong!', function(data) {
@@ -260,13 +260,13 @@ function System(name, key) { // 게임의 전체 진행 담당
     let reconnectJSON = JSON.stringify({
       name: name.replace(" ", "|-=-|"),
       tankId: this.tankId ? this.tankId : 0,
-      level: this.controlTankLevel,
+      xp: this.controlTankXp,
       id: this.playerId || -1
     });
     fetch(`https://${window.location.hostname}/reconnect/${reconnectJSON}`).then(res => res.json()).then(json => {
       if (!json.ok) return this.status = "disconnected";
       this.status = "";
-      socket.emit("login", name, key, json.key || "");
+      socket.emit("login", name, key, this.tankId);
     }).catch(e => this.status = "disconnected");
   });
   
@@ -277,7 +277,8 @@ function System(name, key) { // 게임의 전체 진행 담당
   });
 
   socket.on('playerSet', (data) => {
-    this.controlTankLevel = data.level;
+    this.controlTankLevel = localStorage.tankId = data.level;
+    this.controlTankXp = data.xp;
     this.drawObject.setSight(data.camera.z);
     this.drawObject.cameraSet(data.camera);
     this.isControlRotate = data.isRotate;
