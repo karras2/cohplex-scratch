@@ -148,17 +148,7 @@ let getKey = () => {
   return str;
 };
 
-app.get('/reconnect/:data', (req, res) => {
-  let data = false;
-  try {
-    data = JSON.parse(req.params.data);
-  } catch (e) {
-    return res.json({ ok: false });
-  }
-  if (!reconnectInfo[data.id]) return res.json({ ok: true });
-  let ok = true;
-  for (let key in reconnectInfo[data.id]) if (!["x", "y"].includes(key)) if (reconnectInfo[data.id] !== data[key]) return res.json({ ok: false });
-  reconnectQueue[data.id] = reconnectInfo[data.id];
+app.get('/reconnect', (req, res) => {
   res.json({
     ok: true
   });
@@ -224,7 +214,7 @@ io.on('connection', (socket) => {
 
   io.emit('mapSize', gameSet.mapSize, gameSet.gameMode);
 
-  socket.on('login', (name, key, oldId = false) => { // 탱크 생성.
+  socket.on('login', (name, key, oldId) => { // 탱크 생성.
     let testAlive = () => {
       if (currentPlayer.controlObject == null) return true;
       if (currentPlayer.controlObject.isDead) return false;
@@ -245,7 +235,14 @@ io.on('connection', (socket) => {
       sockets[socket.id] = socket;
       if (currentPlayer.isDev) console.log("A dev joined!");
       let spawnData = false;
-      if (oldId && reconnectQueue[oldId]) spawnData = reconnectQueue[oldId], delete reconnectQueue[oldId];
+      if (oldId) {
+        console.log("Trying to spawn with id:", oldId);
+        if (reconnectQueue[oldId]) {
+          console.log("Valid data, spawning in with old data.");
+          spawnData = JSON.parse(JSON.stringify(reconnectQueue[oldId]));
+          delete reconnectQueue[oldId];
+        }
+      }
       let obj = {
         objType: 'tank', // 오브젝트 타입. tank, bullet, drone, shape, boss 총 5가지가 있다.
         type: spawnData ? spawnData.type : 0, // 오브젝트의 종류값.
@@ -387,10 +384,10 @@ io.on('connection', (socket) => {
     if (sockets[socket.id]) {
       console.log('Socket closed.');
       
-      reconnectInfo[currentPlayer.id] = {
+      reconnectQueue[currentPlayer.id] = reconnectInfo[currentPlayer.id] = {
         id: currentPlayer.id,
         name: currentPlayer.name,
-        tankId: currentPlayer.controlObject.type,
+        type: currentPlayer.controlObject.type,
         xp: currentPlayer.controlObject.exp,
         x: currentPlayer.controlObject.x,
         y: currentPlayer.controlObject.y
