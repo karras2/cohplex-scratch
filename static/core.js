@@ -257,7 +257,10 @@ function System(name, key) { // 게임의 전체 진행 담당
   socket.on('disconnect', () => {
     this.status = "reconnecting";
     let reconnectJSON = {
-      name: name.replace(" ", "|-=-|")
+      name: name.replace(" ", "|-=-|"),
+      tankName: this.controlTank ? this.controlTank.tankType : "Not spawned in",
+      level: this.controlTankLevel,
+      id: this.playerId || -1
     };
     fetch(`https://${window.location.hostname}/reconnect/${reconnectJSON}`).then(res => res.json()).then(json => {
       if (!json.ok) return this.status = "disconnected";
@@ -281,6 +284,7 @@ function System(name, key) { // 게임의 전체 진행 담당
     this.stats = data.stats;
     this.maxStats = data.maxStats;
     this.upgrades = window.upgrades = data.upgrades;
+    this.playerId = data.playerId;
   });
 
   socket.on('objectList', (objectList) => {
