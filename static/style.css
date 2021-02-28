@@ -52,22 +52,8 @@ html, body, #canvas {
 	/* border-color: 10px solid black; */
 }
 
-.token-input {
-	width: 493.568px;
-	height: 50px;
-	line-height: 47.5px;
-	font-size: 47.5px;
-	font-weight: bold;
-	padding-left: 5px;
-	padding-right: 5px;
-	border: 6px solid black;
-	margin : 0 auto;
-	display: block;
-	/* border-color: 10px solid black; */
-}
-
 .head {
-	font-size: 75px;
+	font-size: 50px;
 	font-weight: bold;
 	padding-left: 5px;
 	padding-right: 5px;
