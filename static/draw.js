@@ -163,11 +163,12 @@ function DrawObject(camera) { // 그리기 담당
     this.ctx.fillRect((-this.mapSize.x - this.camera.x) * this.camera.z, (-this.mapSize.y - this.camera.y) * this.camera.z, this.mapSize.x * 2 * this.camera.z, this.mapSize.y * 2 * this.camera.z);
 
     this.ctx.globalAlpha = 0.15;
-    this.ctx.fillStyle = new RGB(0, 176, 225).getRGBValue();
-    this.ctx.fillRect((-this.mapSize.x - this.camera.x) * this.camera.z, (-this.mapSize.y - this.camera.y) * this.camera.z, (this.mapSize.x * 2 * 0.15) * this.camera.z, this.mapSize.y * 2 * this.camera.z);
-    this.ctx.fillStyle = new RGB(241, 78, 84).getRGBValue();
-    this.ctx.fillRect(((-this.mapSize.x - this.camera.x) + (this.mapSize.x * 2 * 0.85)) * this.camera.z, (-this.mapSize.y - this.camera.y) * this.camera.z, (this.mapSize.x * 2 * 0.15)* this.camera.z, this.mapSize.y * 2 * this.camera.z);
-
+    if (this.gm.includes("tdm")) {
+      this.ctx.fillStyle = new RGB(0, 176, 225).getRGBValue();
+      this.ctx.fillRect((-this.mapSize.x - this.camera.x) * this.camera.z, (-this.mapSize.y - this.camera.y) * this.camera.z, (this.mapSize.x * 2 * 0.15) * this.camera.z, this.mapSize.y * 2 * this.camera.z);
+      this.ctx.fillStyle = new RGB(241, 78, 84).getRGBValue();
+      this.ctx.fillRect(((-this.mapSize.x - this.camera.x) + (this.mapSize.x * 2 * 0.85)) * this.camera.z, (-this.mapSize.y - this.camera.y) * this.camera.z, (this.mapSize.x * 2 * 0.15)* this.camera.z, this.mapSize.y * 2 * this.camera.z);
+    }
     this.ctx.globalAlpha = 1;
     this.ctx.beginPath(); // 격자 그리기
     for (let i = -this.camera.x % 12.9 * this.camera.z; i <= this.canvas.width; i += 12.9 * this.camera.z) {
@@ -209,7 +210,7 @@ function DrawObject(camera) { // 그리기 담당
 
   this.uiDraw = function(ui) {
     for (let i = 0; i < ui.length; i++) {
-      ui[i].draw(this.uiCtx, this.camera.uiz);
+      ui[i].draw(this.uiCtx, this.camera.uiz, this.gm);
     }
 
     this.ctx.globalAlpha = 0.7;
@@ -516,7 +517,7 @@ function MiniMap() {
       ctx.lineTo(x, y);
   }
 
-  this.draw = function(ctx, z) {
+  this.draw = function(ctx, z, gm) {
 
     ctx.fillStyle = this.color.getRGBValue();
     ctx.strokeStyle = this.borderColor.getRGBValue();
@@ -526,11 +527,12 @@ function MiniMap() {
     ctx.beginPath();
     ctx.rect(this.x - this.miniMapSize * z + 4 * z, this.y - this.miniMapSize * z + 4 * z, this.miniMapSize * z, this.miniMapSize * z);
     ctx.fill();
-    ctx.fillStyle = new RGB(0, 176, 225).getRGBValue();
-    ctx.fillRect(this.x - this.miniMapSize * z + 4 * z, this.y - this.miniMapSize * z + 4 * z, this.miniMapSize * z * 0.15, this.miniMapSize * z);
-    ctx.fillStyle = new RGB(241, 78, 84).getRGBValue();
-    ctx.fillRect((this.x - this.miniMapSize * z + 4 * z) + (this.miniMapSize * z * 0.85), this.y - this.miniMapSize * z + 4 * z, this.miniMapSize * z * 0.15, this.miniMapSize * z);
-
+    if (gm.includes("tdm")) {
+      ctx.fillStyle = new RGB(0, 176, 225).getRGBValue();
+      ctx.fillRect(this.x - this.miniMapSize * z + 4 * z, this.y - this.miniMapSize * z + 4 * z, this.miniMapSize * z * 0.15, this.miniMapSize * z);
+      ctx.fillStyle = new RGB(241, 78, 84).getRGBValue();
+      ctx.fillRect((this.x - this.miniMapSize * z + 4 * z) + (this.miniMapSize * z * 0.85), this.y - this.miniMapSize * z + 4 * z, this.miniMapSize * z * 0.15, this.miniMapSize * z);
+    }
     ctx.save();
 
     ctx.clip();

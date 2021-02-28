@@ -26,7 +26,7 @@ let V = SAT.Vector;
 let C = SAT.Circle;
 
 var gameSet = {
-  gameMode: "tdm",
+  gameMode: "2tdm",
   maxPlayer: 10,
   tokens: ["TOKEN_wrjgdsnfTihD48970MFBlw_TOKEN"],
   mapSize: {
@@ -65,7 +65,7 @@ app.get('/token', (req, res) => {
 app.get("/data", (req, res) => {
   res.json({
     players: users.length + "/" + gameSet.maxPlayer,
-    mode: gameSet.gameMode.replace("ffa", "Free For All").replace("tdm", "Team Death Match")
+    mode: gameSet.gameMode.replace("ffa", "Free For All").replace("tdm", " Team Death Match")
   });
 });
 
@@ -203,7 +203,7 @@ io.on('connection', (socket) => {
         setAlive: () => currentPlayer.isAlive = false
       };
       obj.team = obj.id;
-      if (gameSet.gameMode === "tdm") {
+      if (gameSet.gameMode.includes("tdm")) {
         obj.team = currentPlayer.team;
         let w = gameSet.mapSize.x * 2;
         if (obj.team === 0) obj.x = util.randomRange(-w / 2, -w / 2 + w * 0.15);
@@ -217,9 +217,6 @@ io.on('connection', (socket) => {
       users.push(currentPlayer);
       objects.push(currentPlayer.controlObject);
       socket.emit('mapSize', gameSet.mapSize, gameSet.gameMode);
-      //gameSet.mapSize.x += 100;
-      //gameSet.mapSize.y += 100;
-      shapeUtil.extendMaxShape(-10);
       io.emit('mapSize', gameSet.mapSize, gameSet.gameMode);
     }
   });
@@ -283,12 +280,10 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => { // 연결 끊김
     if (sockets[socket.id]) {
       console.log('Socket closed.');
-      //gameSet.mapSize.x -= 100;
-      //gameSet.mapSize.y -= 100;
 
       tree = sendTree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
 
-      //shapeUtil.extendMaxShape(-10);
+      shapeUtil.extendMaxShape(-10);
 
       currentPlayer.controlObject.owner = null;
       users.splice(util.findIndex(users, currentPlayer.id), 1);
@@ -313,7 +308,7 @@ function collisionCheck(aUser, bUser) { // 충돌 시 계산
 
   if (aUser === bUser.owner || bUser === aUser.owner) return;
   let doMotion = true;
-  if (gameSet.gameMode === "tdm" && aUser.team == bUser.team && (aUser.objType === "tank" || bUser.objType === "tank") && (["bullet", "drone"].includes(aUser.objType) || ["bullet", "drone"].includes(bUser.objType))) doMotion = false
+  if (gameSet.gameMode.includes("tdm") && aUser.team == bUser.team && (aUser.objType === "tank" || bUser.objType === "tank") && (["bullet", "drone"].includes(aUser.objType) || ["bullet", "drone"].includes(bUser.objType))) doMotion = false
 
   if (doMotion) {
     aUser.dx += Math.cos(dir) * Math.min(bUser.bound * aUser.stance, 6) / 5;
@@ -481,7 +476,7 @@ function tickObject(obj, index) {
     if (obj.y > gameSet.mapSize.y + 51.6) obj.y = gameSet.mapSize.y + 51.6;
     if (obj.y < -gameSet.mapSize.y - 51.6) obj.y = -gameSet.mapSize.y - 51.6;
   }
-  if (gameSet.gameMode === "tdm") {
+  if (gameSet.gameMode.includes("tdm")) {
     let coll = false;
     if (obj.x < -gameSet.mapSize.x + gameSet.mapSize.x * 0.3 && obj.team !== 0) coll = true;
     if (obj.x > gameSet.mapSize.x * 0.7 && obj.team !== 1) coll = true;

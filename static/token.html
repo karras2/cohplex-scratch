@@ -27,6 +27,7 @@
       document.getElementById(id + '-clear').onclick = function() { localStorage[id] = input.value = '' };
       document.getElementById(id + '-recall').onclick = function() { input.value = localStorage[id] };
     }
+    makeInput("token");
   </script>
 </body>
 </html>
