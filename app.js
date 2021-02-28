@@ -25,6 +25,29 @@ process.on("uncaughtexception", e => {
 let V = SAT.Vector;
 let C = SAT.Circle;
 
+const upgrades = {
+  "Tank": [1, 6, 7, 8, 35],
+  "Twin": [3, 13, 4],
+  "Sniper": [15, 19, 11, 30],
+  "Machine Gun": [10, 20],
+  "Flank Guard": [4, 9],
+  "Triple Shot": [14, 40, 2],
+  "Twin Flank": [18, 46],
+  "Quad Tank": [5],
+  "Destroyer": [47, 25, 51, 52],
+  "Gunner": [37, 41, 31, 29],
+  "Assassin": [22, 21],
+  "Hunter": [28, 41],
+  "Overseer": [12, 32, 50, 46, 26, 17],
+  "Trapper": [33, 42, 31, 32, 34],
+  "Tri Angle": [24, 23],
+  "Smasher": [49, 36, 48, 58],
+  "Developer": [62, 63, 27, 16, 64],
+  "Beta Tanks": [53, 55, 54, 56, 57],
+  "Dominators": [43, 44, 45],
+  "Bosses": [60],
+};
+
 var gameSet = {
   gameMode: "ffa",
   maxPlayer: 10,
@@ -650,7 +673,8 @@ function sendUpdates() {
       isRotate: u.controlObject.isCanDir,
       stat: u.controlObject.stat,
       stats: u.controlObject.stats,
-      maxStats: u.controlObject.maxStats
+      maxStats: u.controlObject.maxStats,
+      upgrades: upgrades[u.controlObject.tankType] || []
     });
     sockets[u.id].emit('scoreboardlist', scoreBoardList);
   };
