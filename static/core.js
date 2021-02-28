@@ -69,10 +69,10 @@ function System(name, key) { // 게임의 전체 진행 담당
     MegaSmasher,
     Hoinfodaman,
     FallenOverlord,
+    Developer,
     BetaTanks,
     Dominators,
-    Bosses,
-    Developer
+    Bosses
   ];
 
   let findTankID = name => this.tankList.indexOf(this.tankList.find(r => new r().tankType === name));
@@ -94,6 +94,9 @@ function System(name, key) { // 게임의 전체 진행 담당
   this.UPGRADES["Tri Angle"] = ["Fighter", "Booster"];
   this.UPGRADES["Smasher"] = ["Spike", "Landmine", "Auto-Smasher", "Mega Smasher"];
   this.UPGRADES["Developer"] = ["Beta Tanks", "Dominators", "Mothership", "Arena Closer", "Bosses"];
+  this.UPGRADES['Beta Tanks'] = ["Bumper", "Diffusion", "Dispersion", "Dual", "Commander"];
+  this.UPGRADES["Dominators"] = ["Destroyer Dominator", "Gunner Dominator", "Trapper Dominator"];
+  this.UPGRADES["Bosses"] = ["Fallen Overlord"];
   for (let path in this.UPGRADES) this.UPGRADES[path] = this.UPGRADES[path].map(up => [up, findTankID(up), new this.tankList[findTankID(up)]()]);
   window.UPS = this.UPGRADES;
   this.bulletList = [

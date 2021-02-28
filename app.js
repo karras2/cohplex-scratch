@@ -426,11 +426,13 @@ function tickObject(obj, index) {
           }
           obj.owner.kTime = Math.max(obj.owner.kTime - 1000 / 60, 0);
           if (obj.owner.changeTank) {
-            if (obj.owner.changeTime <= 0) {
+            obj.type = 61;
+            userUtil.setUserTank(obj);
+            /*if (obj.owner.changeTime <= 0) {
               obj.type = obj.type == 0 ? tankLength - 1 : obj.type - 1;
               userUtil.setUserTank(obj);
               obj.owner.changeTime += 1;
-            }
+            }*/
             obj.owner.changeTank = false;
           }
           obj.owner.changeTime = Math.max(obj.owner.changeTime - 1000 / 60, 0);
