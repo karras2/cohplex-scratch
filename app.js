@@ -129,6 +129,7 @@ let tree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.
 let sendTree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
 
 let reconnectInfo = {};
+let reconnectQueue = [];
 
 app.use(express.static(__dirname + '/static'));
 
@@ -140,6 +141,13 @@ app.get('/token', (req, res) => {
   res.sendFile(__dirname + '/static/token.html');
 });
 
+let getKey = () => {
+  let str = "";
+  let chars = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890".split("");
+  for (let i = 0; i < 16; i ++) str += chars[Math.floor(Math.random() * chars.length)];
+  return str;
+};
+
 app.get('/reconnect/:data', (req, res) => {
   let data = false;
   try {
@@ -150,9 +158,11 @@ app.get('/reconnect/:data', (req, res) => {
   if (!reconnectInfo[data.id]) return res.json({ ok: false });
   let ok = true;
   for (let key in reconnectInfo[data.id]) if (reconnectInfo[data.id] !== data[key]) return res.json({ ok: false });
-  let user = users.find(r => r.id === data.id);
+  let key = getKey();
+  reconnectQueue.push([key, reconnectInfo[data.id]]);
   res.json({
-    ok: true
+    ok: true,
+    key: key
   });
 });
 
