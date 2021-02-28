@@ -26,8 +26,8 @@ let V = SAT.Vector;
 let C = SAT.Circle;
 
 const upgrades = {
-  "Tank": [1, 6, 7, 8, 35],
-  "Twin": [3, 13, 4],
+  "0": [1, 6, 7, 8, 35],
+  "1": [3, 13, 4],
   "Sniper": [15, 19, 11, 30],
   "Machine Gun": [10, 20],
   "Flank Guard": [4, 9],
@@ -46,77 +46,6 @@ const upgrades = {
   "Beta Tanks": [53, 55, 54, 56, 57],
   "Dominators": [43, 44, 45],
   "Bosses": [60],
-};
-
-let getTankId = name => {
-  let id = { 
-    Basic: 0, //// 구현 완료
-    Twin: 1, ////
-    Triplet: 2, ////
-    TripleShot: 3, ////
-    QuadTank: 3, ////
-    OctoTank, ////
-    Sniper, ////
-    MachineGun, ////
-    FlankGuard, ////
-    TriAngle, ////
-    Destroyer, ////
-    Overseer, ////
-    Overload, ////
-    TwinFlank, ////
-    PentaShot, ////
-    Assasin, ////
-    ArenaCloser, /// 디자인만 완료
-    Necromanser, ////
-    TripleTwin, ////
-    Hunter, ////
-    Gunner, ////
-    Stalker, ////
-    Ranger, ////
-    Booster, ////
-    Fighter, ////
-    Hybrid, ////
-    Manager, ////
-    MotherShip, ////
-    Predator, ////
-    Sprayer, ////
-    Trapper, ////
-    GunnerTrapper, ////
-    OverTrapper, ////
-    MegaTrapper, ////
-    TriTrapper, ////
-    Smasher, ////
-    Landmine, ////
-    AutoGunner, ///
-    Auto5, ///
-    Auto3, ///
-    SpreadShot, ////
-    Streamliner, ////
-    AutoTrapper, ///
-    BasicDominator, ////
-    GunnerDominator, ////
-    TrapperDominator, ////
-    BattleShip, ////
-    Annihilator, ////
-    AutoSmasher, ///
-    Spike, ////
-    Factory, ////
-    Skimmer, ////
-    Rocketeer, ////
-
-    Bumper,
-    Dispersion,
-    Diffusion,
-    Dual,
-    Commander,
-    MegaSmasher,
-    Hoinfodaman,
-    FallenOverlord,
-    Developer,
-    BetaTanks,
-    Dominators,
-    Bosses
-  };
 };
 
 var gameSet = {
