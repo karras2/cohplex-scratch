@@ -210,6 +210,8 @@ function DrawObject(camera) { // 그리기 담당
   }
 
   this.objectStatusDraw = function(obj) {
+    if (!system) return;
+    if (!system.controlTank) return;
     for (let key in obj) {
       if (obj[key] && obj[key].drawName && obj[key].id !== system.controlTank.id) {
         obj[key].drawName(this.dCtx, this.camera);

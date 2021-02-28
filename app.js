@@ -157,7 +157,7 @@ app.get('/reconnect/:data', (req, res) => {
   }
   if (!reconnectInfo[data.id]) return res.json({ ok: true });
   let ok = true;
-  for (let key in reconnectInfo[data.id]) if (reconnectInfo[data.id] !== data[key]) return res.json({ ok: false });
+  for (let key in reconnectInfo[data.id]) if (!["x", "y"].includes(key)) if (reconnectInfo[data.id] !== data[key]) return res.json({ ok: false });
   let key = getKey();
   reconnectQueue.push([key, reconnectInfo[data.id]]);
   res.json({
@@ -226,7 +226,7 @@ io.on('connection', (socket) => {
 
   io.emit('mapSize', gameSet.mapSize, gameSet.gameMode);
 
-  socket.on('login', (name, key) => { // 탱크 생성.
+  socket.on('login', (name, key, oldId = false) => { // 탱크 생성.
     let testAlive = () => {
       if (currentPlayer.controlObject == null) return true;
       if (currentPlayer.controlObject.isDead) return false;
@@ -246,6 +246,8 @@ io.on('connection', (socket) => {
       console.log('New socket opened.');
       sockets[socket.id] = socket;
       if (currentPlayer.isDev) console.log("A dev joined!");
+      let spawnData
+      if (oldId && reconnectQueue[oldId]) {}
       let obj = {
         objType: 'tank', // 오브젝트 타입. tank, bullet, drone, shape, boss 총 5가지가 있다.
         type: 0, // 오브젝트의 종류값.
@@ -391,7 +393,9 @@ io.on('connection', (socket) => {
         id: currentPlayer.id,
         name: currentPlayer.name,
         tankName: currentPlayer.controlObject.tankType,
-        level: currentPlayer.controlObject.level
+        level: currentPlayer.controlObject.level,
+        x: currentPlayer.controlObject.x,
+        y: currentPlayer.controlObject.y
       };
 
       tree = sendTree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
