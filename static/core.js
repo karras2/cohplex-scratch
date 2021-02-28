@@ -256,9 +256,10 @@ function System(name, key) { // 게임의 전체 진행 담당
   
   socket.on('disconnect', () => {
     this.status = "reconnecting";
-    fetch(`https://${window.location.hostname}/ping`).then(res => res.json()).then(json => {
+    fetch(`https://${window.location.hostname}/ping/`).then(res => res.json()).then(json => {
       if (!json.ok) return this.status = "disconnected";
       this.status = "";
+      socket.emit("login", name, key);
     }).catch(e => this.status = "disconnected");
   });
   
