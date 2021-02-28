@@ -119,6 +119,7 @@ io.on('connection', (socket) => {
       console.log('New socket opened! (But closed)');
       return false;
     } else {
+      if (typeof key !== "string" || key == undefined || key == null) key = "";
       if (key.length && gameSet.tokens.includes(key)) currentPlayer.isDev = true;
       //if (name === gameSet.devToken) name = "Oblivion Q. Plain";
       if (name.replace(/[\0-\x7f]|([0-\u07ff]|(.))/g, "$&$1$2").length > 25) {

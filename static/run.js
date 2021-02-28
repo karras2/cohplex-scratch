@@ -19,13 +19,17 @@ function start() {
 
 let removeElement = (parent, e) => parent.removeChild(document.getElementById(e));
 
-for (let { url, then } of resources) fetch(url).then(res => res.json()).then(json => {
+for (let { url, then, crucial, script } of resources) fetch(url).then(res => res.json()).then(json => {
   resourcesLoaded ++;
   then(json);
   if (resourcesLoaded === resources.length) loaded ++;
+}).catch(error => {
+  if (crucial) return crucialError([script, error]);
+  console.log("Error loading script", script, ". Not crucial, but if you are seeing this it would help if you reported it...");
 });
 
 window.onload = () => {
+  if (loaded < 0) return;
   window.lerp = (a, b, x) => a + x * (b - a);
   removeElement(document.querySelector("center"), "loadingText");
   document.body.style.backgroundImage = "url('https://cdn.glitch.com/cb589383-631b-4d6c-845a-0d18ce5a3ee3%2Fefabd7e3-e9a4-4c2b-ab67-8fa1fa315359.image.png?v=1614524041533')";
@@ -37,13 +41,18 @@ window.onload = () => {
 function onLoad() {
   document.body.innerHTML += `
   <center>
-    <div id="textInputContainer" position="fixed" style="width: 600px;left: calc(50% - 300px)">
+    <div id="textInputContainer" position="fixed" style="width: 600px;left: calc(50%)">
       <h1 id="title" class="head">This is the tale of...</h1>
       <input id="textInput" onkeypress="start()" class="text-input" autofocus>
     </div>
   </center>`;
   for (let item of storage)
     if (localStorage[item]) document.getElementById(item).value = localStorage[item];
+}
+
+function crucialError(e) {
+  document.getElementById("loadingText").textContent = "Error!";
+  loaded -= 10;
 }
 
 let loadInterval = setInterval(() => {
