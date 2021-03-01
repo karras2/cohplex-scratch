@@ -772,8 +772,6 @@ function sendUpdates() {
   };
 }
 
-objects.push(botUtil.spawnBot());
-
 setInterval(moveloop, 1000 / 60);
 setInterval(sendUpdates, 1000 / 30);
 server.listen(3000, () => {
