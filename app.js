@@ -214,9 +214,6 @@ let tankLength = 65;
 let tree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
 let sendTree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
 
-let reconnectInfo = {};
-let reconnectQueue = [];
-
 app.use(express.static(__dirname + '/static'));
 
 app.get('/', (req, res) => {
@@ -233,12 +230,6 @@ let getKey = () => {
   for (let i = 0; i < 16; i++) str += chars[Math.floor(Math.random() * chars.length)];
   return str;
 };
-
-app.get('/reconnect', (req, res) => {
-  res.json({
-    ok: true
-  });
-});
 
 app.get("/data", (req, res) => {
   let mode = gameSet.gameMode;
@@ -300,7 +291,7 @@ io.on('connection', (socket) => {
 
   io.emit('mapSize', gameSet.mapSize, gameSet.gameMode);
 
-  socket.on('login', (name, key, oldId) => { // 탱크 생성.
+  socket.on('login', (name, key) => { // 탱크 생성.
     let testAlive = () => {
       if (currentPlayer.controlObject == null) return true;
       if (currentPlayer.controlObject.isDead) return false;
@@ -320,27 +311,18 @@ io.on('connection', (socket) => {
       console.log('New socket opened.');
       sockets[socket.id] = socket;
       if (currentPlayer.isDev) console.log("A dev joined!");
-      let spawnData = false;
-      if (oldId) {
-        console.log("Trying to spawn with id:", oldId);
-        if (reconnectQueue[oldId]) {
-          console.log("Valid data, spawning in with old data.");
-          spawnData = JSON.parse(JSON.stringify(reconnectQueue[oldId]));
-          delete reconnectQueue[oldId];
-        }
-      }
       let obj = {
         objType: 'tank', // Object type. There are 5 types in total: tank, bullet, drone, shape, and boss.
-        type: spawnData ? spawnData.type : 0, // 오브젝트의 종류값.
+        type: 0, // 오브젝트의 종류값.
         owner: currentPlayer, // 오브젝트의 부모.
         id: objID(), // 오브젝트의 고유 id.
         team: -1, // 오브젝트의 팀값.
-        x: spawnData ? spawnData.x : util.randomRange(-gameSet.mapSize.x, gameSet.mapSize.x), // 오브젝트의 좌표값.
-        y: spawnData ? spawnData.y : util.randomRange(-gameSet.mapSize.y, gameSet.mapSize.y),
+        x: util.randomRange(-gameSet.mapSize.x, gameSet.mapSize.x), // 오브젝트의 좌표값.
+        y: util.randomRange(-gameSet.mapSize.y, gameSet.mapSize.y),
         dx: 0.0, // 오브젝트의 속도값.
         dy: 0.0,
         level: 1, // 오브젝트의 레벨값.
-        exp: spawnData ? spawnData.xp : 0, // 오브젝트의 경험치값.
+        exp: 0, // 오브젝트의 경험치값.
         speed: function() {
           return (0.07 + (0.007 * obj.stats[7])) * Math.pow(0.985, obj.level - 1);
         }, // (0.07+(0.007*speedStat))*0.0985^(level-1)
@@ -469,19 +451,6 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => { // 연결 끊김
     if (sockets[socket.id]) {
       console.log('Socket closed.');
-
-      /*reconnectQueue[currentPlayer.id] = reconnectInfo[currentPlayer.id] = {
-        id: currentPlayer.id,
-        name: currentPlayer.name,
-        type: currentPlayer.controlObject.type,
-        xp: currentPlayer.controlObject.exp,
-        x: currentPlayer.controlObject.x,
-        y: currentPlayer.controlObject.y
-      };
-
-      currentPlayer.controlObject.damage = function() {
-        return 0.1;
-      };*/
 
       tree = sendTree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
 
