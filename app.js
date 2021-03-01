@@ -188,7 +188,7 @@ let getUpgrades = u => {
 };
 
 var gameSet = {
-  gameMode: "ffa",
+  gameMode: "2tdm",
   maxPlayer: 10,
   tokens: ["TOKEN_wrjgdsnfTihD48970MFBlw_TOKEN"],
   mapSize: {
@@ -639,7 +639,7 @@ function tickObject(obj, index) {
           obj.owner.changeTime = Math.max(obj.owner.changeTime - 1000 / 60, 0);
         }
       } else {
-        if (obj.owner !== false) userUtil.afkTank(obj);
+        userUtil.afkTank(obj);
       }
       break;
     case "bullet":
@@ -868,6 +868,6 @@ server.listen(3000, () => {
 });
 
 
-setInterval(() => {
+/*setInterval(() => {
   if (bots < 1) spawnBot();
-}, 5e3);
+}, 5e3);*/
