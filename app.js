@@ -26,12 +26,13 @@ process.on("uncaughtexception", e => {
 let V = SAT.Vector;
 let C = SAT.Circle;
 
+let bots = 0;
 let spawnBot = () => {
   let team = 0;
   let obj = {
     objType: 'tank', // Object type. There are 5 types in total: tank, bullet, drone, shape, and boss.
     type: 1, // 오브젝트의 종류값.
-    owner: null, // 오브젝트의 부모.
+    owner: false, // 오브젝트의 부모.
     id: objID(), // 오브젝트의 고유 id.
     team: -1, // 오브젝트의 팀값.
     x: util.randomRange(-gameSet.mapSize.x, gameSet.mapSize.x), // 오브젝트의 좌표값.
@@ -39,7 +40,7 @@ let spawnBot = () => {
     dx: 0.0, // 오브젝트의 속도값.
     dy: 0.0,
     level: 45, // 오브젝트의 레벨값.
-    exp: 0, // 오브젝트의 경험치값.
+    exp: 23500, // 오브젝트의 경험치값.
     speed: function() {
       return (0.07 + (0.007 * obj.stats[7])) * Math.pow(0.985, obj.level - 1);
     }, // (0.07+(0.007*speedStat))*0.0985^(level-1)
@@ -75,7 +76,15 @@ let spawnBot = () => {
     hitObject: null, // 오브젝트의 피격 오브젝트.
     moveAi: null, // 오브젝트의 이동 AI. 플레이어의 조종권한이 없을 때 실행하는 함수입니다.
     event: { // 여기 있는 값들은 모두 "함수" 입니다.
-
+      deadEvent: (e, k) => {
+        bots --;
+        console.log("A bot died!");
+        return true;
+      },
+      killEvent: (e, k) => {
+        console.log("A bot got a kill lol");
+        return true;
+      }
     },
     variable: {
 
@@ -97,6 +106,7 @@ let spawnBot = () => {
   }
   userUtil.setUserTank(obj);
   objects.push(obj);
+  bots ++;
 };
 
 const upgrades = {
@@ -627,7 +637,7 @@ function tickObject(obj, index) {
           obj.owner.changeTime = Math.max(obj.owner.changeTime - 1000 / 60, 0);
         }
       } else {
-        userUtil.afkTank(obj);
+        if (obj.owner !== false) userUtil.afkTank(obj);
       }
       break;
     case "bullet":
@@ -856,4 +866,6 @@ server.listen(3000, () => {
 });
 
 
-setInterval(spawnBot, 1e4);
+setInterval(() => {
+  if (bots < 5) spawnBot();
+}, 5e3);
