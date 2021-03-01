@@ -14,7 +14,6 @@ const objUtil = require('./lib/objectSet');
 const userUtil = require('./lib/userSet');
 const bulletUtil = require('./lib/bulletSet');
 const shapeUtil = require('./lib/shapeSet');
-const botUtil = require("./lib/bots.js");
 
 const quadtree = require('./lib/QuadTree');
 const readline = require('readline');
@@ -870,5 +869,5 @@ server.listen(3000, () => {
 
 
 setInterval(() => {
-  if (bots < 5) spawnBot();
+  if (bots < 1) spawnBot();
 }, 5e3);
