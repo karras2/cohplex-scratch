@@ -76,6 +76,9 @@ let spawnBot = () => {
     hitObject: null, // 오브젝트의 피격 오브젝트.
     moveAi: null, // 오브젝트의 이동 AI. 플레이어의 조종권한이 없을 때 실행하는 함수입니다.
     event: { // 여기 있는 값들은 모두 "함수" 입니다.
+      rightDownEvent: function() {},
+      rightEvent: function() {},
+      rightUpEvent: function() {},
       deadEvent: (e, k) => {
         bots --;
         console.log("A bot died!");
@@ -104,7 +107,7 @@ let spawnBot = () => {
     if (obj.team === 0) obj.x = util.randomRange(-w / 2, -w / 2 + w * 0.15);
     if (obj.team === 1) obj.x = util.randomRange((w / 2) * 0.85, w / 2);
   }
-  userUtil.setUserTank(obj);
+  userUtil.setUserTank(obj, true);
   objects.push(obj);
   bots ++;
 };
@@ -468,7 +471,7 @@ io.on('connection', (socket) => {
     if (sockets[socket.id]) {
       console.log('Socket closed.');
 
-      reconnectQueue[currentPlayer.id] = reconnectInfo[currentPlayer.id] = {
+      /*reconnectQueue[currentPlayer.id] = reconnectInfo[currentPlayer.id] = {
         id: currentPlayer.id,
         name: currentPlayer.name,
         type: currentPlayer.controlObject.type,
@@ -479,7 +482,7 @@ io.on('connection', (socket) => {
 
       currentPlayer.controlObject.damage = function() {
         return 0.1;
-      };
+      };*/
 
       tree = sendTree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
 
