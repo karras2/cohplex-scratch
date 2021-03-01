@@ -245,7 +245,7 @@ io.on('connection', (socket) => {
         }
       }
       let obj = {
-        objType: 'tank', // 오브젝트 타입. tank, bullet, drone, shape, boss 총 5가지가 있다.
+        objType: 'tank', // Object type. There are 5 types in total: tank, bullet, drone, shape, and boss.
         type: spawnData ? spawnData.type : 0, // 오브젝트의 종류값.
         owner: currentPlayer, // 오브젝트의 부모.
         id: objID(), // 오브젝트의 고유 id.
@@ -393,6 +393,8 @@ io.on('connection', (socket) => {
         x: currentPlayer.controlObject.x,
         y: currentPlayer.controlObject.y
       };
+      
+      currentPlayer.controlObject.damage = function() { return 0.1; };
 
       tree = sendTree = new quadtree(-gameSet.mapSize.x * 2, -gameSet.mapSize.y * 2, gameSet.mapSize.x * 4, gameSet.mapSize.y * 4);
 
