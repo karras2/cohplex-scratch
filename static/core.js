@@ -257,7 +257,7 @@ function System(name, key) { // 게임의 전체 진행 담당
   }.bind(this));
   
   socket.on('disconnect', () => {
-    this.status = "reconnecting";
+    socket.emit("disconnect");
   });
   
   socket.on('records', r => {
