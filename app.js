@@ -14,6 +14,7 @@ const objUtil = require('./lib/objectSet');
 const userUtil = require('./lib/userSet');
 const bulletUtil = require('./lib/bulletSet');
 const shapeUtil = require('./lib/shapeSet');
+const botUtil = require("./lib/bots.js");
 
 const quadtree = require('./lib/QuadTree');
 const readline = require('readline');
@@ -770,6 +771,8 @@ function sendUpdates() {
     sockets[u.id].emit('scoreboardlist', scoreBoardList);
   };
 }
+
+objects.push(botUtil.spawnBot());
 
 setInterval(moveloop, 1000 / 60);
 setInterval(sendUpdates, 1000 / 30);
